@@ -2,7 +2,9 @@ import {
   Component
 } from '@angular/core';
 
-import { ListItemModel } from '@blackbaud/skyux/dist/core';
+import {
+  ListItemModel
+} from '@blackbaud/skyux/dist/core';
 
 @Component({
   selector: 'grid-visual',
