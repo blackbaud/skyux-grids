@@ -26,6 +26,9 @@
   },
   "homepage": "https://github.com/blackbaud/skyux-grids#readme",
   "peerDependencies": {
+    "@angular/common": "^4.3.6",
+    "@angular/core": "^4.3.6",
+    "@angular/forms": "^4.3.6",
     "@skyux/list-builder": "^3.0.0-alpha.0",
     "@skyux/indicators": "^3.0.0-rc.1"
   },
