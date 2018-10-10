@@ -12,7 +12,7 @@ import { SkyGridComponent } from '../grid.component';
 import {
   ListItemModel,
   ListSortFieldSelectorModel
-} from '@skyux/list-builder';
+} from '@skyux/list-builder/modules/list/state';
 
 import { SkyGridColumnWidthModelChange } from '../types';
 

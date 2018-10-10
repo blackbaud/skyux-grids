@@ -4,7 +4,7 @@ import {
 
 import {
   ListItemModel
-} from '@blackbaud/skyux/dist/core';
+} from '@skyux/list-builder/modules/list/state';
 
 @Component({
   selector: 'grid-visual',

@@ -31,7 +31,7 @@ import {
 import {
   ListItemModel,
   ListSortFieldSelectorModel
-} from '@skyux/list-builder';
+} from '@skyux/list-builder/modules/list/state';
 
 import {
   SkyGridColumnComponent

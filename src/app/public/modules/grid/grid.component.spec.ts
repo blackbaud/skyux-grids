@@ -1015,7 +1015,6 @@ describe('Grid Component', () => {
         }
       ]);
 
-      tick();
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         expect(fixture.nativeElement).toBeAccessible();

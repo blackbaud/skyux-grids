@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/blackbaud/skyux-grids#readme",
   "peerDependencies": {
-    "@skyux/indicators": ">=3.0.0-rc.1"
+    "@skyux/list-builder": "^3.0.0-alpha.0",
+    "@skyux/indicators": "^3.0.0-rc.1"
   },
   "dependencies": {
     "dragula": "3.7.2",
@@ -45,6 +46,7 @@
     "@angular/router": "4.3.6",
     "@blackbaud/skyux": "2.26.0",
     "@blackbaud/skyux-builder": "1.24.0",
+    "@skyux/list-builder": "3.0.0-alpha.0",
     "@skyux/indicators": "3.0.0-rc.1",
     "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.0",
     "core-js": "2.4.1",
