@@ -451,7 +451,7 @@ describe('Grid Component', () => {
           expect(headerEl.querySelector('i')).toHaveCssClass('fa-caret-up');
         });
 
-        it('should have proper aria-sort labels', () => {
+        it('should have proper aria-sort labels', async(() => {
           let headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
           headerEl.click();
           fixture.detectChanges();
@@ -475,7 +475,7 @@ describe('Grid Component', () => {
           fixture.whenStable().then(() => {
             expect(fixture.nativeElement).toBeAccessible();
           });
-        });
+        }));
 
         it('should sort on enter or space press', () => {
           let headerEl = element.query(By.css('th[sky-cmp-id="column1"]'));
