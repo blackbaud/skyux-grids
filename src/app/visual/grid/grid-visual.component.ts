@@ -1,27 +1,16 @@
 import {
-  Component, ViewChildren, QueryList, ChangeDetectorRef, ViewChild
+  Component
 } from '@angular/core';
 
 import {
   ListItemModel
 } from '@skyux/list-builder/modules/list/state';
-import { SkyGridColumnComponent, SkyGridComponent } from '../../public';
 
 @Component({
   selector: 'grid-visual',
   templateUrl: './grid-visual.component.html'
 })
 export class GridVisualComponent {
-
-  constructor(private ref: ChangeDetectorRef) {
-
-  }
-
-  @ViewChildren(SkyGridColumnComponent)
-  public columns: QueryList<SkyGridColumnComponent>
-  @ViewChild(SkyGridComponent)
-  public grid: SkyGridComponent;
-  public selectedColumnIds: Array<string>;
 
   public highlightText: string;
 
@@ -37,13 +26,5 @@ export class GridVisualComponent {
 
   public triggerHighlight() {
     this.highlightText = 'e';
-  }
-
-  public hideColumn() {
-    this.selectedColumnIds = ['column1', 'column3'];
-  }
-
-  public showColumn() {
-    this.selectedColumnIds = ['column1', 'column2', 'column3'];
   }
 }

@@ -1,10 +1,5 @@
 <div id="screenshot-grid">
-  <sky-grid
-    fit="scroll"
-    [data]="items"
-    [highlightText]="highlightText"
-    [selectedColumnIds]="selectedColumnIds"
-  >
+  <sky-grid fit="scroll" [data]="items" [highlightText]="highlightText">
     <sky-grid-column field="column1" heading="Column1"></sky-grid-column>
     <sky-grid-column field="column2" heading="Column2"></sky-grid-column>
     <sky-grid-column field="column3" heading="Column3" [excludeFromHighlighting]="true"></sky-grid-column>
@@ -16,18 +11,4 @@
   (click)="triggerHighlight()"
 >
   Trigger Highlight
-</button>
-<button
-  id="hide-button"
-  class="sky-btn sky-btn-primary"
-  (click)="hideColumn()"
->
-  Hide Column 2
-</button>
-<button
-  id="show-button"
-  class="sky-btn sky-btn-primary"
-  (click)="showColumn()"
->
-  Show Column 2
 </button>
