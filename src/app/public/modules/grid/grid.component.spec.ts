@@ -150,6 +150,16 @@ function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]) 
     expect(isWithin(actualWidths[i], expectedWidths[i], 1)).toEqual(true);
   }
 }
+
+function showColumn2(fixture: ComponentFixture<any>) {
+  let button = fixture.debugElement.query(By.css('#show-column-button'));
+  button.nativeElement.click();
+}
+
+function hideColumn2(fixture: ComponentFixture<any>) {
+  let button = fixture.debugElement.query(By.css('#hide-column-button'));
+  button.nativeElement.click();
+}
 //#endregion
 
 describe('Grid Component', () => {
@@ -654,6 +664,36 @@ describe('Grid Component', () => {
           // Assert max value on input ranges was not changed.
           let expectedColumnInputs = getColumnResizeInputMaxValues(fixture);
           expect(initialMaxValues).toEqual(expectedColumnInputs);
+        }));
+
+        it('should reset table with when columns are hidden/shown', fakeAsync(() => {
+          // Get initial baseline for comparison.
+          let initialTableWidth = getTableWidth(fixture);
+          let initialColumnWidths = getColumnWidths(fixture);
+
+          // Resize first column and hide column two.
+          let resizeXDistance = 50;
+          resizeColumn(fixture, resizeXDistance, 0);
+          let tableWidthAfterResize = getTableWidth(fixture);
+          let columnWidthsAfterResize = getColumnWidths(fixture);
+
+          hideColumn2(fixture);
+
+          // Assert table was resized properly.
+          let newTableWidth = getTableWidth(fixture);
+          let newColumnWidths = getColumnWidths(fixture);
+
+          let expectedTableWidth = tableWidthAfterResize - newColumnWidths[1];
+          verifyWidthsMatch(expectedTableWidth, newTableWidth);
+
+          // let expectedColumnWidths = Object.assign(initialColumnWidths);
+          // expectedColumnWidths[0] = initialColumnWidths[0] + resizeXDistance;
+          // verifyWidthsMatch(initialTableWidth + resizeXDistance, newTableWidth);
+
+          console.log(component.columnWidthsChange);
+          // component.columnWidthsChange.forEach((cwc, index) => {
+          //   verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+          // });
         }));
       });
     });

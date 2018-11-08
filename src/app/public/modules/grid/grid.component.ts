@@ -185,6 +185,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       this.setDisplayedColumns();
       if (changes['selectedColumnIds'].previousValue !== changes['selectedColumnIds'].currentValue) {
         this.selectedColumnIdsChange.emit(this.selectedColumnIds);
+        this.resetTableWidth();
       }
     }
 
@@ -537,6 +538,15 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     this.activeResizeColumnIndex = clickTarget.getAttribute('sky-cmp-index');
     let column = this.getColumnModelByIndex(this.activeResizeColumnIndex);
     this.startColumnWidth = column.width;
+  }
+
+  private resetTableWidth() {
+    this.gridAdapter.setStyle(this.tableElementRef, 'width', `auto`);
+    this.ref.detectChanges();
+    this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
+    this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
+    this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
+    this.ref.detectChanges();
   }
 
   private getRangeInputByIndex(index: string | number) {
