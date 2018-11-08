@@ -136,6 +136,18 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
+.sky-grid-multiselect-cell {
+  padding: 0;
+  text-align: center;
+  width:38px;
+   ::ng-deep.sky-switch-control {
+    margin: 0 auto;
+  }
+}
+ .sky-grid-selected-row td {
+  background:$sky-background-color-selected;
+}
+
 .sky-grid-has-toolbar {
   .sky-grid-heading {
     border-top-width: 0px;

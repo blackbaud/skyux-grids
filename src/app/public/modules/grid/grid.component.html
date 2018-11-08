@@ -10,6 +10,16 @@
       [ngClass]="getTableClassNames()"
       #gridTable>
       <thead>
+          <th
+            class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
+            *ngIf="rowSelectId"
+          >
+          <sky-checkbox
+            [label]="'skyux_grid_select_all' | skyLibResources"
+            (change)="triggerMultiselectSelectAll($event)"
+            #multiselectSelectAll
+          ></sky-checkbox>
+        </th>
         <tr dragula="sky-grid-heading">
           <th
             scope="col"
@@ -73,7 +83,20 @@
         <tr
           class="sky-grid-row"
           *ngFor="let item of items"
-          [attr.sky-cmp-id]="item.id">
+          [attr.sky-cmp-id]="item.id"
+          [ngClass]="{ 'sky-grid-selected-row' : item.isSelected }"
+          >
+          <td
+            class="sky-grid-multiselect-cell sky-grid-header-locked"
+            *ngIf="rowSelectId"
+          >
+            <sky-checkbox
+              [label]="'skyux_grid_select_row' | skyLibResources"
+              (change)="onMultiselectChange()"
+              [(ngModel)]="item.isSelected"
+            >
+            </sky-checkbox>
+          </td>
           <td
             class="sky-grid-cell"
             *ngFor="let column of displayedColumns; let last = last; let i = index">

@@ -1,1 +1,10 @@
-{}
+{
+  "skyux_grid_select_all": {
+    "_description": "Label for the checkbox in a grid to select all items.",
+    "message": "Select all"
+  },
+  "skyux_grid_select_row": {
+    "_description": "Label for the checkbox in a grid to select a row.",
+    "message": "Select row"
+  }
+}

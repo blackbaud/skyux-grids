@@ -34,6 +34,10 @@ import {
 } from '@skyux/list-builder/modules/list/state';
 
 import {
+  SkyCheckboxComponent
+} from '@skyux/forms';
+
+import {
   SkyGridColumnComponent
 } from './grid-column.component';
 import {
@@ -45,7 +49,8 @@ import {
 
 import {
   SkyGridColumnHeadingModelChange,
-  SkyGridColumnWidthModelChange
+  SkyGridColumnWidthModelChange,
+  SkyGridSelectedRowsModelChange
 } from './types';
 
 let nextId = 0;
@@ -88,11 +93,17 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   @Input()
   public highlightText: string;
 
+  @Input()
+  public rowSelectId: string;
+
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
 
   @Output()
   public sortFieldChange = new EventEmitter<ListSortFieldSelectorModel>();
+
+  @Output()
+  public rowsSelected = new EventEmitter<SkyGridSelectedRowsModelChange>();
 
   @Output()
   public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
@@ -103,6 +114,9 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   @ContentChildren(SkyGridColumnComponent, { descendants: true })
   private columnComponents: QueryList<SkyGridColumnComponent>;
+
+  @ViewChild('multiselectSelectAll')
+  private multiselectSelectAll: SkyCheckboxComponent;
 
   private subscriptions: Subscription[] = [];
 
@@ -298,6 +312,23 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
      });
  }
 
+  public triggerMultiselectSelectAll(event: any) {
+    this.items.forEach(item => {
+      item.isSelected = event.checked;
+    });
+      // In cases where consumer has NOT subscribed to the emitter (rowsSelected),
+    // this timeout will keep the checkboxes from getting out of sync.
+    window.setTimeout(() => {
+      this.ref.detectChanges();
+    });
+    this.emitSelectedRows();
+  }
+
+  public onMultiselectChange() {
+    this.multiselectSelectAll.checked = false;
+    this.emitSelectedRows();
+  }
+
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
     const foundColumnModel = this.columns.find((column: SkyGridColumnModel) => {
       return (
@@ -424,7 +455,17 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   private transformData() {
     // Transform data into object with id and data properties
     if (this.data.length > 0 && this.data[0].id && !this.data[0].data) {
-      this.items = this.data.map(item => new ListItemModel(item.id, item));
+      // If multiselect is turned on, retain selections.
+      if (this.rowSelectId) {
+        this.items = this.data.map(item => {
+          let checked = this.getSelectedRows().indexOf(item.id) > -1;
+          // TODO: Update after isChecked property is added to ListItemModel
+          // return new ListItemModel(item.id, item, checked);
+          return new ListItemModel(item.id, item);
+        });
+      } else {
+        this.items = this.data.map(item => new ListItemModel(item.id, item));
+      }
     } else {
       this.items = this.data;
     }
@@ -563,5 +604,19 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   private addDelimeter(text: string[], delimiter: string) {
     return text.filter(val => val).join(delimiter);
+  }
+
+  private emitSelectedRows() {
+    let selectedRows: SkyGridSelectedRowsModelChange = {
+      selectedRowIds: this.getSelectedRows()
+    };
+    this.rowsSelected.emit(selectedRows);
+  }
+   private getSelectedRows() {
+    return this.items.filter(item => {
+      return item.isSelected;
+    }).map(item => {
+      return item.id;
+    });
   }
 }

@@ -7,14 +7,19 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import { SkyGridComponent } from '../grid.component';
-
 import {
   ListItemModel,
   ListSortFieldSelectorModel
 } from '@skyux/list-builder/modules/list/state';
 
-import { SkyGridColumnWidthModelChange } from '../types';
+import {
+  SkyGridComponent
+} from '../grid.component';
+
+import {
+  SkyGridColumnWidthModelChange,
+  SkyGridSelectedRowsModelChange
+} from '../types';
 
 const moment = require('moment');
 
@@ -39,6 +44,8 @@ export class GridTestComponent {
   public sortField: ListSortFieldSelectorModel;
   public columnWidthsChange: Array<SkyGridColumnWidthModelChange>;
   public fitType: string = 'scroll';
+  public rowSelectId: string;
+  public selectedRowsChange: SkyGridSelectedRowsModelChange;
 
   public selectedColumnIds: string[] = [
     'column1',
@@ -49,49 +56,56 @@ export class GridTestComponent {
   ];
 
   public data: any[] = [
-    new ListItemModel('1', {
+    {
+      id: '1',
       column1: '1',
       column2: 'Apple',
       column3: 1,
       column4: moment().add(1, 'minute')
-    }),
-    new ListItemModel('2', {
+    },
+    {
+      id: '2',
       column1: '01',
       column2: 'Banana',
       column3: 1,
       column4: moment().add(6, 'minute'),
       column5: 'test'
-    }),
-    new ListItemModel('3', {
+    },
+    {
+      id: '3',
       column1: '11',
       column2: 'Carrot',
       column3: 11,
       column4: moment().add(4, 'minute')
-    }),
-    new ListItemModel('4', {
+    },
+    {
+      id: '4',
       column1: '12',
       column2: 'Daikon',
       column3: 12,
       column4: moment().add(2, 'minute')
-    }),
-    new ListItemModel('5', {
+    },
+    {
+      id: '5',
       column1: '13',
       column2: 'Edamame',
       column3: 13,
       column4: moment().add(5, 'minute')
-    }),
-    new ListItemModel('6', {
+    },
+    {
+      id: '6',
       column1: '20',
       column2: 'Fig',
       column3: 20,
       column4: moment().add(3, 'minute')
-    }),
-    new ListItemModel('7', {
+    },
+    {
+      id: '7',
       column1: '21',
       column2: 'Grape',
       column3: 21,
       column4: moment().add(7, 'minute')
-    })
+    }
   ];
 
   public searchFunction: (data: any, searchText: string) => boolean =
@@ -102,10 +116,34 @@ export class GridTestComponent {
     }
 
   public onSort(sortSelector: ListSortFieldSelectorModel) {
-    this.activeSortSelector = sortSelector;
+    const sortField = sortSelector.fieldSelector;
+    const descending = sortSelector.descending;
+    this.data = this.data.sort((a: any, b: any) => {
+      let value1 = a[sortField];
+      let value2 = b[sortField];
+      if (value1 && typeof value1 === 'string') {
+        value1 = value1.toLowerCase();
+      }
+        if (value2 && typeof value2 === 'string') {
+        value2 = value2.toLowerCase();
+      }
+        if (value1 === value2) {
+        return 0;
+      }
+        let result = value1 > value2 ? 1 : -1;
+        if (descending) {
+        result *= -1;
+      }
+        return result;
+    }).slice();
+
   }
 
   public onResize(columnWidths: Array<SkyGridColumnWidthModelChange>) {
     this.columnWidthsChange = columnWidths;
   }
+
+  public onMultiselectChange(selectedRows: SkyGridSelectedRowsModelChange) {
+   this.selectedRowsChange = selectedRows;
+ }
 }
