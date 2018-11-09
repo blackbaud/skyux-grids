@@ -513,7 +513,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   private getColumnWidthModelChange() {
     let columnWidthModelChange = new Array<SkyGridColumnWidthModelChange>();
-    this.displayedColumns.forEach(column => {
+    this.columns.forEach(column => {
       columnWidthModelChange.push({
         id: column.id,
         field: column.field,
@@ -545,7 +545,6 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     this.ref.detectChanges();
     this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
     this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
-    this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
     this.ref.detectChanges();
   }
 

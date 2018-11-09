@@ -578,7 +578,9 @@ describe('Grid Component', () => {
           verifyWidthsMatch(initialTableWidth + resizeXDistance, newTableWidth);
           verifyAllWidthsMatch(expectedColumnWidths, newColumnWidths);
           component.columnWidthsChange.forEach((cwc, index) => {
-            verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            if (cwc.id.indexOf('hidden') === -1) {
+              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            }
           });
         }));
 
@@ -628,7 +630,9 @@ describe('Grid Component', () => {
             verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
             verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
             component.columnWidthsChange.forEach((cwc, index) => {
-              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              if (cwc.id.indexOf('hidden') === -1) {
+                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              }
             });
 
             // Decrease first column.
@@ -644,7 +648,9 @@ describe('Grid Component', () => {
             verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
             verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
             component.columnWidthsChange.forEach((cwc, index) => {
-              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              if (cwc.id.indexOf('hidden') === -1) {
+                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              }
             });
 
             // Run accessibility test.
@@ -666,34 +672,47 @@ describe('Grid Component', () => {
           expect(initialMaxValues).toEqual(expectedColumnInputs);
         }));
 
-        it('should reset table with when columns are hidden/shown', fakeAsync(() => {
+        it('should reset table width when columns are hidden/shown', fakeAsync(() => {
           // Get initial baseline for comparison.
           let initialTableWidth = getTableWidth(fixture);
-          let initialColumnWidths = getColumnWidths(fixture);
 
-          // Resize first column and hide column two.
+          // Resize first column.
           let resizeXDistance = 50;
           resizeColumn(fixture, resizeXDistance, 0);
-          let tableWidthAfterResize = getTableWidth(fixture);
-          let columnWidthsAfterResize = getColumnWidths(fixture);
 
+          // Hide column 2.
           hideColumn2(fixture);
+          fixture.detectChanges();
 
-          // Assert table was resized properly.
+          // Assert table width should be 50 additional pixels for resize of col2,
+          // and less 150 for the hidden column.
           let newTableWidth = getTableWidth(fixture);
-          let newColumnWidths = getColumnWidths(fixture);
-
-          let expectedTableWidth = tableWidthAfterResize - newColumnWidths[1];
+          let expectedTableWidth = initialTableWidth + 50 - 150;
           verifyWidthsMatch(expectedTableWidth, newTableWidth);
 
-          // let expectedColumnWidths = Object.assign(initialColumnWidths);
-          // expectedColumnWidths[0] = initialColumnWidths[0] + resizeXDistance;
-          // verifyWidthsMatch(initialTableWidth + resizeXDistance, newTableWidth);
+          // Show column 2.
+          showColumn2(fixture);
+          fixture.detectChanges();
 
-          console.log(component.columnWidthsChange);
-          // component.columnWidthsChange.forEach((cwc, index) => {
-          //   verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
-          // });
+          // Now that we've put col2 back, assert table width
+          // should be 50 additional pixels for resize of col2
+          newTableWidth = getTableWidth(fixture);
+          expectedTableWidth = initialTableWidth + 50;
+          verifyWidthsMatch(expectedTableWidth, newTableWidth);
+        }));
+
+        it('should properly emit column widths even when columns are hidden', fakeAsync(() => {
+          // Hide column 2.
+          hideColumn2(fixture);
+          fixture.detectChanges();
+
+          // Resize first column.
+          let resizeXDistance = 50;
+          resizeColumn(fixture, resizeXDistance, 0);
+
+          // Expect hidden column to be in emitted array.
+          let column2 = component.columnWidthsChange.find(cwc => cwc.id === 'column2');
+          expect(column2).not.toBeNull();
         }));
       });
     });
