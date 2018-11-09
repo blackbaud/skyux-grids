@@ -14,12 +14,6 @@ export class GridVisualComponent {
 
   public highlightText: string;
 
-  public selectedColumnIds: string[] = [
-    'column1',
-    'column2',
-    'column3'
-  ];
-
   public items = [
     new ListItemModel('1', { column1: '1', column2: 'Apple', column3: 'aa' }),
     new ListItemModel('2', { column1: '01', column2: 'Banana', column3: 'bb' }),
@@ -32,17 +26,5 @@ export class GridVisualComponent {
 
   public triggerHighlight() {
     this.highlightText = 'e';
-  }
-
-  public onColumnWidthsChange(data: any) {
-    console.log(data);
-  }
-
-  public hideColumn() {
-    this.selectedColumnIds = ['column1', 'column3'];
-  }
-
-  public showColumn() {
-    this.selectedColumnIds = ['column1', 'column2', 'column3'];
   }
 }
