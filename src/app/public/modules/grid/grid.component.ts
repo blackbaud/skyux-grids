@@ -47,6 +47,7 @@ import {
   SkyGridColumnHeadingModelChange,
   SkyGridColumnWidthModelChange
 } from './types';
+import { SkyWindowRefService } from '@skyux/core';
 
 let nextId = 0;
 
@@ -132,7 +133,8 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   constructor(
     private dragulaService: DragulaService,
     private ref: ChangeDetectorRef,
-    private gridAdapter: SkyGridAdapterService
+    private gridAdapter: SkyGridAdapterService,
+    private skyWindow: SkyWindowRefService
   ) {
     this.displayedColumns = new Array<SkyGridColumnModel>();
     this.items = new Array<any>();
@@ -541,11 +543,13 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   }
 
   private resetTableWidth() {
-    this.gridAdapter.setStyle(this.tableElementRef, 'width', `auto`);
-    this.ref.detectChanges();
-    this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
-    this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
-    this.ref.detectChanges();
+    this.skyWindow.getWindow().setTimeout(() => {
+      this.gridAdapter.setStyle(this.tableElementRef, 'width', `auto`);
+      this.ref.detectChanges();
+      this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
+      this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
+      this.ref.detectChanges();
+    });
   }
 
   private getRangeInputByIndex(index: string | number) {

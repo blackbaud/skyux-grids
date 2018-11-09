@@ -35,6 +35,7 @@ import {
   SkyGridComponent,
   SkyGridColumnModel
 } from './';
+import { SkyWindowRefService } from '@skyux/core';
 
 //#region helpers
 function getColumnHeader(id: string, element: DebugElement) {
@@ -174,6 +175,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       });
     }));
@@ -683,6 +687,7 @@ describe('Grid Component', () => {
           // Hide column 2.
           hideColumn2(fixture);
           fixture.detectChanges();
+          tick();
 
           // Assert table width should be 50 additional pixels for resize of col2,
           // and less 150 for the hidden column.
@@ -693,6 +698,7 @@ describe('Grid Component', () => {
           // Show column 2.
           showColumn2(fixture);
           fixture.detectChanges();
+          tick();
 
           // Now that we've put col2 back, assert table width
           // should be 50 additional pixels for resize of col2
@@ -705,6 +711,7 @@ describe('Grid Component', () => {
           // Hide column 2.
           hideColumn2(fixture);
           fixture.detectChanges();
+          tick();
 
           // Resize first column.
           let resizeXDistance = 50;
@@ -761,6 +768,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       });
     });
@@ -866,6 +876,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       });
 
@@ -1095,6 +1108,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       });
     }));
@@ -1182,6 +1198,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       });
 
@@ -1217,6 +1236,9 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
+        ],
+        providers: [
+          SkyWindowRefService
         ]
       }).compileComponents();
     }));
