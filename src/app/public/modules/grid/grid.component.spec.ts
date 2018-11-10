@@ -142,7 +142,7 @@ function isWithin(actual: number, base: number, distance: number) {
 }
 
 function verifyWidthsMatch(actual: number, expected: number) {
-  expect(isWithin(actual, expected, 2)).toEqual(true);
+  expect(isWithin(actual, expected, 5)).toEqual(true);
 }
 
 function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]) {
