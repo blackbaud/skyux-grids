@@ -35,7 +35,6 @@ import {
   SkyGridComponent,
   SkyGridColumnModel
 } from './';
-import { SkyWindowRefService } from '@skyux/core';
 
 //#region helpers
 function getColumnHeader(id: string, element: DebugElement) {
@@ -175,9 +174,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       });
     }));
@@ -768,9 +764,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       });
     });
@@ -876,9 +869,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       });
 
@@ -1108,9 +1098,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       });
     }));
@@ -1198,9 +1185,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       });
 
@@ -1236,9 +1220,6 @@ describe('Grid Component', () => {
         imports: [
           GridFixturesModule,
           SkyGridModule
-        ],
-        providers: [
-          SkyWindowRefService
         ]
       }).compileComponents();
     }));
