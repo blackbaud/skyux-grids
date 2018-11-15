@@ -9,11 +9,11 @@ import {
 
 import {
   ListItemModel
-} from '@skyux/list-builder-state/state/items/item.model';
+} from '@skyux/list-builder-common/state/items/item.model';
 
 import {
   ListSortFieldSelectorModel
-} from '@skyux/list-builder-state/state/sort/field-selector.model';
+} from '@skyux/list-builder-common/state/sort/field-selector.model';
 
 import { SkyGridComponent } from '../grid.component';
 
