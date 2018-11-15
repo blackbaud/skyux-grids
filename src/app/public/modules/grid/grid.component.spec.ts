@@ -149,7 +149,7 @@ function isWithin(actual: number, base: number, distance: number) {
 }
 
 function verifyWidthsMatch(actual: number, expected: number) {
-  expect(isWithin(actual, expected, 2)).toEqual(true);
+  expect(isWithin(actual, expected, 5)).toEqual(true);
 }
 
 function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]) {
@@ -157,6 +157,16 @@ function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]) 
   for (let i = 0; i < actualWidths.length; i++) {
     expect(isWithin(actualWidths[i], expectedWidths[i], 1)).toEqual(true);
   }
+}
+
+function showColumn2(fixture: ComponentFixture<any>) {
+  let button = fixture.debugElement.query(By.css('#show-column-button'));
+  button.nativeElement.click();
+}
+
+function hideColumn2(fixture: ComponentFixture<any>) {
+  let button = fixture.debugElement.query(By.css('#hide-column-button'));
+  button.nativeElement.click();
 }
 //#endregion
 
@@ -236,6 +246,16 @@ describe('Grid Component', () => {
             .toBe(row.column1);
           expect(getCell(row.id, 'hiddenCol2', element).nativeElement.textContent)
             .toBe(row.column1);
+        }
+      }
+    }
+
+    function verifyConsumerColumnWidthsAreMaintained() {
+      for (let i = 0; i < component.grid.displayedColumns.length; i ++) {
+        let col = component.grid.displayedColumns[i];
+        if (col.width) {
+          let colEl = element.queryAll(By.css('thead th'))[i];
+          verifyWidthsMatch(colEl.nativeElement.offsetWidth, col.width);
         }
       }
     }
@@ -400,6 +420,10 @@ describe('Grid Component', () => {
           component.searchText = '';
           component.searchedData = '';
         }
+      });
+
+      it('should maintain column width when provided by consumer', () => {
+        verifyConsumerColumnWidthsAreMaintained();
       });
 
       it('should pass accessibility', async(() => {
@@ -569,7 +593,9 @@ describe('Grid Component', () => {
           verifyWidthsMatch(initialTableWidth + resizeXDistance, newTableWidth);
           verifyAllWidthsMatch(expectedColumnWidths, newColumnWidths);
           component.columnWidthsChange.forEach((cwc, index) => {
-            verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            if (cwc.id.indexOf('hidden') === -1) {
+              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            }
           });
         }));
 
@@ -619,7 +645,9 @@ describe('Grid Component', () => {
             verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
             verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
             component.columnWidthsChange.forEach((cwc, index) => {
-              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              if (cwc.id.indexOf('hidden') === -1) {
+                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              }
             });
 
             // Decrease first column.
@@ -635,7 +663,9 @@ describe('Grid Component', () => {
             verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
             verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
             component.columnWidthsChange.forEach((cwc, index) => {
-              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              if (cwc.id.indexOf('hidden') === -1) {
+                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+              }
             });
 
             // Run accessibility test.
@@ -655,6 +685,52 @@ describe('Grid Component', () => {
           // Assert max value on input ranges was not changed.
           let expectedColumnInputs = getColumnResizeInputMaxValues(fixture);
           expect(initialMaxValues).toEqual(expectedColumnInputs);
+        }));
+
+        it('should reset table width when columns are hidden/shown', fakeAsync(() => {
+          // Get initial baseline for comparison.
+          let initialTableWidth = getTableWidth(fixture);
+
+          // Resize first column.
+          let resizeXDistance = 50;
+          resizeColumn(fixture, resizeXDistance, 0);
+
+          // Hide column 2.
+          hideColumn2(fixture);
+          fixture.detectChanges();
+          tick();
+
+          // Assert table width should be 50 additional pixels for resize of col2,
+          // and less 150 for the hidden column.
+          let newTableWidth = getTableWidth(fixture);
+          let expectedTableWidth = initialTableWidth + 50 - 150;
+          verifyWidthsMatch(expectedTableWidth, newTableWidth);
+
+          // Show column 2.
+          showColumn2(fixture);
+          fixture.detectChanges();
+          tick();
+
+          // Now that we've put col2 back, assert table width
+          // should be 50 additional pixels for resize of col2
+          newTableWidth = getTableWidth(fixture);
+          expectedTableWidth = initialTableWidth + 50;
+          verifyWidthsMatch(expectedTableWidth, newTableWidth);
+        }));
+
+        it('should properly emit column widths even when columns are hidden', fakeAsync(() => {
+          // Hide column 2.
+          hideColumn2(fixture);
+          fixture.detectChanges();
+          tick();
+
+          // Resize first column.
+          let resizeXDistance = 50;
+          resizeColumn(fixture, resizeXDistance, 0);
+
+          // Expect hidden column to be in emitted array.
+          let column2 = component.columnWidthsChange.find(cwc => cwc.id === 'column2');
+          expect(column2).not.toBeNull();
         }));
       });
     });
@@ -1289,7 +1365,7 @@ describe('Grid Component', () => {
     });
   });
 
-  describe('async headings', () => {
+  describe('async headings and descriptions', () => {
     let fixture: ComponentFixture<GridAsyncTestComponent>;
     let element: DebugElement;
 
@@ -1317,6 +1393,19 @@ describe('Grid Component', () => {
       tick();
 
       expect(getColumnHeader('column1', element).nativeElement.textContent.trim()).toBe('Column1');
+    }));
+
+    it('should handle async column headings', fakeAsync(() => {
+      fixture.detectChanges();
+
+      let col1 = fixture.componentInstance.grid.columns.find(col => col.id === 'column1');
+      expect(col1.description).toBe('');
+
+      tick(110); // wait for setTimeout
+      fixture.detectChanges();
+      tick();
+
+      expect(col1.description).toBe('Column1 Description');
     }));
   });
 });

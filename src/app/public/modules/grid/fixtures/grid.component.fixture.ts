@@ -102,7 +102,7 @@ export class GridTestComponent {
     {
       id: '7',
       column1: '21',
-      column2: 'Grape',
+      column2: 'Some long text that would provoke an overflow of monster proportions!',
       column3: 21,
       column4: moment().add(7, 'minute')
     }
@@ -144,6 +144,14 @@ export class GridTestComponent {
   }
 
   public onMultiselectChange(selectedRows: SkyGridSelectedRowsModelChange) {
-   this.selectedRowsChange = selectedRows;
- }
+    this.selectedRowsChange = selectedRows;
+  }
+
+  public hideColumn() {
+    this.selectedColumnIds = ['column1', 'column3', 'column4', 'column5'];
+  }
+
+  public showColumn() {
+    this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
+  }
 }
