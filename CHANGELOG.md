@@ -1,4 +1,4 @@
-# 3.0.0-rc.6 (2018-11-20)
+# 3.0.0-rc.2 (2018-11-20)
 
  - Fixed body cells from overflowing when consumer provides column width. [#13](https://github.com/blackbaud/skyux-grids/pull/13)
  - Added support for `@skyux/list-builder-common@3.0.0-rc.1`. [#14](https://github.com/blackbaud/skyux-grids/pull/14)
