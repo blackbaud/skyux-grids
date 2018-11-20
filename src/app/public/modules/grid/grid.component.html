@@ -10,7 +10,7 @@
       [ngClass]="getTableClassNames()"
       #gridTable>
       <thead>
-          <th
+          <!-- <th
             class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
             *ngIf="rowSelectId"
           >
@@ -19,8 +19,13 @@
             (change)="triggerMultiselectSelectAll($event)"
             #multiselectSelectAll
           ></sky-checkbox>
-        </th>
+        </th> -->
         <tr dragula="sky-grid-heading">
+          <th *ngIf="rowSelectId"
+            class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
+            [style.width.px]="minColWidth"
+          >
+        </th>
           <th
             scope="col"
             class="sky-grid-heading sky-field-label"
@@ -89,6 +94,7 @@
           <td
             class="sky-grid-multiselect-cell sky-grid-header-locked"
             *ngIf="rowSelectId"
+            [style.width.px]="minColWidth"
           >
             <sky-checkbox
               [label]="'skyux_grid_select_row' | skyLibResources"

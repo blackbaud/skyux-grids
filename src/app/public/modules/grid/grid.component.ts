@@ -29,13 +29,12 @@ import {
 } from 'ng2-dragula/ng2-dragula';
 
 import {
-  ListItemModel,
-  ListSortFieldSelectorModel
-} from '@skyux/list-builder/modules/list/state';
+  ListItemModel
+} from '@skyux/list-builder-common/state/items/item.model';
 
 import {
-  SkyCheckboxComponent
-} from '@skyux/forms';
+  ListSortFieldSelectorModel
+} from '@skyux/list-builder-common/state/sort/field-selector.model';
 
 import {
   SkyGridColumnComponent
@@ -116,9 +115,6 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   @ContentChildren(SkyGridColumnComponent, { descendants: true })
   private columnComponents: QueryList<SkyGridColumnComponent>;
-
-  @ViewChild('multiselectSelectAll')
-  private multiselectSelectAll: SkyCheckboxComponent;
 
   private subscriptions: Subscription[] = [];
 
@@ -322,20 +318,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
      });
  }
 
-  public triggerMultiselectSelectAll(event: any) {
-    this.items.forEach(item => {
-      item.isSelected = event.checked;
-    });
-      // In cases where consumer has NOT subscribed to the emitter (rowsSelected),
-    // this timeout will keep the checkboxes from getting out of sync.
-    window.setTimeout(() => {
-      this.ref.detectChanges();
-    });
-    this.emitSelectedRows();
-  }
-
   public onMultiselectChange() {
-    this.multiselectSelectAll.checked = false;
     this.emitSelectedRows();
   }
 
@@ -484,9 +467,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       if (this.rowSelectId) {
         this.items = this.data.map(item => {
           let checked = this.getSelectedRows().indexOf(item.id) > -1;
-          // TODO: Update after isChecked property is added to ListItemModel
-          // return new ListItemModel(item.id, item, checked);
-          return new ListItemModel(item.id, item);
+          return new ListItemModel(item.id, item, checked);
         });
       } else {
         this.items = this.data.map(item => new ListItemModel(item.id, item));
@@ -647,7 +628,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     };
     this.rowsSelected.emit(selectedRows);
   }
-   private getSelectedRows() {
+  private getSelectedRows() {
     return this.items.filter(item => {
       return item.isSelected;
     }).map(item => {

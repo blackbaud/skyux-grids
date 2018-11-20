@@ -144,6 +144,10 @@ $sky-grid-resize-handle-width: 5px;
     margin: 0 auto;
   }
 }
+
+th.sky-grid-multiselect-cell {
+  cursor: default;
+}
  .sky-grid-selected-row td {
   background:$sky-background-color-selected;
 }

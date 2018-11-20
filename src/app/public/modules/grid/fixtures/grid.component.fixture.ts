@@ -8,9 +8,8 @@ import {
 } from '@angular/core';
 
 import {
-  ListItemModel,
   ListSortFieldSelectorModel
-} from '@skyux/list-builder/modules/list/state';
+} from '@skyux/list-builder-common/state/sort/field-selector.model';
 
 import {
   SkyGridComponent
@@ -116,6 +115,7 @@ export class GridTestComponent {
     }
 
   public onSort(sortSelector: ListSortFieldSelectorModel) {
+    this.activeSortSelector = sortSelector;
     const sortField = sortSelector.fieldSelector;
     const descending = sortSelector.descending;
     this.data = this.data.sort((a: any, b: any) => {

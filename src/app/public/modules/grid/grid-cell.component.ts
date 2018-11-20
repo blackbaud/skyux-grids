@@ -10,10 +10,11 @@ import {
 
 import {
   getData
-} from '@skyux/list-builder/modules/list/helpers';
+} from '@skyux/list-builder-common/helpers';
+
 import {
   ListItemModel
-} from '@skyux/list-builder/modules/list/state';
+} from '@skyux/list-builder-common/state/items/item.model';
 
 @Component({
   selector: 'sky-grid-cell',
