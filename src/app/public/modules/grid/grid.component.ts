@@ -29,12 +29,9 @@ import {
 } from 'ng2-dragula/ng2-dragula';
 
 import {
-  ListItemModel
-} from '@skyux/list-builder-common/state/items/item.model';
-
-import {
+  ListItemModel,
   ListSortFieldSelectorModel
-} from '@skyux/list-builder-common/state/sort/field-selector.model';
+} from '@skyux/list-builder-common';
 
 import {
   SkyGridColumnComponent
