@@ -49,13 +49,6 @@ function getCell(rowId: string, columnId: string, element: DebugElement) {
   );
 }
 
-function makeEvent(eventType: string, evtObj: any) {
-  let evt = document.createEvent('MouseEvents');
-  evt.initMouseEvent(eventType, false, false, window, 0, 0, 0, evtObj.clientX,
-    0, false, false, false, false, 0, undefined);
-  document.dispatchEvent(evt);
-}
-
 function getElementCords(elementRef: any) {
   const rect = (elementRef.nativeElement as HTMLElement).getBoundingClientRect();
   const coords = {
@@ -107,9 +100,15 @@ function resizeColumn(fixture: ComponentFixture<any>, deltaX: number, columnInde
   resizeHandles[columnIndex].triggerEventHandler('mousedown', event);
   fixture.detectChanges();
 
-  makeEvent('mousemove', { clientX: axis.x + deltaX });
+  let evt = document.createEvent('MouseEvents');
+  evt.initMouseEvent('mousemove', false, false, window, 0, 0, 0, axis.x + deltaX,
+    0, false, false, false, false, 0, undefined);
+  document.dispatchEvent(evt);
   fixture.detectChanges();
-  makeEvent('mouseup', { clientX: axis.x + deltaX });
+  evt = document.createEvent('MouseEvents');
+  evt.initMouseEvent('mouseup', false, false, window, 0, 0, 0, axis.x + deltaX,
+    0, false, false, false, false, 0, undefined);
+  document.dispatchEvent(evt);
   fixture.detectChanges();
 }
 
