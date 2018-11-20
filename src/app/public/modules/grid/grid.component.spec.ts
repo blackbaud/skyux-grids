@@ -437,9 +437,8 @@ describe('Grid Component', () => {
           let headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
           let skyIcon = headerEl.querySelector('sky-icon') as HTMLElement;
           expect(skyIcon.style.visibility).toBe('hidden');
-          let evt = document.createEvent('MouseEvents');
-          evt.initEvent('mouseup', false, false);
-          headerEl.dispatchEvent(evt);
+          SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+            { bubbles: false, cancelable: false });
           fixture.detectChanges();
 
           headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
@@ -448,9 +447,8 @@ describe('Grid Component', () => {
           expect(headerEl.querySelector('i')).toHaveCssClass('fa-caret-down');
           expect(skyIcon.style.visibility).toBe('visible');
 
-          evt = document.createEvent('MouseEvents');
-          evt.initEvent('mouseup', false, false);
-          headerEl.dispatchEvent(evt);
+          SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+            { bubbles: false, cancelable: false });
           fixture.detectChanges();
 
           headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
@@ -462,9 +460,8 @@ describe('Grid Component', () => {
 
         it('should not respond to click when the appropriate column option is set', () => {
           let headerEl = nativeElement.querySelectorAll('th').item(1) as HTMLElement;
-          let evt = document.createEvent('MouseEvents');
-          evt.initEvent('mouseup', false, false);
-          headerEl.dispatchEvent(evt);
+          SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+            { bubbles: false, cancelable: false });
           fixture.detectChanges();
 
           headerEl = nativeElement.querySelectorAll('th').item(1) as HTMLElement;
@@ -487,17 +484,15 @@ describe('Grid Component', () => {
 
         it('should have proper aria-sort labels', async(() => {
           let headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
-          let evt = document.createEvent('MouseEvents');
-          evt.initEvent('mouseup', false, false);
-          headerEl.dispatchEvent(evt);
+          SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+            { bubbles: false, cancelable: false });
           fixture.detectChanges();
 
           headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
           expect(headerEl.getAttribute('aria-sort')).toBe('descending');
 
-          evt = document.createEvent('MouseEvents');
-          evt.initEvent('mouseup', false, false);
-          headerEl.dispatchEvent(evt);
+          SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+            { bubbles: false, cancelable: false });
           fixture.detectChanges();
 
           headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
