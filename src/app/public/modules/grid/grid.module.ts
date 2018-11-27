@@ -46,8 +46,7 @@ import {
     DragulaModule,
     FormsModule,
     SkyCheckboxModule,
-    SkyGridsResourcesModule,
-    SkyTextHighlightModule
+    SkyGridsResourcesModule
   ],
   exports: [
     SkyGridComponent,

@@ -628,6 +628,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     };
     this.rowsSelected.emit(selectedRows);
   }
+
   private getSelectedRows() {
     return this.items.filter(item => {
       return item.isSelected;
