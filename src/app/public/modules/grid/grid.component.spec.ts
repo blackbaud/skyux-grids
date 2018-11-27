@@ -901,61 +901,78 @@ describe('Grid Component', () => {
     describe('Standard setup', () => {
       it('should add checkboxes properly to grid, with proper accessibility attributes', () => {
         const checkboxes = getMultiselectInputs();
+
         expect(checkboxes).not.toBeNull();
         expect(checkboxes.length).toEqual(component.data.length);
         checkboxes.forEach(checkbox => {
           expect(checkbox.nativeElement.getAttribute('aria-label')).not.toBeNull();
         });
       });
+
       it('should set the multiselect column to the minimum width', () => {
         let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
 
         verifyWidthsMatch(headerEl.offsetWidth, parseInt(minColWidth, 10));
       });
+
       it('should toggle selected classes properly when checked', () => {
         const checkboxes = getMultiselectInputs();
         const tableRows = getTableRows(fixture);
-          // Start with no class.
+
+        // Start with no class.
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
-          // Check to add class.
+
+        // Check to add class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
+
         expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
-          // Uncheck to remove class.
+
+        // Uncheck to remove class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
+
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
       });
+
       it('should emit a change when checkboxes are checked', fakeAsync(() => {
         const inputs = getMultiselectInputs();
-         // Nothing should have been emitted yet.
+
+        // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
-         // Check 1,2,5.
+
+        // Check 1,2,5.
         inputs[0].nativeElement.click();
         inputs[1].nativeElement.click();
         inputs[4].nativeElement.click();
         fixture.detectChanges();
-         // Expect the emitter to send us 1,2,5.
+
+        // Expect the emitter to send us 1,2,5.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: [ '1', '2', '5' ]
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
+
       it('should retain checked items when sorting', () => {
         const inputs = getMultiselectInputs();
         const tableRows = getTableRows(fixture);
-         // Nothing should have been emitted yet.
+
+        // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
-         // Check 1,2,5.
+
+        // Check 1,2,5.
         inputs[0].nativeElement.click();
         inputs[1].nativeElement.click();
         inputs[4].nativeElement.click();
         fixture.detectChanges();
-         // Sort by one of the columns.
+
+        // Sort by one of the columns.
         const tableHeader = getColumnHeader('column1', element);
         tableHeader.nativeElement.click();
         fixture.detectChanges();
-         // Make sure only the above 3 rows are checked.
+
+        // Expect only the above 3 rows are checked.
         tableRows.forEach(row => {
           let id = row.nativeElement.getAttribute('sky-cmp-id');
           if (id === '1' || id === '2' || id === '5') {
@@ -965,6 +982,7 @@ describe('Grid Component', () => {
           }
         });
       });
+
       it('should not be sortable when clicking on multiselect column', () => {
         let sortSpy = spyOn(component, 'onSort');
         let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
