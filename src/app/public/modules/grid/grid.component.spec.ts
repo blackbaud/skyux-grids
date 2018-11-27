@@ -433,7 +433,7 @@ describe('Grid Component', () => {
       }));
 
       describe('sorting', () => {
-        fit('adds appropriate icons and styles, and emits event on click to headers', () => {
+        it('adds appropriate icons and styles, and emits event on click to headers', () => {
           let headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
           let skyIcon = headerEl.querySelector('sky-icon') as HTMLElement;
           expect(skyIcon.style.visibility).toBe('hidden');
@@ -510,7 +510,7 @@ describe('Grid Component', () => {
           });
         }));
 
-        xit('should sort on enter or space press', () => {
+        it('should sort on enter or space press', () => {
           let headerEl = element.query(By.css('th[sky-cmp-id="column1"]'));
           headerEl.triggerEventHandler('keydown', { key: 'Enter' });
           fixture.detectChanges();
@@ -898,72 +898,30 @@ describe('Grid Component', () => {
      function getMultiselectInputs() {
       return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
     }
-     function getMultiselectSelectAll() {
-      return fixture.debugElement.query(By.css('thead .sky-grid-multiselect-cell sky-checkbox input'));
-    }
      describe('Standard setup', () => {
-      xit('should add checkboxes properly to grid, with proper accessibility attributes', () => {
-        const selectAll = getMultiselectSelectAll();
+      it('should add checkboxes properly to grid, with proper accessibility attributes', () => {
         const checkboxes = getMultiselectInputs();
-         expect(selectAll).not.toBeNull();
         expect(checkboxes).not.toBeNull();
         expect(checkboxes.length).toEqual(component.data.length);
-        expect(selectAll.nativeElement.getAttribute('aria-label')).not.toBeNull();
         checkboxes.forEach(checkbox => {
           expect(checkbox.nativeElement.getAttribute('aria-label')).not.toBeNull();
         });
       });
-       it('should toggle selected classes properly when checked', () => {
+      it('should toggle selected classes properly when checked', () => {
         const checkboxes = getMultiselectInputs();
         const tableRows = getTableRows(fixture);
-         // Start with no class.
+          // Start with no class.
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
-         // Check to add class.
+          // Check to add class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
         expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
-         // Uncheck to remove class.
+          // Uncheck to remove class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
       });
-       xit('should select/deselect all when the top checkbox is checked/unchecked', fakeAsync(() => {
-        const selectAll = getMultiselectSelectAll();
-         // Start with all checkboxes to have an undefined isSelected state.
-        component.grid.items.forEach(item => {
-          expect(item.isSelected).toBe(false);
-        });
-         // Check the "select all" checkbox.
-        selectAll.nativeElement.click();
-        tick(110); // wait for setTimeout
-        fixture.detectChanges();
-         // Expect all checkboxes to be selected.
-        component.grid.items.forEach(item => {
-          expect(item.isSelected).toEqual(true);
-        });
-         // Check the "select all" checkbox.
-        selectAll.nativeElement.click();
-        tick(110); // wait for setTimeout
-        fixture.detectChanges();
-         // Expect all checkboxes to NOT be selected.
-        component.grid.items.forEach(item => {
-          expect(item.isSelected).toEqual(false);
-        });
-      }));
-       xit('should unselect the select all checkbox when not all checkboxes are checked', () => {
-        const selectAll = getMultiselectSelectAll();
-        const inputs = getMultiselectInputs();
-         // Check the "select all" checkbox.
-        selectAll.nativeElement.click();
-        fixture.detectChanges();
-         // Unselect a multiselect checkbox.
-        inputs[0].nativeElement.click();
-        fixture.detectChanges();
-         // Expect "Select All" checkbox to be unchecked.
-        expect(selectAll.nativeElement.checked).toBe(false);
-      });
-       xit('should emit a change when checkboxes are checked', fakeAsync(() => {
-        const selectAll = getMultiselectSelectAll();
+      it('should emit a change when checkboxes are checked', fakeAsync(() => {
         const inputs = getMultiselectInputs();
          // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
@@ -977,17 +935,8 @@ describe('Grid Component', () => {
           selectedRowIds: [ '1', '2', '5' ]
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
-         // Select all.
-        selectAll.nativeElement.click();
-        tick(110); // wait for setTimeout
-        fixture.detectChanges();
-         // Expect the emitter to send us EVERYTHING.
-        expectedRows = {
-          selectedRowIds: [ '1', '2', '3', '4', '5', '6', '7' ]
-        };
-        expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
-       it('should retain checked items when sorting', () => {
+      it('should retain checked items when sorting', () => {
         const inputs = getMultiselectInputs();
         const tableRows = getTableRows(fixture);
          // Nothing should have been emitted yet.
