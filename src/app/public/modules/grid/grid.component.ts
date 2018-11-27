@@ -50,17 +50,24 @@ import {
 } from './types';
 import { SkyWindowRefService } from '@skyux/core';
 
+import {
+  skyAnimationHighlight
+} from '@skyux/animations';
+
 let nextId = 0;
 
 @Component({
   selector: 'sky-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  viewProviders: [ DragulaService ],
+  viewProviders: [DragulaService],
   providers: [
     SkyGridAdapterService
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    skyAnimationHighlight
+  ]
 })
 export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input()
@@ -89,6 +96,15 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   @Input()
   public highlightText: string;
+
+  @Input()
+  public hyperlinkedColumn: string;
+
+  @Input()
+  public highlightRowCondition = ((x: any) => false);
+
+  @Output()
+  public hyperlinkedColumnClick = new EventEmitter<SkyGridColumnModel>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -205,6 +221,10 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     if (changes['sortField']) {
       this.setSortHeaders();
     }
+
+    if (changes['highlightRowCondition']) {
+      this.highlightRowData();
+    }
   }
 
   public ngOnDestroy() {
@@ -262,23 +282,23 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   public sortByColumn(column: SkyGridColumnModel) {
     if (!this.isDraggingResizeHandle && column.isSortable) {
       this.currentSortField
-      .take(1)
-      .map(field => {
-        let selector = {
-          fieldSelector: column.field,
-          descending: true
-        };
-
-        if (field && field.fieldSelector === column.field && field.descending) {
-          selector = {
+        .take(1)
+        .map(field => {
+          let selector = {
             fieldSelector: column.field,
-            descending: false
+            descending: true
           };
-        }
-        this.sortFieldChange.emit(selector);
-        this.currentSortField.next(selector);
-      })
-      .subscribe();
+
+          if (field && field.fieldSelector === column.field && field.descending) {
+            selector = {
+              fieldSelector: column.field,
+              descending: false
+            };
+          }
+          this.sortFieldChange.emit(selector);
+          this.currentSortField.next(selector);
+        })
+        .subscribe();
     }
   }
 
@@ -295,18 +315,18 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     return this.currentSortField
       .distinctUntilChanged()
       .map(field => {
-      return field.fieldSelector === column.field ?
-        (field.descending ? 'descending' : 'ascending') : (column.isSortable ? 'none' : undefined);
-    });
+        return field.fieldSelector === column.field ?
+          (field.descending ? 'descending' : 'ascending') : (column.isSortable ? 'none' : undefined);
+      });
   }
 
   public getCaretVisibility(columnField: string): Observable<string> {
-   return this.currentSortField
-     .distinctUntilChanged()
-     .map(field => {
-       return field.fieldSelector === columnField ? 'visible' : 'hidden';
-     });
- }
+    return this.currentSortField
+      .distinctUntilChanged()
+      .map(field => {
+        return field.fieldSelector === columnField ? 'visible' : 'hidden';
+      });
+  }
 
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
     const foundColumnModel = this.columns.find((column: SkyGridColumnModel) => {
@@ -376,6 +396,14 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     let newValue = Number(input.value);
     let deltaX = newValue - this.startColumnWidth;
     this.resizeColumnByIndex(this.activeResizeColumnIndex, newValue, deltaX);
+  }
+
+  public hyperlinkedColumnClicked(column: SkyGridColumnModel) {
+    this.hyperlinkedColumnClick.emit(column);
+  }
+
+  public highlightRow(dataRow: any): string {
+    return this.highlightRowCondition(dataRow) ? 'highlight' : '';
   }
 
   @HostListener('document:mousemove', ['$event'])
@@ -457,6 +485,10 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   private setSortHeaders() {
     this.currentSortField.next(this.sortField || { fieldSelector: '', descending: false });
+  }
+
+  private highlightRowData() {
+    this.ref.markForCheck();
   }
 
   private getColumnsFromComponent() {
