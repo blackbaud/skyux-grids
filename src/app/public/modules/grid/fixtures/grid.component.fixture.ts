@@ -9,7 +9,7 @@ import {
 
 import {
   ListSortFieldSelectorModel
-} from '@skyux/list-builder-common/state/sort/field-selector.model';
+} from '@skyux/list-builder-common';
 
 import {
   SkyGridComponent
