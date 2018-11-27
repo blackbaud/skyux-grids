@@ -16,11 +16,6 @@
             [style.max-width.px]="minColWidth"
             [style.width.px]="minColWidth"
           >
-            <!-- <div
-              [style.max-width.px]="minColWidth"
-              [style.width.px]="minColWidth"
-            >
-            </div> -->
           </th>
           <th
             scope="col"
@@ -87,18 +82,20 @@
           [attr.sky-cmp-id]="item.id"
           [ngClass]="{ 'sky-grid-selected-row' : item.isSelected }"
         >
-          <td
+          <td *ngIf="rowSelectId"
             class="sky-grid-multiselect-cell sky-grid-header-locked"
-            *ngIf="rowSelectId"
-            [style.max-width.px]="minColWidth"
-            [style.width.px]="minColWidth"
           >
-            <sky-checkbox
-              [label]="'skyux_grid_select_row' | skyLibResources"
-              (change)="onMultiselectChange()"
-              [(ngModel)]="item.isSelected"
+            <div
+              [style.max-width.px]="minColWidth"
+              [style.width.px]="minColWidth"
             >
-            </sky-checkbox>
+              <sky-checkbox
+                [label]="'skyux_grid_select_row' | skyLibResources"
+                (change)="onMultiselectChange()"
+                [(ngModel)]="item.isSelected"
+              >
+              </sky-checkbox>
+            </div>
           </td>
           <td
             class="sky-grid-cell"
