@@ -879,7 +879,7 @@ describe('Grid Component', () => {
     let fixture: ComponentFixture<GridTestComponent>,
         component: GridTestComponent,
         element: DebugElement;
-     beforeEach(() => {
+    beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
           GridFixturesModule,
@@ -887,7 +887,7 @@ describe('Grid Component', () => {
         ]
       });
     });
-     beforeEach(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(GridTestComponent);
       component = fixture.componentInstance;
       component.rowSelectId = 'id';
@@ -895,10 +895,10 @@ describe('Grid Component', () => {
       fixture.detectChanges();
       fixture.detectChanges();
     });
-     function getMultiselectInputs() {
+    function getMultiselectInputs() {
       return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
     }
-     describe('Standard setup', () => {
+    describe('Standard setup', () => {
       it('should add checkboxes properly to grid, with proper accessibility attributes', () => {
         const checkboxes = getMultiselectInputs();
         expect(checkboxes).not.toBeNull();
@@ -959,6 +959,15 @@ describe('Grid Component', () => {
             expect(row.query(By.css('input')).nativeElement.checked).toBe(false);
           }
         });
+      });
+      it('should not be sortable when clicking on multiselect column', () => {
+        let sortSpy = spyOn(component, 'onSort');
+        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
+        SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
+          { bubbles: false, cancelable: false });
+        fixture.detectChanges();
+
+        expect(sortSpy).not.toHaveBeenCalled();
       });
     });
   });

@@ -115,6 +115,8 @@ export class GridTestComponent {
     }
 
   public onSort(sortSelector: ListSortFieldSelectorModel) {
+    console.log('sortSelector');
+
     this.activeSortSelector = sortSelector;
     const sortField = sortSelector.fieldSelector;
     const descending = sortSelector.descending;
