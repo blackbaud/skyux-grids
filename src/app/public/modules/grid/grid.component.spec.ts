@@ -167,6 +167,9 @@ function hideColumn2(fixture: ComponentFixture<any>) {
   let button = fixture.debugElement.query(By.css('#hide-column-button'));
   button.nativeElement.click();
 }
+
+const minColWidth = '50';
+const maxColWidth = '9999';
 //#endregion
 
 describe('Grid Component', () => {
@@ -545,9 +548,6 @@ describe('Grid Component', () => {
 
       describe('Resiazable columns', () => {
 
-        let minColWidth = '50';
-        let maxColWidth = '9999';
-
         it('should not resize if user does not use resize handle', fakeAsync(() => {
           // Get initial baseline for comparison.
           let initialTableWidth = getTableWidth(fixture);
@@ -906,6 +906,11 @@ describe('Grid Component', () => {
         checkboxes.forEach(checkbox => {
           expect(checkbox.nativeElement.getAttribute('aria-label')).not.toBeNull();
         });
+      });
+      it('should set the multiselect column to the minimum width', () => {
+        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
+
+        verifyWidthsMatch(headerEl.offsetWidth, parseInt(minColWidth, 10));
       });
       it('should toggle selected classes properly when checked', () => {
         const checkboxes = getMultiselectInputs();
