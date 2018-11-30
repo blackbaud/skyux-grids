@@ -992,6 +992,34 @@ describe('Grid Component', () => {
 
         expect(sortSpy).not.toHaveBeenCalled();
       });
+
+      it('should properly update isSelected when selectAllMultiselect/clearAllMultiselect are called', () => {
+        const checkboxes = getMultiselectInputs();
+        const tableRows = getTableRows(fixture);
+
+        // Start with no class.
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+
+        // Select all.
+        component.selectAll();
+        fixture.detectChanges();
+
+        for (let i = 0; i < checkboxes.length; i++) {
+          expect(component.data[i].isSelected = true);
+          expect(checkboxes[i].nativeElement.checked = true);
+          expect(tableRows[i].nativeElement).toHaveCssClass('sky-grid-selected-row');
+        }
+
+        // Clear all.
+        component.clearAll();
+        fixture.detectChanges();
+
+        for (let i = 0; i < checkboxes.length; i++) {
+          expect(component.data[i].isSelected = false);
+          expect(checkboxes[i].nativeElement.checked = false);
+          expect(tableRows[i].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        }
+      });
     });
   });
 

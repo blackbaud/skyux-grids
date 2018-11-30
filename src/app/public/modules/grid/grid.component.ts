@@ -431,6 +431,20 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
   }
 
+  public selectAllMultiselect() {
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].isSelected = true;
+    }
+    this.ref.markForCheck();
+  }
+
+  public clearAllMultiselect() {
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].isSelected = false;
+    }
+    this.ref.markForCheck();
+  }
+
   private onHeaderDrop(newColumnIds: Array<string>) {
     // update selected columnIds
     this.selectedColumnIds = newColumnIds;
