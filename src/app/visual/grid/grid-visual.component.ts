@@ -3,16 +3,9 @@ import {
 } from '@angular/core';
 
 import {
-  ListItemModel
-} from '@skyux/list-builder-common/state/items/item.model';
-
-import {
+  ListItemModel,
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
-
-import {
-  SkyGridSelectedRowsModelChange
-} from '../../public';
 
 @Component({
   selector: 'grid-visual',
@@ -64,9 +57,5 @@ export class GridVisualComponent {
 
   public triggerHighlight() {
     this.highlightText = 'e';
-  }
-
-  public rowsSelected(data: SkyGridSelectedRowsModelChange) {
-    console.log(data);
   }
 }
