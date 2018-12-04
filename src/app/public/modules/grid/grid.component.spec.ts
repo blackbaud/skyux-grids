@@ -890,8 +890,8 @@ describe('Grid Component', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(GridTestComponent);
       component = fixture.componentInstance;
-      component.rowSelectId = 'id';
       element = fixture.debugElement as DebugElement;
+      component.rowSelectId = 'id';
       fixture.detectChanges();
       fixture.detectChanges();
     });
@@ -948,6 +948,64 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         // Expect the emitter to send us 1,2,5.
+        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // In this example, 'id'.
+        let expectedRows: SkyGridSelectedRowsModelChange = {
+          selectedRowIds: [ '1', '2', '5' ]
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
+      }));
+
+      it('should emit a change when checkboxes are checked, based on a custom rowSelectId', fakeAsync(() => {
+        fixture = TestBed.createComponent(GridTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement as DebugElement;
+        component.rowSelectId = 'customId';
+        fixture.detectChanges();
+        fixture.detectChanges();
+
+        const inputs = getMultiselectInputs();
+
+        // Nothing should have been emitted yet.
+        expect(component.selectedRowsChange).toBeUndefined();
+
+        // Check 1,2,5.
+        inputs[0].nativeElement.click();
+        inputs[1].nativeElement.click();
+        inputs[4].nativeElement.click();
+        fixture.detectChanges();
+
+        // Expect the emitter to send us 1,2,5.
+        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // In this example, 'customId'.
+        let expectedRows: SkyGridSelectedRowsModelChange = {
+          selectedRowIds: [ '101', '102', '105' ]
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
+      }));
+
+      it('should fall back to id property when rowSelectId property doesnt exist', fakeAsync(() => {
+        fixture = TestBed.createComponent(GridTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement as DebugElement;
+        component.rowSelectId = 'foobar';
+        fixture.detectChanges();
+        fixture.detectChanges();
+
+        const inputs = getMultiselectInputs();
+
+        // Nothing should have been emitted yet.
+        expect(component.selectedRowsChange).toBeUndefined();
+
+        // Check 1,2,5.
+        inputs[0].nativeElement.click();
+        inputs[1].nativeElement.click();
+        inputs[4].nativeElement.click();
+        fixture.detectChanges();
+
+        // Expect the emitter to send us 1,2,5.
+        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // In this example, there is no match so it should fall back to the 'id' property.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: [ '1', '2', '5' ]
         };

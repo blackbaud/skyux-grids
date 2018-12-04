@@ -36,9 +36,8 @@
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud/skyux": "2.28.1",
-    "@blackbaud/skyux-builder": "1.28.0",
-    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5",
-    "@skyux/list-builder-common": "3.0.0-rc.1"
+    "@blackbaud/skyux": "2.31.0",
+    "@blackbaud/skyux-builder": "1.30.0",
+    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5"
   }
 }

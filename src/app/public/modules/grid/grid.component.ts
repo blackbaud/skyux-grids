@@ -647,6 +647,9 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     return this.items.filter(item => {
       return item.isSelected;
     }).map(item => {
+      if (item.data.hasOwnProperty(this.rowSelectId)) {
+        return item.data[this.rowSelectId];
+      }
       return item.id;
     });
   }
