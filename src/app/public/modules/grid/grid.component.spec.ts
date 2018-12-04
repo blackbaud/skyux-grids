@@ -935,6 +935,38 @@ describe('Grid Component', () => {
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
       });
 
+      it('should select checkbox when clicking on row', async(() => {
+        const checkboxes = getMultiselectInputs();
+        const tableRows = getTableRows(fixture);
+
+        // Start unchecked.
+        expect(checkboxes[0].nativeElement.checked).toBe(false);
+
+        // Check to add class.
+        tableRows[0].nativeElement.click();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          // Start unchecked.
+          expect(checkboxes[0].nativeElement.checked).toBe(true);
+          expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
+
+          // Uncheck to remove class.
+          tableRows[0].nativeElement.click();
+          fixture.detectChanges();
+
+          fixture.whenStable().then(() => {
+            fixture.detectChanges();
+
+            // Expect class to be removed and checkbox to be unchecked.
+            expect(checkboxes[0].nativeElement.checked).toBe(false);
+            expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+          });
+        });
+      }));
+
       it('should emit a change when checkboxes are checked', fakeAsync(() => {
         const inputs = getMultiselectInputs();
 

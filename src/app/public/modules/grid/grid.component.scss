@@ -149,6 +149,11 @@ th.sky-grid-multiselect-cell {
 }
  .sky-grid-selected-row td {
   background:$sky-background-color-selected;
+  border-top:1px solid #dadbf6;
+  border-bottom:1px solid #dadbf6;
+}
+.sky-grid-multiselect-row:hover {
+  background-color:#e4e5f8;
 }
 
 .sky-grid-has-toolbar {

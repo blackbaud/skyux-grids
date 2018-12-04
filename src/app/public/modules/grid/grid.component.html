@@ -80,7 +80,11 @@
           class="sky-grid-row"
           *ngFor="let item of items"
           [attr.sky-cmp-id]="item.id"
-          [ngClass]="{ 'sky-grid-selected-row' : item.isSelected }"
+          [ngClass]="{
+            'sky-grid-selected-row' : item.isSelected,
+            'sky-grid-multiselect-row' : rowSelectId
+          }"
+          (click)="selectRow(item)"
         >
           <td *ngIf="rowSelectId"
             class="sky-grid-multiselect-cell sky-grid-header-locked"

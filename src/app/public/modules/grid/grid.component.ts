@@ -431,6 +431,13 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
   }
 
+  public selectRow(selectedItem: ListItemModel) {
+    if (this.rowSelectId) {
+      selectedItem.isSelected = !selectedItem.isSelected;
+      this.ref.markForCheck();
+    }
+  }
+
   public selectAllMultiselect() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = true;
