@@ -3,7 +3,6 @@ import {
 } from '@angular/core';
 
 import {
-  ListItemModel,
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
 
