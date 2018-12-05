@@ -147,13 +147,13 @@ $sky-grid-resize-handle-width: 5px;
 th.sky-grid-multiselect-cell {
   cursor: default;
 }
- .sky-grid-selected-row td {
+.sky-grid-selected-row td {
   background:$sky-background-color-selected;
   border-top:1px solid #dadbf6;
   border-bottom:1px solid #dadbf6;
 }
-.sky-grid-multiselect-row:hover {
-  background-color:#e4e5f8;
+.sky-grid-multiselect-row:hover>td {
+  background-color:darken($sky-background-color-selected, 3%);
 }
 
 .sky-grid-has-toolbar {

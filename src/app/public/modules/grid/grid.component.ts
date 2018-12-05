@@ -431,10 +431,12 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
   }
 
-  public selectRow(selectedItem: ListItemModel) {
+  public selectRow(event: any, selectedItem: ListItemModel) {
     if (this.rowSelectId) {
-      selectedItem.isSelected = !selectedItem.isSelected;
-      this.ref.markForCheck();
+      if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
+        selectedItem.isSelected = !selectedItem.isSelected;
+        this.ref.markForCheck();
+      }
     }
   }
 
@@ -659,5 +661,39 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       }
       return item.id;
     });
+  }
+
+  private isInteractiveElement(event: any): any {
+    let interactiveElSelectors = `
+      a,
+      button,
+      input,
+      label,
+      option,
+      select,
+      textarea,
+      details,
+      dialog,
+      menu,
+      menuitem,
+      summary`;
+    return this.getClosest(event.target, interactiveElSelectors);
+  }
+
+  // Polyfill for Element.closest().
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+  // Returns true if an ancestor is found with the matching DOM selector.
+  private getClosest(el: any, selector: string): boolean {
+    if (!document.documentElement.contains(el)) {
+      return undefined;
+    }
+    do {
+      if (el.matches(selector)) {
+        return el;
+      }
+      el = el.parentElement || el.parentNode;
+    } while (el !== undefined && el.nodeType === 1);
+
+    return undefined;
   }
 }

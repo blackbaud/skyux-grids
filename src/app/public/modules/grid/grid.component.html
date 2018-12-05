@@ -79,12 +79,13 @@
         <tr
           class="sky-grid-row"
           *ngFor="let item of items"
+          [attr.aria-selected]="item.isSelected"
           [attr.sky-cmp-id]="item.id"
           [ngClass]="{
             'sky-grid-selected-row' : item.isSelected,
             'sky-grid-multiselect-row' : rowSelectId
           }"
-          (click)="selectRow(item)"
+          (click)="selectRow($event, item)"
         >
           <td *ngIf="rowSelectId"
             class="sky-grid-multiselect-cell sky-grid-header-locked"
