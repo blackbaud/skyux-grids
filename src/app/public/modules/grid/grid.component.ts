@@ -17,11 +17,22 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
+import {
+  Observable
+} from 'rxjs/Observable';
+
+import {
+  BehaviorSubject
+} from 'rxjs/BehaviorSubject';
+
+import {
+  Subscription
+} from 'rxjs/Subscription';
+
 import 'rxjs/add/operator/distinctUntilChanged';
+
 import 'rxjs/add/operator/map';
+
 import 'rxjs/add/operator/take';
 
 import {
@@ -39,9 +50,11 @@ import {
 import {
   SkyGridColumnComponent
 } from './grid-column.component';
+
 import {
   SkyGridColumnModel
 } from './grid-column.model';
+
 import {
   SkyGridAdapterService
 } from './grid-adapter.service';
@@ -52,7 +65,10 @@ import {
   SkyGridColumnWidthModelChange,
   SkyGridSelectedRowsModelChange
 } from './types';
-import { SkyWindowRefService } from '@skyux/core';
+
+import {
+  SkyWindowRefService
+} from '@skyux/core';
 
 let nextId = 0;
 

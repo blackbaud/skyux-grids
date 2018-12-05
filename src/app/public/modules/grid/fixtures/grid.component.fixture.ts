@@ -121,7 +121,7 @@ export class GridTestComponent {
       return true;
     }
 
-  public onSort(sortSelector: ListSortFieldSelectorModel) {
+  public onSort(sortSelector: ListSortFieldSelectorModel): void {
     this.activeSortSelector = sortSelector;
     const sortField = sortSelector.fieldSelector;
     const descending = sortSelector.descending;
@@ -146,27 +146,27 @@ export class GridTestComponent {
 
   }
 
-  public onResize(columnWidths: Array<SkyGridColumnWidthModelChange>) {
+  public onResize(columnWidths: Array<SkyGridColumnWidthModelChange>): void {
     this.columnWidthsChange = columnWidths;
   }
 
-  public onMultiselectChange(selectedRows: SkyGridSelectedRowsModelChange) {
+  public onMultiselectChange(selectedRows: SkyGridSelectedRowsModelChange): void {
     this.selectedRowsChange = selectedRows;
   }
 
-  public hideColumn() {
+  public hideColumn(): void {
     this.selectedColumnIds = ['column1', 'column3', 'column4', 'column5'];
   }
 
-  public showColumn() {
+  public showColumn(): void {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
   }
 
-  public selectAll() {
+  public selectAll(): void {
     this.grid.selectAllMultiselect();
   }
 
-  public clearAll() {
+  public clearAll(): void {
     this.grid.clearAllMultiselect();
   }
 }
