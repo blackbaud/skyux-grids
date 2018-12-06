@@ -28,7 +28,7 @@
     "@angular/forms": "^4.3.6",
     "@skyux/i18n": "^3.2.0",
     "@skyux/list-builder-common": "^3.0.0-rc.1",
-    "@skyux/forms": "^3.0.0-rc.1",
+    "@skyux/forms": "^3.0.0-rc.4",
     "@skyux/indicators": "^3.0.0-rc.2"
   },
   "dependencies": {
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@blackbaud/skyux": "2.32.0",
     "@blackbaud/skyux-builder": "1.30.0",
-    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5"
+    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5",
+    "@skyux/forms": "3.0.0-rc.4"
   }
 }
