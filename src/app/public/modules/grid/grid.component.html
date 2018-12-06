@@ -11,8 +11,8 @@
       #gridTable>
       <thead>
         <tr dragula="sky-grid-heading">
-          <th *ngIf="rowSelectId"
-            class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
+          <th *ngIf="enableChecklist"
+            class="sky-grid-heading sky-grid-checklist-cell sky-grid-header-locked"
             scope="col"
             [style.max-width.px]="minColWidth"
             [style.width.px]="minColWidth"
@@ -86,12 +86,12 @@
           [attr.sky-cmp-id]="item.id"
           [ngClass]="{
             'sky-grid-selected-row' : item.isSelected,
-            'sky-grid-multiselect-row' : rowSelectId
+            'sky-grid-checklist-row' : enableChecklist
           }"
           (click)="selectRow($event, item)"
         >
-          <td *ngIf="rowSelectId"
-            class="sky-grid-multiselect-cell sky-grid-header-locked"
+          <td *ngIf="enableChecklist"
+            class="sky-grid-checklist-cell sky-grid-header-locked"
           >
             <div
               [style.max-width.px]="minColWidth"
@@ -99,7 +99,7 @@
             >
               <sky-checkbox
                 [label]="'skyux_grid_select_row' | skyLibResources"
-                (change)="onMultiselectChange()"
+                (change)="onChecklistChange()"
                 [(ngModel)]="item.isSelected"
               >
               </sky-checkbox>

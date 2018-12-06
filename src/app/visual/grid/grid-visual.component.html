@@ -35,17 +35,18 @@
   </button>
 </p>
 
-<h1>Simple grid with multiselect enabled</h1>
+<h1>Simple grid with checklist enabled</h1>
 
 <div
-  id="screenshot-grid-multiselect"
+  id="screenshot-grid-checklist"
 >
   <sky-grid
     fit="scroll"
-    [data]="dataForSimpleGridWithMultiSelect"
-    [rowSelectId]="'myId'"
-    (sortFieldChange)="sortChangedMultiselectGrid($event)"
-    (rowsSelected)="onRowsSelected($event)"
+    [data]="dataForSimpleGridWithChecklist"
+    [enableChecklist]="true"
+    [checklistRowId]="'myId'"
+    (sortFieldChange)="sortChangedChecklistGrid($event)"
+    (checklistSelectionChange)="onChecklistSelectionChange($event)"
   >
     <sky-grid-column
       field="myId"

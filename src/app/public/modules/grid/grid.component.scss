@@ -136,7 +136,7 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
-.sky-grid-multiselect-cell {
+.sky-grid-checklist-cell {
   padding: 0;
   text-align: center;
    ::ng-deep.sky-switch-control {
@@ -144,7 +144,7 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
-th.sky-grid-multiselect-cell {
+th.sky-grid-checklist-cell {
   cursor: default;
 
   .screen-reader-only {
@@ -157,7 +157,7 @@ th.sky-grid-multiselect-cell {
   border-top:1px solid #dadbf6;
   border-bottom:1px solid #dadbf6;
 }
-.sky-grid-multiselect-row:hover>td {
+.sky-grid-checklist-row:hover>td {
   background-color:darken($sky-background-color-selected, 3%);
 }
 

@@ -43,7 +43,7 @@ export class GridTestComponent {
   public sortField: ListSortFieldSelectorModel;
   public columnWidthsChange: Array<SkyGridColumnWidthModelChange>;
   public fitType: string = 'scroll';
-  public rowSelectId: string;
+  public checklistRowId: string;
   public selectedRowsChange: SkyGridSelectedRowsModelChange;
 
   public selectedColumnIds: string[] = [
@@ -150,7 +150,7 @@ export class GridTestComponent {
     this.columnWidthsChange = columnWidths;
   }
 
-  public onMultiselectChange(selectedRows: SkyGridSelectedRowsModelChange): void {
+  public onChecklistChange(selectedRows: SkyGridSelectedRowsModelChange): void {
     this.selectedRowsChange = selectedRows;
   }
 
@@ -163,10 +163,10 @@ export class GridTestComponent {
   }
 
   public selectAll(): void {
-    this.grid.selectAllMultiselect();
+    this.grid.checklistSelectAll();
   }
 
   public clearAll(): void {
-    this.grid.clearAllMultiselect();
+    this.grid.checklistClearAll();
   }
 }

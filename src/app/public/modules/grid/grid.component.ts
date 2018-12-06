@@ -111,7 +111,10 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   public highlightText: string;
 
   @Input()
-  public rowSelectId: string;
+  public enableChecklist: boolean;
+
+  @Input()
+  public checklistRowId: string;
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -120,7 +123,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   public sortFieldChange = new EventEmitter<ListSortFieldSelectorModel>();
 
   @Output()
-  public rowsSelected = new EventEmitter<SkyGridSelectedRowsModelChange>();
+  public checklistSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
 
   @Output()
   public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
@@ -237,6 +240,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
     });
+    // close selectionchange?
   }
 
   public getTableClassNames() {
@@ -334,7 +338,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
      });
  }
 
-  public onMultiselectChange() {
+  public onChecklistChange() {
     this.emitSelectedRows();
   }
 
@@ -448,7 +452,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   }
 
   public selectRow(event: any, selectedItem: ListItemModel) {
-    if (this.rowSelectId) {
+    if (this.enableChecklist) {
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
@@ -457,14 +461,14 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
   }
 
-  public selectAllMultiselect() {
+  public checklistSelectAll() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = true;
     }
     this.ref.markForCheck();
   }
 
-  public clearAllMultiselect() {
+  public checklistClearAll() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = false;
     }
@@ -503,7 +507,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   private transformData() {
     // Transform data into object with id and data properties
     if (this.data.length > 0 && this.data[0].id && !this.data[0].data) {
-      if (this.rowSelectId) {
+      if (this.checklistRowId) {
         this.items = this.getGridDataWithSelectedRows();
       } else {
         this.items = this.data.map(item => new ListItemModel(item.id, item));
@@ -517,8 +521,8 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     let selectedRows = this.getSelectedRows();
     return this.data.map(item => {
       let checked;
-      if (item.hasOwnProperty(this.rowSelectId)) {
-        checked = selectedRows.indexOf(item[this.rowSelectId]) > -1;
+      if (item.hasOwnProperty(this.checklistRowId)) {
+        checked = selectedRows.indexOf(item[this.checklistRowId]) > -1;
       } else {
         checked = selectedRows.indexOf(item.id) > -1;
       }
@@ -675,15 +679,15 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     let selectedRows: SkyGridSelectedRowsModelChange = {
       selectedRowIds: this.getSelectedRows()
     };
-    this.rowsSelected.emit(selectedRows);
+    this.checklistSelectionChange.emit(selectedRows);
   }
 
   private getSelectedRows() {
     return this.items.filter(item => {
       return item.isSelected;
     }).map(item => {
-      if (item.data.hasOwnProperty(this.rowSelectId)) {
-        return item.data[this.rowSelectId];
+      if (item.data.hasOwnProperty(this.checklistRowId)) {
+        return item.data[this.checklistRowId];
       }
       return item.id;
     });

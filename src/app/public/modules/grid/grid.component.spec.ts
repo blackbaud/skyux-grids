@@ -898,7 +898,7 @@ describe('Grid Component', () => {
     });
   });
 
-  describe('multiselect', () => {
+  describe('checklist', () => {
     let fixture: ComponentFixture<GridTestComponent>,
         component: GridTestComponent,
         element: DebugElement;
@@ -914,16 +914,16 @@ describe('Grid Component', () => {
       fixture = TestBed.createComponent(GridTestComponent);
       component = fixture.componentInstance;
       element = fixture.debugElement as DebugElement;
-      component.rowSelectId = 'id';
+      component.checklistRowId = 'id';
       fixture.detectChanges();
       fixture.detectChanges();
     });
-    function getMultiselectInputs() {
-      return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
+    function getChecklistInputs() {
+      return fixture.debugElement.queryAll(By.css('tbody .sky-grid-checklist-cell input'));
     }
     describe('Standard setup', () => {
       it('should add checkboxes properly to grid, with proper accessibility attributes', () => {
-        const checkboxes = getMultiselectInputs();
+        const checkboxes = getChecklistInputs();
 
         expect(checkboxes).not.toBeNull();
         expect(checkboxes.length).toEqual(component.data.length);
@@ -932,14 +932,14 @@ describe('Grid Component', () => {
         });
       });
 
-      it('should set the multiselect column to the minimum width', () => {
-        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
+      it('should set the checklist column to the minimum width', () => {
+        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-checklist-cell') as HTMLElement;
 
         verifyWidthsMatch(headerEl.offsetWidth, parseInt(minColWidth, 10));
       });
 
       it('should toggle selected classes properly when checked', () => {
-        const checkboxes = getMultiselectInputs();
+        const checkboxes = getChecklistInputs();
         const tableRows = getTableRows(fixture);
 
         // Start with no class.
@@ -959,7 +959,7 @@ describe('Grid Component', () => {
       });
 
       it('should select checkbox when clicking on row', async(() => {
-        const checkboxes = getMultiselectInputs();
+        const checkboxes = getChecklistInputs();
         const tableRows = getTableRows(fixture);
 
         // Start unchecked.
@@ -991,7 +991,7 @@ describe('Grid Component', () => {
       }));
 
       it('should emit a change when checkboxes are checked', fakeAsync(() => {
-        const inputs = getMultiselectInputs();
+        const inputs = getChecklistInputs();
 
         // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
@@ -1003,7 +1003,7 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         // Expect the emitter to send us 1,2,5.
-        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // Values should match the row value of the consumer-provided key in 'checklistRowId'.
         // In this example, 'id'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: [ '1', '2', '5' ]
@@ -1012,7 +1012,7 @@ describe('Grid Component', () => {
       }));
 
       it('should emit a change when clicking on row', async(() => {
-        const checkboxes = getMultiselectInputs();
+        const checkboxes = getChecklistInputs();
         const tableRows = getTableRows(fixture);
 
         // Start unchecked.
@@ -1028,7 +1028,7 @@ describe('Grid Component', () => {
           fixture.detectChanges();
 
           // Expect the emitter to send us 1,2,5.
-          // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+          // Values should match the row value of the consumer-provided key in 'checklistRowId'.
           // In this example, 'id'.
           let expectedRows: SkyGridSelectedRowsModelChange = {
             selectedRowIds: [ '1', '2', '5' ]
@@ -1037,15 +1037,15 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should emit a change when checkboxes are checked, based on a custom rowSelectId', fakeAsync(() => {
+      it('should emit a change when checkboxes are checked, based on a custom checklistRowId', fakeAsync(() => {
         fixture = TestBed.createComponent(GridTestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement as DebugElement;
-        component.rowSelectId = 'customId';
+        component.checklistRowId = 'customId';
         fixture.detectChanges();
         fixture.detectChanges();
 
-        const inputs = getMultiselectInputs();
+        const inputs = getChecklistInputs();
 
         // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
@@ -1057,7 +1057,7 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         // Expect the emitter to send us 1,2,5.
-        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // Values should match the row value of the consumer-provided key in 'checklistRowId'.
         // In this example, 'customId'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: [ '101', '102', '105' ]
@@ -1065,15 +1065,15 @@ describe('Grid Component', () => {
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
 
-      it('should fall back to id property when rowSelectId property doesnt exist', fakeAsync(() => {
+      it('should fall back to id property when checklistRowId property doesnt exist', fakeAsync(() => {
         fixture = TestBed.createComponent(GridTestComponent);
         component = fixture.componentInstance;
         element = fixture.debugElement as DebugElement;
-        component.rowSelectId = 'foobar';
+        component.checklistRowId = 'foobar';
         fixture.detectChanges();
         fixture.detectChanges();
 
-        const inputs = getMultiselectInputs();
+        const inputs = getChecklistInputs();
 
         // Nothing should have been emitted yet.
         expect(component.selectedRowsChange).toBeUndefined();
@@ -1085,7 +1085,7 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         // Expect the emitter to send us 1,2,5.
-        // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+        // Values should match the row value of the consumer-provided key in 'checklistRowId'.
         // In this example, there is no match so it should fall back to the 'id' property.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: [ '1', '2', '5' ]
@@ -1094,7 +1094,7 @@ describe('Grid Component', () => {
       }));
 
       it('should retain checked items when sorting', () => {
-        const inputs = getMultiselectInputs();
+        const inputs = getChecklistInputs();
         const tableRows = getTableRows(fixture);
 
         // Nothing should have been emitted yet.
@@ -1122,9 +1122,9 @@ describe('Grid Component', () => {
         });
       });
 
-      it('should not be sortable when clicking on multiselect column', () => {
+      it('should not be sortable when clicking on checklist column', () => {
         let sortSpy = spyOn(component, 'onSort');
-        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
+        let headerEl = fixture.nativeElement.querySelector('th.sky-grid-checklist-cell') as HTMLElement;
         SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
           { bubbles: false, cancelable: false });
         fixture.detectChanges();
@@ -1132,8 +1132,8 @@ describe('Grid Component', () => {
         expect(sortSpy).not.toHaveBeenCalled();
       });
 
-      it('should properly update isSelected when selectAllMultiselect/clearAllMultiselect are called', () => {
-        const checkboxes = getMultiselectInputs();
+      it('should properly update isSelected when checklistSelectAll/checklistClearAll are called', () => {
+        const checkboxes = getChecklistInputs();
         const tableRows = getTableRows(fixture);
 
         // Start with no class.
@@ -1161,7 +1161,7 @@ describe('Grid Component', () => {
       });
 
       it('should be accessible', async(() => {
-        const inputs = getMultiselectInputs();
+        const inputs = getChecklistInputs();
 
         // Run accessibility test.
         fixture.whenStable().then(() => {
@@ -1180,7 +1180,7 @@ describe('Grid Component', () => {
     });
   });
 
-  describe('multiselect with interactive elements', () => {
+  describe('checklist with interactive elements', () => {
     let fixture: ComponentFixture<GridInteractiveTestComponent>,
         component: GridInteractiveTestComponent,
         element: DebugElement;
@@ -1196,13 +1196,13 @@ describe('Grid Component', () => {
       fixture = TestBed.createComponent(GridInteractiveTestComponent);
       component = fixture.componentInstance;
       element = fixture.debugElement as DebugElement;
-      component.rowSelectId = 'id';
+      component.checklistRowId = 'id';
       fixture.detectChanges();
       fixture.detectChanges();
     });
 
-    function getMultiselectInputs() {
-      return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
+    function getChecklistInputs() {
+      return fixture.debugElement.queryAll(By.css('tbody .sky-grid-checklist-cell input'));
     }
 
     function getButtons() {
@@ -1210,7 +1210,7 @@ describe('Grid Component', () => {
     }
 
     it('should not check checkbox when clicking on an interactive element in the row', async(() => {
-      const checkboxes = getMultiselectInputs();
+      const checkboxes = getChecklistInputs();
       const tableRows = getTableRows(fixture);
       const buttons = getButtons();
 
@@ -1338,7 +1338,7 @@ describe('Grid Component', () => {
           undefined,
           {
             querySelectorAll(elementSelector: string) {
-              expect(elementSelector).toBe('th:not(.sky-grid-multiselect-cell)');
+              expect(elementSelector).toBe('th:not(.sky-grid-checklist-cell)');
               return [
                 {
                   getAttribute(idSelector: string) {
