@@ -19,16 +19,39 @@ import {
   tick
 } from '@angular/core/testing';
 
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import {
+  DragulaService
+} from 'ng2-dragula/ng2-dragula';
 
 const moment = require('moment');
 
-import { GridEmptyTestComponent } from './fixtures/grid-empty.component.fixture';
-import { GridDynamicTestComponent } from './fixtures/grid-dynamic.component.fixture';
-import { GridAsyncTestComponent } from './fixtures/grid-async.component.fixture';
-import { GridFixturesModule } from './fixtures/grid-fixtures.module';
-import { GridTestComponent } from './fixtures/grid.component.fixture';
-import { MockDragulaService } from './fixtures/mock-dragula.service';
+import {
+  GridEmptyTestComponent
+} from './fixtures/grid-empty.component.fixture';
+
+import {
+  GridDynamicTestComponent
+} from './fixtures/grid-dynamic.component.fixture';
+
+import {
+  GridAsyncTestComponent
+} from './fixtures/grid-async.component.fixture';
+
+import {
+  GridFixturesModule
+} from './fixtures/grid-fixtures.module';
+
+import {
+  GridTestComponent
+} from './fixtures/grid.component.fixture';
+
+import {
+  GridInteractiveTestComponent
+} from './fixtures/grid-interactive.component.fixture';
+
+import {
+  MockDragulaService
+} from './fixtures/mock-dragula.service';
 
 import {
   SkyGridModule,
@@ -942,14 +965,14 @@ describe('Grid Component', () => {
         // Start unchecked.
         expect(checkboxes[0].nativeElement.checked).toBe(false);
 
-        // Check to add class.
+        // Click on first row.
         tableRows[0].nativeElement.click();
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
           fixture.detectChanges();
 
-          // Start unchecked.
+          // Expect first row to have class.
           expect(checkboxes[0].nativeElement.checked).toBe(true);
           expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
 
@@ -986,6 +1009,32 @@ describe('Grid Component', () => {
           selectedRowIds: [ '1', '2', '5' ]
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
+      }));
+
+      it('should emit a change when clicking on row', async(() => {
+        const checkboxes = getMultiselectInputs();
+        const tableRows = getTableRows(fixture);
+
+        // Start unchecked.
+        expect(checkboxes[0].nativeElement.checked).toBe(false);
+
+        // Click on a few rows.
+        tableRows[0].nativeElement.click();
+        tableRows[1].nativeElement.click();
+        tableRows[4].nativeElement.click();
+        fixture.detectChanges();
+
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          // Expect the emitter to send us 1,2,5.
+          // Values should match the row value of the consumer-provided key in 'rowSelectId'.
+          // In this example, 'id'.
+          let expectedRows: SkyGridSelectedRowsModelChange = {
+            selectedRowIds: [ '1', '2', '5' ]
+          };
+          expect(component.selectedRowsChange).toEqual(expectedRows);
+        });
       }));
 
       it('should emit a change when checkboxes are checked, based on a custom rowSelectId', fakeAsync(() => {
@@ -1110,7 +1159,77 @@ describe('Grid Component', () => {
           expect(tableRows[i].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
         }
       });
+
+      it('should be accessible', async(() => {
+        const inputs = getMultiselectInputs();
+
+        // Run accessibility test.
+        fixture.whenStable().then(() => {
+          expect(fixture.nativeElement).toBeAccessible();
+
+          // Click on first row.
+          inputs[0].nativeElement.click();
+          fixture.detectChanges();
+
+          fixture.whenStable().then(() => {
+            fixture.detectChanges();
+            expect(fixture.nativeElement).toBeAccessible();
+          });
+        });
+      }));
     });
+  });
+
+  describe('multiselect with interactive elements', () => {
+    let fixture: ComponentFixture<GridInteractiveTestComponent>,
+        component: GridInteractiveTestComponent,
+        element: DebugElement;
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          GridFixturesModule,
+          SkyGridModule
+        ]
+      });
+    });
+    beforeEach(() => {
+      fixture = TestBed.createComponent(GridInteractiveTestComponent);
+      component = fixture.componentInstance;
+      element = fixture.debugElement as DebugElement;
+      component.rowSelectId = 'id';
+      fixture.detectChanges();
+      fixture.detectChanges();
+    });
+
+    function getMultiselectInputs() {
+      return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
+    }
+
+    function getButtons() {
+      return fixture.debugElement.queryAll(By.css('tbody td button'));
+    }
+
+    it('should not check checkbox when clicking on an interactive element in the row', async(() => {
+      const checkboxes = getMultiselectInputs();
+      const tableRows = getTableRows(fixture);
+      const buttons = getButtons();
+
+      // Click on buttons.
+      buttons[0].nativeElement.click();
+      buttons[1].nativeElement.click();
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+
+        // Expect nothing to be checked or emitted.
+        expect(checkboxes[0].nativeElement.checked).toBe(false);
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(checkboxes[1].nativeElement.checked).toBe(false);
+        expect(tableRows[1].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(component.selectedRowsChange).toEqual(undefined);
+      });
+    }));
   });
 
   describe('dragula functionality', () => {

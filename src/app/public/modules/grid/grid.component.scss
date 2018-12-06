@@ -146,7 +146,12 @@ $sky-grid-resize-handle-width: 5px;
 
 th.sky-grid-multiselect-cell {
   cursor: default;
+
+  .screen-reader-only {
+    @include sky-screen-reader-only();
+  }
 }
+
 .sky-grid-selected-row td {
   background:$sky-background-color-selected;
   border-top:1px solid #dadbf6;

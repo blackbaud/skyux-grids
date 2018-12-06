@@ -39,11 +39,27 @@ export class GridVisualComponent {
     { id: '7', column1: '21', column2: 'Grape', column3: 'gg', myId: '107' }
   ];
 
-  public sortChanged(activeSort: ListSortFieldSelectorModel) {
+  public sortChangedSimpleGrid(activeSort: ListSortFieldSelectorModel) {
+    this.dataForSimpleGrid = this.performSort(activeSort, this.dataForSimpleGrid);
+  }
+
+  public sortChangedMultiselectGrid(activeSort: ListSortFieldSelectorModel) {
+    this.dataForSimpleGridWithMultiSelect = this.performSort(activeSort, this.dataForSimpleGridWithMultiSelect);
+  }
+
+  public triggerHighlight() {
+    this.highlightText = 'e';
+  }
+
+  public onRowsSelected(value: SkyGridSelectedRowsModelChange) {
+    this.selectedRows = value.selectedRowIds.toString();
+  }
+
+  private performSort(activeSort: ListSortFieldSelectorModel, data: any[]) {
     const sortField = activeSort.fieldSelector;
     const descending = activeSort.descending;
 
-    this.dataForSimpleGrid = this.dataForSimpleGrid.sort((a: any, b: any) => {
+    return data.sort((a: any, b: any) => {
       let value1 = a[sortField];
       let value2 = b[sortField];
 
@@ -67,13 +83,5 @@ export class GridVisualComponent {
 
       return result;
     }).slice();
-  }
-
-  public triggerHighlight() {
-    this.highlightText = 'e';
-  }
-
-  public onRowsSelected(value: SkyGridSelectedRowsModelChange) {
-    this.selectedRows = value.selectedRowIds.toString();
   }
 }

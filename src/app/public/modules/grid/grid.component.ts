@@ -452,6 +452,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
+        this.emitSelectedRows();
       }
     }
   }
@@ -502,18 +503,27 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   private transformData() {
     // Transform data into object with id and data properties
     if (this.data.length > 0 && this.data[0].id && !this.data[0].data) {
-      // If multiselect is turned on, retain selections.
       if (this.rowSelectId) {
-        this.items = this.data.map(item => {
-          let checked = this.getSelectedRows().indexOf(item.id) > -1;
-          return new ListItemModel(item.id, item, checked);
-        });
+        this.items = this.getGridDataWithSelectedRows();
       } else {
         this.items = this.data.map(item => new ListItemModel(item.id, item));
       }
     } else {
       this.items = this.data;
     }
+  }
+
+  private getGridDataWithSelectedRows() {
+    let selectedRows = this.getSelectedRows();
+    return this.data.map(item => {
+      let checked;
+      if (item.hasOwnProperty(this.rowSelectId)) {
+        checked = selectedRows.indexOf(item[this.rowSelectId]) > -1;
+      } else {
+        checked = selectedRows.indexOf(item.id) > -1;
+      }
+      return new ListItemModel(item.id, item, checked);
+    });
   }
 
   private setSortHeaders() {
