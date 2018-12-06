@@ -17,6 +17,14 @@ import {
   ViewChild
 } from '@angular/core';
 
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
+
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -56,9 +64,22 @@ let nextId = 0;
   selector: 'sky-grid',
   templateUrl: './grid.component.html',
   styleUrls: ['./grid.component.scss'],
-  viewProviders: [ DragulaService ],
+  viewProviders: [DragulaService],
   providers: [
     SkyGridAdapterService
+  ],
+  animations: [
+    trigger('skyAnimationHighlight', [
+      state('highlight', style({
+        border: '3px solid #0000ff'
+      })),
+      transition('highlight => void',
+        animate('0.5s')
+      ),
+      transition('void => highlight',
+        animate('0.5s')
+      )
+    ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -89,6 +110,15 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
 
   @Input()
   public highlightText: string;
+
+  @Input()
+  public hyperlinkedColumnName: string;
+
+  @Input()
+  public highlightRowCondition = ((data: any) => false);
+
+  @Output()
+  public hyperlinkedColumnClick = new EventEmitter<SkyGridColumnModel>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -262,23 +292,23 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
   public sortByColumn(column: SkyGridColumnModel) {
     if (!this.isDraggingResizeHandle && column.isSortable) {
       this.currentSortField
-      .take(1)
-      .map(field => {
-        let selector = {
-          fieldSelector: column.field,
-          descending: true
-        };
-
-        if (field && field.fieldSelector === column.field && field.descending) {
-          selector = {
+        .take(1)
+        .map(field => {
+          let selector = {
             fieldSelector: column.field,
-            descending: false
+            descending: true
           };
-        }
-        this.sortFieldChange.emit(selector);
-        this.currentSortField.next(selector);
-      })
-      .subscribe();
+
+          if (field && field.fieldSelector === column.field && field.descending) {
+            selector = {
+              fieldSelector: column.field,
+              descending: false
+            };
+          }
+          this.sortFieldChange.emit(selector);
+          this.currentSortField.next(selector);
+        })
+        .subscribe();
     }
   }
 
@@ -295,18 +325,18 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     return this.currentSortField
       .distinctUntilChanged()
       .map(field => {
-      return field.fieldSelector === column.field ?
-        (field.descending ? 'descending' : 'ascending') : (column.isSortable ? 'none' : undefined);
-    });
+        return field.fieldSelector === column.field ?
+          (field.descending ? 'descending' : 'ascending') : (column.isSortable ? 'none' : undefined);
+      });
   }
 
   public getCaretVisibility(columnField: string): Observable<string> {
-   return this.currentSortField
-     .distinctUntilChanged()
-     .map(field => {
-       return field.fieldSelector === columnField ? 'visible' : 'hidden';
-     });
- }
+    return this.currentSortField
+      .distinctUntilChanged()
+      .map(field => {
+        return field.fieldSelector === columnField ? 'visible' : 'hidden';
+      });
+  }
 
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
     const foundColumnModel = this.columns.find((column: SkyGridColumnModel) => {
@@ -369,6 +399,19 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
 
     this.initializeResizeColumn(event);
+  }
+
+  public hyperlinkedColumnClicked(column: SkyGridColumnModel) {
+    this.hyperlinkedColumnClick.emit(column);
+  }
+
+  public highlightRow(dataRow: any): string {
+    let animationClass = '';
+    if (this.highlightRowCondition) {
+      animationClass = this.highlightRowCondition(dataRow) ? 'highlight' : '';
+    }
+
+    return animationClass;
   }
 
   public onInputChangeResizeCol(event: Event) {

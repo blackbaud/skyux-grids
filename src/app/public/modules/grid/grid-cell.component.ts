@@ -27,6 +27,9 @@ export class SkyGridCellComponent implements OnInit {
   public columnId: string;
 
   @Input()
+  public hyperlinkedColumnName: string;
+
+  @Input()
   private template: TemplateRef<any>;
 
   @Input()
@@ -49,5 +52,13 @@ export class SkyGridCellComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  get showHyperlinkedColumn() {
+    let isHyperlinked = false;
+    if ((this.fieldSelector || this.columnId) === this.hyperlinkedColumnName) {
+      isHyperlinked = true;
+    }
+    return isHyperlinked;
   }
 }
