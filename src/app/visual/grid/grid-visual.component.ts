@@ -29,7 +29,7 @@ export class GridVisualComponent {
     { id: '7', column1: '21', column2: 'Grape', column3: 'gg' }
   ];
 
-  public dataForSimpleGridWithChecklist = [
+  public dataForSimpleGridWithMultiselect = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa', myId: '101' },
     { id: '2', column1: '01', column2: 'Banana', column3: 'bb', myId: '102' },
     { id: '3', column1: '11', column2: 'Banana', column3: 'cc', myId: '103' },
@@ -43,15 +43,15 @@ export class GridVisualComponent {
     this.dataForSimpleGrid = this.performSort(activeSort, this.dataForSimpleGrid);
   }
 
-  public sortChangedChecklistGrid(activeSort: ListSortFieldSelectorModel) {
-    this.dataForSimpleGridWithChecklist = this.performSort(activeSort, this.dataForSimpleGridWithChecklist);
+  public sortChangedMultiselectGrid(activeSort: ListSortFieldSelectorModel) {
+    this.dataForSimpleGridWithMultiselect = this.performSort(activeSort, this.dataForSimpleGridWithMultiselect);
   }
 
   public triggerHighlight() {
     this.highlightText = 'e';
   }
 
-  public onChecklistSelectionChange(value: SkyGridSelectedRowsModelChange) {
+  public onMultiselectSelectionChange(value: SkyGridSelectedRowsModelChange) {
     this.selectedRows = value.selectedRowIds.toString();
   }
 

@@ -6,12 +6,12 @@
   [data]="data"
   [width]="600"
   [height]="400"
-  [enableChecklist]="true"
-  [checklistRowId]="checklistRowId"
+  [enableMultiselect]="true"
+  [multiselectRowId]="multiselectRowId"
   [sortField]="sortField"
   (sortFieldChange)="onSort($event)"
   (columnWidthChange)="onResize($event)"
-  (checklistSelectionChange)="onChecklistChange($event)">
+  (multiselectSelectionChange)="onMultiselectChange($event)">
   <sky-grid-column
     field="column1"
     heading="Column1"
