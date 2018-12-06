@@ -718,12 +718,22 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       return undefined;
     }
     do {
-      if (el.matches(selector)) {
+      if (this.elementMatches(el, selector)) {
         return el;
       }
       el = el.parentElement || el.parentNode;
     } while (el !== undefined && el.nodeType === 1);
 
     return undefined;
+  }
+
+  // Polyfill for Element.matches().
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
+  // Returns true if the element would be selected by the specified selector string.
+  private elementMatches(el: any, selector: string) {
+    let matches = document.querySelectorAll(selector);
+    let i = matches.length;
+    while (--i >= 0 && matches.item(i) !== el) {}
+    return i > -1;
   }
 }
