@@ -914,6 +914,7 @@ describe('Grid Component', () => {
       fixture = TestBed.createComponent(GridTestComponent);
       component = fixture.componentInstance;
       element = fixture.debugElement as DebugElement;
+      component.enableMultiselect = true;
       component.multiselectRowId = 'id';
       fixture.detectChanges();
       fixture.detectChanges();
@@ -936,6 +937,40 @@ describe('Grid Component', () => {
         let headerEl = fixture.nativeElement.querySelector('th.sky-grid-multiselect-cell') as HTMLElement;
 
         verifyWidthsMatch(headerEl.offsetWidth, parseInt(minColWidth, 10));
+      });
+
+      it('should not show multiselect features if enableMultiselect is false', () => {
+        fixture = TestBed.createComponent(GridTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement as DebugElement;
+        component.enableMultiselect = false;
+        fixture.detectChanges();
+        fixture.detectChanges();
+
+        const checkboxes = getMultiselectInputs();
+        const tableRows = getTableRows(fixture);
+
+        expect(checkboxes.length).toEqual(0);
+        tableRows.forEach(row => {
+          expect(row.nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        });
+      });
+
+      it('should not show multiselect features if enableMultiselect is undefined', () => {
+        fixture = TestBed.createComponent(GridTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement as DebugElement;
+        component.enableMultiselect = undefined;
+        fixture.detectChanges();
+        fixture.detectChanges();
+
+        const checkboxes = getMultiselectInputs();
+        const tableRows = getTableRows(fixture);
+
+        expect(checkboxes.length).toEqual(0);
+        tableRows.forEach(row => {
+          expect(row.nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        });
       });
 
       it('should toggle selected classes properly when checked', () => {
@@ -1042,6 +1077,7 @@ describe('Grid Component', () => {
         component = fixture.componentInstance;
         element = fixture.debugElement as DebugElement;
         component.multiselectRowId = 'customId';
+        component.enableMultiselect = true;
         fixture.detectChanges();
         fixture.detectChanges();
 
@@ -1070,6 +1106,7 @@ describe('Grid Component', () => {
         component = fixture.componentInstance;
         element = fixture.debugElement as DebugElement;
         component.multiselectRowId = 'foobar';
+        component.enableMultiselect = true;
         fixture.detectChanges();
         fixture.detectChanges();
 
@@ -1196,6 +1233,7 @@ describe('Grid Component', () => {
       fixture = TestBed.createComponent(GridInteractiveTestComponent);
       component = fixture.componentInstance;
       element = fixture.debugElement as DebugElement;
+      component.enableMultiselect = true;
       component.multiselectRowId = 'id';
       fixture.detectChanges();
       fixture.detectChanges();
