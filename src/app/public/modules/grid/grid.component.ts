@@ -240,7 +240,6 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
     });
-    // close selectionchange?
   }
 
   public getTableClassNames() {
