@@ -93,7 +93,7 @@ describe('Grid', () => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
     SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
-    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+    expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-multiselect-lg'
     });
   });
@@ -102,7 +102,7 @@ describe('Grid', () => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
-    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+    expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-multiselect-xs'
     });
   });
@@ -115,7 +115,7 @@ describe('Grid', () => {
     checkboxes.get(0).click();
     checkboxes.get(2).click();
     checkboxes.get(3).click();
-    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+    expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-multiselect-selected-lg'
     });
   });
@@ -128,7 +128,7 @@ describe('Grid', () => {
     checkboxes.get(0).click();
     checkboxes.get(2).click();
     checkboxes.get(3).click();
-    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+    expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-multiselect-selected-xs'
     });
   });
