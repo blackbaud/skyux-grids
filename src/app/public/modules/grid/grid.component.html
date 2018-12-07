@@ -85,7 +85,7 @@
           [attr.aria-selected]="item.isSelected"
           [attr.sky-cmp-id]="item.id"
           [ngClass]="{
-            'sky-grid-selected-row' : item.isSelected,
+            'sky-grid-multiselect-selected-row' : item.isSelected,
             'sky-grid-multiselect-row' : enableMultiselect
           }"
           (click)="selectRow($event, item)"

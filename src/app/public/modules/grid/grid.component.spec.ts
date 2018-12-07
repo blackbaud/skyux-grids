@@ -952,7 +952,7 @@ describe('Grid Component', () => {
 
         expect(checkboxes.length).toEqual(0);
         tableRows.forEach(row => {
-          expect(row.nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+          expect(row.nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
         });
       });
 
@@ -969,7 +969,7 @@ describe('Grid Component', () => {
 
         expect(checkboxes.length).toEqual(0);
         tableRows.forEach(row => {
-          expect(row.nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+          expect(row.nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
         });
       });
 
@@ -978,19 +978,19 @@ describe('Grid Component', () => {
         const tableRows = getTableRows(fixture);
 
         // Start with no class.
-        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
 
         // Check to add class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
 
-        expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
 
         // Uncheck to remove class.
         checkboxes[0].nativeElement.click();
         fixture.detectChanges();
 
-        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
       });
 
       it('should select checkbox when clicking on row', async(() => {
@@ -1009,7 +1009,7 @@ describe('Grid Component', () => {
 
           // Expect first row to have class.
           expect(checkboxes[0].nativeElement.checked).toBe(true);
-          expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-selected-row');
+          expect(tableRows[0].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
 
           // Uncheck to remove class.
           tableRows[0].nativeElement.click();
@@ -1020,7 +1020,7 @@ describe('Grid Component', () => {
 
             // Expect class to be removed and checkbox to be unchecked.
             expect(checkboxes[0].nativeElement.checked).toBe(false);
-            expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+            expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
           });
         });
       }));
@@ -1174,7 +1174,7 @@ describe('Grid Component', () => {
         const tableRows = getTableRows(fixture);
 
         // Start with no class.
-        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
 
         // Select all.
         component.selectAll();
@@ -1183,7 +1183,7 @@ describe('Grid Component', () => {
         for (let i = 0; i < checkboxes.length; i++) {
           expect(component.data[i].isSelected = true);
           expect(checkboxes[i].nativeElement.checked = true);
-          expect(tableRows[i].nativeElement).toHaveCssClass('sky-grid-selected-row');
+          expect(tableRows[i].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
         }
 
         // Clear all.
@@ -1193,7 +1193,7 @@ describe('Grid Component', () => {
         for (let i = 0; i < checkboxes.length; i++) {
           expect(component.data[i].isSelected = false);
           expect(checkboxes[i].nativeElement.checked = false);
-          expect(tableRows[i].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+          expect(tableRows[i].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
         }
       });
 
@@ -1262,9 +1262,9 @@ describe('Grid Component', () => {
 
         // Expect nothing to be checked or emitted.
         expect(checkboxes[0].nativeElement.checked).toBe(false);
-        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
         expect(checkboxes[1].nativeElement.checked).toBe(false);
-        expect(tableRows[1].nativeElement).not.toHaveCssClass('sky-grid-selected-row');
+        expect(tableRows[1].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
         expect(component.selectedRowsChange).toEqual(undefined);
       });
     }));

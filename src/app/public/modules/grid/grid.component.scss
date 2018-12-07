@@ -152,13 +152,27 @@ th.sky-grid-multiselect-cell {
   }
 }
 
-.sky-grid-selected-row td {
+// Prevents a FF bug where borders would randomly appear.
+.sky-grid-multiselect-row {
+  td {
+    border-left:1px solid transparent;
+    border-right:1px solid transparent;
+  }
+}
+
+.sky-grid-multiselect-row:hover {
+  background-color:darken($sky-background-color-selected, 3%);
+}
+
+.sky-grid-multiselect-selected-row {
   background:$sky-background-color-selected;
   border-top:1px solid #dadbf6;
   border-bottom:1px solid #dadbf6;
-}
-.sky-grid-multiselect-row:hover>td {
-  background-color:darken($sky-background-color-selected, 3%);
+
+  // Override zebra stribing.
+  &:nth-child(odd) {
+    background:$sky-background-color-selected;
+  }
 }
 
 .sky-grid-has-toolbar {
