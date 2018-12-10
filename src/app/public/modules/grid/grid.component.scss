@@ -162,6 +162,11 @@ th.sky-grid-multiselect-cell {
 
 .sky-grid-multiselect-row:hover {
   background-color:darken($sky-background-color-selected, 3%);
+
+  // Override zebra stribing.
+  &:nth-child(odd) {
+    background:darken($sky-background-color-selected, 3%);
+  }
 }
 
 .sky-grid-multiselect-selected-row {
