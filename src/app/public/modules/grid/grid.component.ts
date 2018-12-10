@@ -70,6 +70,8 @@ import {
   SkyWindowRefService
 } from '@skyux/core';
 
+require('./public/polyfills');
+
 let nextId = 0;
 
 @Component({
