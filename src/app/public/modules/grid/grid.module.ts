@@ -39,8 +39,6 @@ import {
   SkyGridsResourcesModule
 } from '../shared/grids-resources.module';
 
-require('../../polyfills.ts');
-
 @NgModule({
   declarations: [
     SkyGridComponent,

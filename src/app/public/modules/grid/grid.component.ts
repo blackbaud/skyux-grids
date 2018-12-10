@@ -70,8 +70,6 @@ import {
   SkyWindowRefService
 } from '@skyux/core';
 
-import * as polyfill from '../../polyfills';
-
 let nextId = 0;
 
 @Component({
@@ -709,6 +707,6 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
       menu,
       menuitem,
       summary`;
-    return polyfill.getClosest(event.target, interactiveElSelectors);
+    return event.target.closest(interactiveElSelectors);
   }
 }

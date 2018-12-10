@@ -6,6 +6,8 @@ import {
   SkyGridModule
 } from './public';
 
+require('./public/polyfills');
+
 @NgModule({
   imports: [
     SkyGridModule
