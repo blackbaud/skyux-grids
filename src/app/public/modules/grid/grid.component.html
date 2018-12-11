@@ -88,7 +88,7 @@
             'sky-grid-multiselect-selected-row' : item.isSelected,
             'sky-grid-multiselect-row' : enableMultiselect
           }"
-          (click)="selectRow($event, item)"
+          (click)="onRowClick($event, item)"
         >
           <td *ngIf="enableMultiselect"
             class="sky-grid-multiselect-cell sky-grid-header-locked"

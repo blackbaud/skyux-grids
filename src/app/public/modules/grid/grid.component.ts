@@ -70,7 +70,7 @@ import {
   SkyWindowRefService
 } from '@skyux/core';
 
-require('./public/polyfills');
+require('../../polyfills');
 
 let nextId = 0;
 
@@ -453,7 +453,7 @@ export class SkyGridComponent implements AfterContentInit, OnChanges, OnDestroy 
     }
   }
 
-  public selectRow(event: any, selectedItem: ListItemModel) {
+  public onRowClick(event: any, selectedItem: ListItemModel) {
     if (this.enableMultiselect) {
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
