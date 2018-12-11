@@ -74,21 +74,7 @@ describe('Polyfills', () => {
       let childEl = nativeElement.querySelector('#child');
       let actual = childEl.closest('#not-found');
 
-      expect(actual).toBeUndefined();
-    });
-
-    it('should return undefined if no ancestor is found', () => {
-      let childEl = nativeElement.querySelector('#child');
-      let actual = childEl.closest('#not-found');
-
-      expect(actual).toBeUndefined();
-    });
-
-    it('should return undefined if the selector is not found', () => {
-      let notFoundEl = nativeElement.querySelector('#not-found');
-      let actual = notFoundEl.closest('#foo');
-
-      expect(actual).toBeUndefined();
+      expect(actual).toBeNull();
     });
   });
 

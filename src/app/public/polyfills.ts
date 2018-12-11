@@ -1,3 +1,5 @@
+// tslint:disable:no-null-keyword
+
 // Polyfill for Element.closest().
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
 // Returns the closest ancestor of the current element (or the current element itself) which
@@ -5,16 +7,17 @@
 if (!Element.prototype.closest) {
   Element.prototype.closest = function(s: any) {
     let el = this;
+    /* istanbul ignore if */
     if (!document.documentElement.contains(el)) {
-      return undefined;
+      return null;
     }
     do {
         if (el.matches(s)) {
           return el;
         }
         el = el.parentElement || el.parentNode;
-    } while (el !== undefined && el.nodeType === 1);
-    return undefined;
+    } while (el !== null && el.nodeType === 1);
+    return null;
   };
 }
 
