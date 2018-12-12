@@ -18,7 +18,7 @@
             [style.width.px]="minColWidth"
           >
             <span class="screen-reader-only">
-              {{ 'skyux_grid_select_row' | skyLibResources }}
+              {{ 'skyux_grid_multiselect_select_row' | skyLibResources }}
             </span>
           </th>
           <th *ngFor="let column of displayedColumns; let last = last, let i = index"
@@ -98,7 +98,7 @@
               [style.width.px]="minColWidth"
             >
               <sky-checkbox
-                [label]="'skyux_grid_select_row' | skyLibResources"
+                [label]="'skyux_grid_multiselect_select_row' | skyLibResources"
                 (change)="onMultiselectChange()"
                 [(ngModel)]="item.isSelected"
               >
