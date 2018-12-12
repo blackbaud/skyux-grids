@@ -8,6 +8,10 @@ import {
 } from '@angular/core';
 
 import {
+  Subject
+} from 'rxjs/Subject';
+
+import {
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
 
@@ -17,6 +21,7 @@ import {
 
 import {
   SkyGridColumnWidthModelChange,
+  SkyGridMessage,
   SkyGridSelectedRowsModelChange
 } from '../types';
 
@@ -46,6 +51,7 @@ export class GridTestComponent {
   public enableMultiselect: boolean = false;
   public multiselectRowId: string;
   public selectedRowsChange: SkyGridSelectedRowsModelChange;
+  public gridController = new Subject<SkyGridMessage>();
 
   public selectedColumnIds: string[] = [
     'column1',

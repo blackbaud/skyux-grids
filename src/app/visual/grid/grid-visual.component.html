@@ -37,6 +37,22 @@
 
 <h1>Simple grid with multiselect enabled</h1>
 
+<button
+  type="button"
+  class="sky-btn sky-btn-primary"
+  (click)="selectAll()"
+>
+  Select all
+</button>
+
+<button
+  type="button"
+  class="sky-btn sky-btn-primary"
+  (click)="clearAll()"
+>
+  Clear all
+</button>
+
 <div
   id="screenshot-grid-multiselect"
 >
@@ -44,6 +60,7 @@
     fit="scroll"
     [data]="dataForSimpleGridWithMultiselect"
     [enableMultiselect]="true"
+    [messageStream]="gridController"
     [multiselectRowId]="'myId'"
     (sortFieldChange)="sortChangedMultiselectGrid($event)"
     (multiselectSelectionChange)="onMultiselectSelectionChange($event)"

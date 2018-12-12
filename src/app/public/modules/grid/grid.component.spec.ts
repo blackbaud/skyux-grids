@@ -60,7 +60,9 @@ import {
 } from './';
 
 import {
-  SkyGridSelectedRowsModelChange
+  SkyGridSelectedRowsModelChange,
+  SkyGridMessageType,
+  SkyGridMessage
 } from './types';
 
 //#region helpers
@@ -1169,7 +1171,7 @@ describe('Grid Component', () => {
         expect(sortSpy).not.toHaveBeenCalled();
       });
 
-      it('should properly update isSelected when multiselectSelectAll/multiselectClearAll are called', () => {
+      it('should properly update isSelected when message stream is used for ClearAll/SelectAll', () => {
         const checkboxes = getMultiselectInputs();
         const tableRows = getTableRows(fixture);
 
@@ -1177,7 +1179,8 @@ describe('Grid Component', () => {
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
 
         // Select all.
-        component.selectAll();
+        const selectAllMessage: SkyGridMessage = { type: SkyGridMessageType.SelectAll };
+        fixture.componentInstance.gridController.next(selectAllMessage);
         fixture.detectChanges();
 
         for (let i = 0; i < checkboxes.length; i++) {
@@ -1186,8 +1189,8 @@ describe('Grid Component', () => {
           expect(tableRows[i].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
         }
 
-        // Clear all.
-        component.clearAll();
+        const clearAllMessage: SkyGridMessage = { type: SkyGridMessageType.ClearAll };
+        fixture.componentInstance.gridController.next(clearAllMessage);
         fixture.detectChanges();
 
         for (let i = 0; i < checkboxes.length; i++) {

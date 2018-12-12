@@ -3,10 +3,16 @@ import {
 } from '@angular/core';
 
 import {
+  Subject
+} from 'rxjs/Subject';
+
+import {
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
 
 import {
+  SkyGridMessageType,
+  SkyGridMessage,
   SkyGridSelectedRowsModelChange
 } from '../../public';
 
@@ -18,6 +24,7 @@ export class GridVisualComponent {
 
   public highlightText: string;
   public selectedRows: string;
+  public gridController = new Subject<SkyGridMessage>();
 
   public dataForSimpleGrid = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
@@ -55,6 +62,14 @@ export class GridVisualComponent {
     this.selectedRows = value.selectedRowIds.toString();
   }
 
+  public selectAll() {
+    this.sendMessage(SkyGridMessageType.SelectAll);
+  }
+
+  public clearAll() {
+    this.sendMessage(SkyGridMessageType.ClearAll);
+  }
+
   private performSort(activeSort: ListSortFieldSelectorModel, data: any[]) {
     const sortField = activeSort.fieldSelector;
     const descending = activeSort.descending;
@@ -83,5 +98,10 @@ export class GridVisualComponent {
 
       return result;
     }).slice();
+  }
+
+  private sendMessage(type: SkyGridMessageType) {
+    const message: SkyGridMessage = { type };
+    this.gridController.next(message);
   }
 }
