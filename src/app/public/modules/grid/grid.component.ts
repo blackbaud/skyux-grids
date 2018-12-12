@@ -486,7 +486,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     }
   }
 
-  public multiselectSelectAll() {
+  private multiselectSelectAll() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = true;
     }
@@ -494,7 +494,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.emitSelectedRows();
   }
 
-  public multiselectClearAll() {
+  private multiselectClearAll() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = false;
     }
