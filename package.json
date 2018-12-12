@@ -26,7 +26,9 @@
     "@angular/common": "^4.3.6",
     "@angular/core": "^4.3.6",
     "@angular/forms": "^4.3.6",
+    "@skyux/i18n": "^3.2.0",
     "@skyux/list-builder-common": "^3.0.0-rc.1",
+    "@skyux/forms": "^3.0.0-rc.4",
     "@skyux/indicators": "^3.0.0-rc.2"
   },
   "dependencies": {
@@ -34,9 +36,9 @@
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud/skyux": "2.28.1",
-    "@blackbaud/skyux-builder": "1.28.0",
+    "@blackbaud/skyux": "2.32.0",
+    "@blackbaud/skyux-builder": "1.30.0",
     "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5",
-    "@skyux/list-builder-common": "3.0.0-rc.1"
+    "@skyux/forms": "3.0.0-rc.4"
   }
 }
