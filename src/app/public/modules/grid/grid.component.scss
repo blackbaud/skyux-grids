@@ -153,10 +153,12 @@ th.sky-grid-multiselect-cell {
 }
 
 // Prevents a FF bug where borders would randomly appear.
-.sky-grid-multiselect-row {
-  td {
-    border-left:1px solid transparent;
-    border-right:1px solid transparent;
+@-moz-document url-prefix() {
+  .sky-grid-multiselect-row {
+    td {
+      border-left:0px solid transparent;
+      border-right:0px solid transparent;
+    }
   }
 }
 

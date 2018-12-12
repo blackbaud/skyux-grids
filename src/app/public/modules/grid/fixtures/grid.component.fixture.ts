@@ -168,12 +168,4 @@ export class GridTestComponent {
   public showColumn(): void {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
   }
-
-  public selectAll(): void {
-    this.grid.multiselectSelectAll();
-  }
-
-  public clearAll(): void {
-    this.grid.multiselectClearAll();
-  }
 }
