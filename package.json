@@ -1,6 +1,6 @@
 {
   "name": "@skyux/grids",
-  "version": "3.0.0-rc.2",
+  "version": "3.0.0-rc.3",
   "description": "SKY UX Grids",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
