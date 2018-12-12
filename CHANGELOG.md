@@ -1,6 +1,6 @@
 # 3.0.0-rc.3 (2018-12-12)
 
-- Added multiselect feature to display column of checkboxes on left side of grid. [#6](https://github.com/blackbaud/skyux-grids/pull/6)
+- Added multiselect feature to display column of checkboxes on grid component. [#6](https://github.com/blackbaud/skyux-grids/pull/6)
 
 # 3.0.0-rc.2 (2018-11-20)
 
