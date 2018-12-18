@@ -36,7 +36,7 @@
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud/skyux": "2.32.0",
+    "@blackbaud/skyux": "2.34.0",
     "@blackbaud/skyux-builder": "1.30.0",
     "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5",
     "@skyux/forms": "3.0.0-rc.4"
