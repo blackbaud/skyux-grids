@@ -858,7 +858,7 @@ describe('Grid Component', () => {
       }));
 
       it('should resize columns on mousemove', fakeAsync(() => {
-        spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
+        const spy = spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
         // Get initial baseline for comparison.
         let initialTableWidth = getTableWidth(fixture);
         let initialColumnWidths = getColumnWidths(fixture);
@@ -880,11 +880,11 @@ describe('Grid Component', () => {
         expectedColumnWidths[4] = 50;
         verifyWidthsMatch(newTableWidth, initialTableWidth);
         verifyAllWidthsMatch(newColumnWidths, expectedColumnWidths);
-        expect(fixture.componentInstance.grid.onMouseMove).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
       }));
 
       it('should not resize on mousemove unless the resize handle was clicked', fakeAsync(() => {
-        spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
+        const spy = spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
         // Get initial baseline for comparison.
         let initialTableWidth = getTableWidth(fixture);
         let initialColumnWidths = getColumnWidths(fixture);
@@ -898,7 +898,7 @@ describe('Grid Component', () => {
         let newColumnWidths = getColumnWidths(fixture);
         verifyWidthsMatch(newTableWidth, initialTableWidth);
         verifyAllWidthsMatch(newColumnWidths, initialColumnWidths);
-        expect(fixture.componentInstance.grid.onMouseMove).not.toHaveBeenCalled();
+        expect(spy).not.toHaveBeenCalled();
       }));
 
       it('should change max value when column width is changed', fakeAsync(() => {

@@ -39,6 +39,8 @@ import 'rxjs/add/operator/map';
 
 import 'rxjs/add/operator/take';
 
+import 'rxjs/add/operator/takeWhile';
+
 import 'rxjs/add/observable/fromEvent';
 
 import {
@@ -168,7 +170,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private resizeBar: ElementRef;
   private tableWidth: number;
   private isDraggingResizeHandle: boolean = false;
-  private isDraggingResizeHandleSubject = new Subject();
   private activeResizeColumnIndex: string;
   private startColumnWidth: number;
   private xPosStart: number;
@@ -409,7 +410,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.initializeResizeColumn(event);
 
     this.isDraggingResizeHandle = true;
-    this.isDraggingResizeHandleSubject.next(true);
     this.xPosStart = event.pageX;
     this.showResizeBar = true;
 
@@ -424,14 +424,18 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     Observable
       .fromEvent(document, 'mousemove')
-      .takeUntil(this.isDraggingResizeHandleSubject)
+      .takeWhile(() => {
+        return this.isDraggingResizeHandle;
+      })
       .subscribe((moveEvent: any) => {
         this.onMouseMove(moveEvent);
       });
 
     Observable
       .fromEvent(document, 'mouseup')
-      .takeUntil(this.isDraggingResizeHandleSubject)
+      .takeWhile(() => {
+        return this.isDraggingResizeHandle;
+      })
       .subscribe((mouseUpEvent: any) => {
         this.onResizeHandleRelease(mouseUpEvent);
       });
@@ -480,7 +484,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     let newColWidth = this.startColumnWidth + deltaX;
     this.resizeColumnByIndex(this.activeResizeColumnIndex, newColWidth, deltaX);
     this.isDraggingResizeHandle = false;
-    this.isDraggingResizeHandleSubject.next(false);
     this.activeResizeColumnIndex = undefined;
 
     event.stopPropagation();
