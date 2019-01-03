@@ -69,23 +69,43 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot with highlighted cells', (done) => {
+  it('should match previous screenshot with highlighted text', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
     SkyHostBrowser.scrollTo('#screenshot-grid');
-    element(by.css('#highlight-button')).click();
+    element(by.css('#highlight-text-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-lg'
+      screenshotName: 'grid-highlighted-text-lg'
     });
   });
 
-  it('should match previous screenshot with highlighted cells (screen: xs)', (done) => {
+  it('should match previous screenshot with highlighted text (screen: xs)', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid');
-    element(by.css('#highlight-button')).click();
+    element(by.css('#highlight-text-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-xs'
+      screenshotName: 'grid-highlighted-text-xs'
+    });
+  });
+
+  it('should match previous screenshot with a highlighted row', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid');
+    element(by.css('#highlight-row-button')).click();
+    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-highlighted-row-lg'
+    });
+  });
+
+  it('should match previous screenshot with a highlighted row (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid');
+    element(by.css('#highlight-row-button')).click();
+    expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-highlighted-row-xs'
     });
   });
 

@@ -8,6 +8,7 @@
     [data]="dataForSimpleGrid"
     [highlightText]="highlightText"
     (sortFieldChange)="sortChangedSimpleGrid($event)"
+    #grid
   >
     <sky-grid-column
       field="column1"
@@ -27,11 +28,18 @@
 
 <p>
   <button
-    id="highlight-button"
+    id="highlight-text-button"
     class="sky-btn sky-btn-primary"
-    (click)="triggerHighlight()"
+    (click)="triggerTextHighlight()"
   >
-    Trigger Highlight
+    Trigger text highlight
+  </button>
+  <button
+    id="highlight-row-button"
+    class="sky-btn sky-btn-primary"
+    (click)="triggerRowHighlight()"
+  >
+    Trigger row highlight
   </button>
 </p>
 
