@@ -502,7 +502,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     }
   }
 
-  public isRowHighlighted(id: string) {
+  public isRowHighlighted(id: string): boolean {
     if (this.rowHighlightedId) {
       return id === this.rowHighlightedId;
     }
