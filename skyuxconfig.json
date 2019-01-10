@@ -1,7 +1,8 @@
 {
-  "name": "skyux-grids",
+  "name": "email",
   "mode": "easy",
   "compileMode": "aot",
+  "auth": true,
   "skyuxModules": [
     "SkyErrorModule"
   ],

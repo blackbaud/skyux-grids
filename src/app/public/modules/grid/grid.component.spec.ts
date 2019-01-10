@@ -1629,6 +1629,34 @@ describe('Grid Component', () => {
       verifyHeaders(true);
       verifyData(true);
     });
+
+    it('should call the UI Config service when column order changes', () => {
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      const spy = spyOn(component.grid['uiConfigService'], 'setConfig').and.callThrough();
+
+      component.settingsKey = 'foobar';
+      component.selectedColumnIds = ['column1', 'column2'];
+
+      fixture.detectChanges();
+
+      component.grid.selectedColumnIds = ['column2', 'column1'];
+
+      fixture.detectChanges();
+
+      expect(spy.calls.count()).toEqual(1);
+    });
   });
 
   describe('Dynamic columns', () => {
