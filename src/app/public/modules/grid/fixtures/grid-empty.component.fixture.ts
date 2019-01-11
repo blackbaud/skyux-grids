@@ -21,10 +21,8 @@ export class GridEmptyTestComponent {
   public template: TemplateRef<any>;
 
   public columns: Array<SkyGridColumnModel>;
-
-  public settingsKey: string;
-
   public selectedColumnIds: string[];
+  public settingsKey: string;
 
   public data: any[] = [
     {

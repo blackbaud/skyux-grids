@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/blackbaud/skyux-grids#readme",
   "peerDependencies": {
-    "@angular/common": ">=4.3.6",
-    "@angular/core": ">=4.3.6",
-    "@angular/forms": ">=4.3.6",
+    "@angular/common": "^4.3.6",
+    "@angular/core": "^4.3.6",
+    "@angular/forms": "^4.3.6",
     "@skyux/core": "^3.5.1",
     "@skyux/i18n": "^3.2.0",
     "@skyux/list-builder-common": "^3.0.0-rc.1",
@@ -37,7 +37,6 @@
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud-internal/skyux-lib-ui-config-service": "^1.0.1",
     "@blackbaud/skyux": "2.37.0",
     "@blackbaud/skyux-builder": "1.30.0",
     "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5"

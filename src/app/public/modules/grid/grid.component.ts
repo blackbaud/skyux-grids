@@ -520,6 +520,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public onRowClick(event: any, selectedItem: ListItemModel) {
+    /* istanbul ignore else */
     if (this.enableMultiselect) {
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
@@ -583,24 +584,19 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.ref.markForCheck();
   }
 
-  private setDisplayedColumns(respectHidden = false): void {
+  private setDisplayedColumns(respectHidden: boolean = false) {
     if (this.selectedColumnIds !== undefined) {
+      // setup displayed columns
       this.displayedColumns = this.selectedColumnIds.map(
         columnId => this.columns.filter(column => column.id === columnId)[0]
       );
-
-      return;
-    }
-
-    if (respectHidden) {
-      this.displayedColumns = this.columns.filter((column) => {
+    } else if (respectHidden) {
+      this.displayedColumns = this.columns.filter(column => {
         return !column.hidden;
       });
-
-      return;
+    } else {
+      this.displayedColumns = this.columns;
     }
-
-    this.displayedColumns = this.columns;
   }
 
   private transformData() {
@@ -816,7 +812,8 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.uiConfigService.getConfig(this.settingsKey)
       .subscribe((config) => {
-        if (config.selectedColumnIds) {
+        /* istanbul ignore else */
+        if (config && config.selectedColumnIds) {
           this.selectedColumnIds = config.selectedColumnIds;
           this.setDisplayedColumns();
           this.ref.markForCheck();
