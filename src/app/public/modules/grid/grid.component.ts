@@ -207,8 +207,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public ngOnInit() {
-    this.applyUserConfig();
-
     this.messageStream
       .takeUntil(this.ngUnsubscribe)
       .subscribe((message: SkyGridMessage) => {
@@ -217,38 +215,15 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public ngAfterContentInit() {
-    if (this.columnComponents.length !== 0 || this.columns !== undefined) {
-      /* istanbul ignore else */
-      /* sanity check */
-      if (this.columnComponents.length > 0) {
-        this.getColumnsFromComponent();
-      }
-
-      this.transformData();
-      this.setDisplayedColumns(true);
+    if (this.settingsKey) {
+      this.applyUserConfig().then(() => {
+        this.initColumns();
+      });
+    } else {
+      this.initColumns();
     }
 
-    // Watch for added/removed columns:
-    this.subscriptions.push(
-      this.columnComponents.changes.subscribe(() => this.updateColumns())
-    );
-
-    // Watch for column heading changes:
-    this.columnComponents.forEach((comp: SkyGridColumnComponent) => {
-      this.subscriptions.push(
-        comp.headingModelChanges
-          .subscribe((change: SkyGridColumnHeadingModelChange) => {
-            this.updateColumnHeading(change);
-          })
-      );
-      this.subscriptions.push(
-        comp.descriptionModelChanges
-          .subscribe((change: SkyGridColumnDescriptionModelChange) => {
-            this.updateColumnDescription(change);
-          })
-      );
-    });
-
+    // Setup column drag-and-drop.
     this.gridAdapter.initializeDragAndDrop(
       this.dragulaService,
       (selectedColumnIds: Array<string>) => {
@@ -805,20 +780,22 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return event.target.closest(interactiveElSelectors);
   }
 
-  private applyUserConfig(): void {
-    if (!this.settingsKey) {
-      return;
-    }
+  private applyUserConfig(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.uiConfigService.getConfig(this.settingsKey)
+        .take(1)
+        .subscribe((config) => {
+          /* istanbul ignore else */
+          if (config && config.selectedColumnIds) {
+            this.selectedColumnIds = config.selectedColumnIds;
+            this.ref.markForCheck();
+          }
 
-    this.uiConfigService.getConfig(this.settingsKey)
-      .subscribe((config) => {
-        /* istanbul ignore else */
-        if (config && config.selectedColumnIds) {
-          this.selectedColumnIds = config.selectedColumnIds;
-          this.setDisplayedColumns();
-          this.ref.markForCheck();
-        }
-      });
+          resolve();
+        }, () => {
+          resolve();
+        });
+    });
   }
 
   private setUserConfig(config: SkyGridUIConfig): void {
@@ -829,12 +806,53 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.uiConfigService.setConfig(
       this.settingsKey,
       config
-    ).subscribe(
-      () => { },
-      (err) => {
-        console.warn('Could not save grid settings.');
-        console.warn(err);
+    )
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(
+        () => { },
+        (err) => {
+          console.warn('Could not save grid settings.');
+          console.warn(err);
+        }
+      );
+  }
+
+  private initColumns(): void {
+    /* istanbul ignore else */
+    if (
+      this.columnComponents.length !== 0 ||
+      this.columns !== undefined
+    ) {
+      /* istanbul ignore else */
+      /* sanity check */
+      if (this.columnComponents.length > 0) {
+        this.getColumnsFromComponent();
       }
+
+      this.transformData();
+      this.setDisplayedColumns(true);
+      this.ref.markForCheck();
+    }
+
+    // Watch for added/removed columns:
+    this.subscriptions.push(
+      this.columnComponents.changes.subscribe(() => this.updateColumns())
     );
+
+    // Watch for column heading changes:
+    this.columnComponents.forEach((comp: SkyGridColumnComponent) => {
+      this.subscriptions.push(
+        comp.headingModelChanges
+          .subscribe((change: SkyGridColumnHeadingModelChange) => {
+            this.updateColumnHeading(change);
+          })
+      );
+      this.subscriptions.push(
+        comp.descriptionModelChanges
+          .subscribe((change: SkyGridColumnDescriptionModelChange) => {
+            this.updateColumnDescription(change);
+          })
+      );
+    });
   }
 }

@@ -20,8 +20,16 @@ import {
 } from '@angular/core/testing';
 
 import {
+  SkyUIConfigService
+} from '@skyux/core';
+
+import {
   DragulaService
 } from 'ng2-dragula/ng2-dragula';
+
+import {
+  Observable
+} from 'rxjs/Observable';
 
 const moment = require('moment');
 
@@ -63,8 +71,6 @@ import {
   SkyGridMessageType,
   SkyGridMessage
 } from './types';
-import { SkyUIConfigService } from '@skyux/core';
-import { Observable } from 'rxjs';
 
 //#region helpers
 function getColumnHeader(id: string, element: DebugElement) {
@@ -590,7 +596,7 @@ describe('Grid Component', () => {
         });
       });
 
-      describe('Resiazable columns', () => {
+      describe('Resizeable columns', () => {
 
         it('should not resize if user does not use resize handle', fakeAsync(() => {
           // Get initial baseline for comparison.
@@ -1768,7 +1774,7 @@ describe('Grid Component', () => {
       expect(spy.calls.count()).toEqual(1);
     });
 
-    it('should handle UI config errors', () => {
+    it('should handle errors when setting config', () => {
       const spy = spyOn(console, 'warn');
 
       const uiConfigService = TestBed.get(SkyUIConfigService);
@@ -1795,6 +1801,31 @@ describe('Grid Component', () => {
       fixture.detectChanges();
 
       expect(spy).toHaveBeenCalledWith('Could not save grid settings.');
+    });
+
+    it('should suppress errors when getting config', () => {
+      const uiConfigService = TestBed.get(SkyUIConfigService);
+
+      spyOn(uiConfigService, 'getConfig').and.callFake(() => {
+        return Observable.throw(new Error());
+      });
+
+      const spy = spyOn(fixture.componentInstance.grid as any, 'initColumns').and.callThrough();
+
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        })
+      ];
+
+      component.settingsKey = 'foobar';
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+      });
     });
   });
 });
