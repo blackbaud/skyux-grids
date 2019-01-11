@@ -1,6 +1,6 @@
 {
   "name": "@skyux/grids",
-  "version": "3.0.0-rc.6",
+  "version": "3.0.0",
   "description": "SKY UX Grids",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
@@ -23,22 +23,21 @@
   },
   "homepage": "https://github.com/blackbaud/skyux-grids#readme",
   "peerDependencies": {
-    "@angular/common": "^4.3.6",
-    "@angular/core": "^4.3.6",
-    "@angular/forms": "^4.3.6",
-    "@skyux/i18n": "^3.2.0",
-    "@skyux/list-builder-common": "^3.0.0-rc.1",
-    "@skyux/forms": "^3.0.0-rc.4",
-    "@skyux/indicators": "^3.0.0-rc.2"
+    "@angular/common": ">=4.3.6",
+    "@angular/core": ">=4.3.6",
+    "@angular/forms": ">=4.3.6",
+    "@skyux/i18n": "^3.5.0",
+    "@skyux/list-builder-common": "^3.0.0",
+    "@skyux/forms": "^3.0.0",
+    "@skyux/indicators": "^3.0.0"
   },
   "dependencies": {
     "dragula": "3.7.2",
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud/skyux": "2.34.0",
+    "@blackbaud/skyux": "2.38.0",
     "@blackbaud/skyux-builder": "1.30.0",
-    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5",
-    "@skyux/forms": "3.0.0-rc.4"
+    "@skyux-sdk/builder-plugin-skyux": "1.0.0-rc.5"
   }
 }
