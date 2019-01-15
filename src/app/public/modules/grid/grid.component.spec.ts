@@ -1722,6 +1722,7 @@ describe('Grid Component', () => {
   describe('UI config', () => {
     let fixture: ComponentFixture<GridEmptyTestComponent>;
     let component: GridEmptyTestComponent;
+    let uiConfigService: SkyUIConfigService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -1732,6 +1733,7 @@ describe('Grid Component', () => {
 
       fixture = TestBed.createComponent(GridEmptyTestComponent);
       component = fixture.componentInstance;
+      uiConfigService = TestBed.get(SkyUIConfigService);
     });
 
     it('should call the UI config service when selected columns change', () => {
@@ -1748,7 +1750,6 @@ describe('Grid Component', () => {
 
       fixture.detectChanges();
 
-      const uiConfigService = TestBed.get(SkyUIConfigService);
       const spy = spyOn(uiConfigService, 'setConfig').and.callThrough();
 
       component.settingsKey = 'foobar';
@@ -1764,20 +1765,17 @@ describe('Grid Component', () => {
       expect(spy.calls.count()).toEqual(1);
     });
 
-    it('should apply UI Config on init', () => {
-      const uiConfigService = TestBed.get(SkyUIConfigService);
+    it('should fetch UI config on init', () => {
       const spy = spyOn(uiConfigService, 'getConfig').and.callThrough();
 
       component.settingsKey = 'foobar';
       fixture.detectChanges();
 
-      expect(spy.calls.count()).toEqual(1);
+      expect(spy).toHaveBeenCalledWith('foobar');
     });
 
     it('should handle errors when setting config', () => {
       const spy = spyOn(console, 'warn');
-
-      const uiConfigService = TestBed.get(SkyUIConfigService);
 
       spyOn(uiConfigService, 'setConfig').and.callFake(() => {
         return Observable.throw(new Error());
@@ -1804,8 +1802,6 @@ describe('Grid Component', () => {
     });
 
     it('should suppress errors when getting config', () => {
-      const uiConfigService = TestBed.get(SkyUIConfigService);
-
       spyOn(uiConfigService, 'getConfig').and.callFake(() => {
         return Observable.throw(new Error());
       });
