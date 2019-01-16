@@ -1,6 +1,6 @@
 # 3.1.0 (2019-01-16)
 
-- Added UI config service hooks to grid component. [#31](https://github.com/blackbaud/skyux-grids/pull/31)
+- Added UI Config Service hooks to grid component. [#31](https://github.com/blackbaud/skyux-grids/pull/31)
 
 # 3.0.0 (2019-01-11)
 
