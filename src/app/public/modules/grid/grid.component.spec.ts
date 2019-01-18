@@ -964,9 +964,26 @@ describe('Grid Component', () => {
       fixture.detectChanges();
       fixture.detectChanges();
     });
+
+    //#region multiselect helpers
     function getMultiselectInputs() {
       return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
     }
+
+    function verifyCheckbox(index: number, checked: boolean) {
+      const checkboxes = getMultiselectInputs();
+      const tableRows = getTableRows(fixture);
+
+      expect(component.data[index].isSelected = checked);
+      expect(checkboxes[index].nativeElement.checked = checked);
+      if (checked) {
+        expect(tableRows[index].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
+      } else {
+        expect(tableRows[index].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
+      }
+    }
+    //#endregion
+
     describe('Standard setup', () => {
       it('should add checkboxes properly to grid, with proper accessibility attributes', () => {
         const checkboxes = getMultiselectInputs();
@@ -1227,9 +1244,7 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         for (let i = 0; i < checkboxes.length; i++) {
-          expect(component.data[i].isSelected = true);
-          expect(checkboxes[i].nativeElement.checked = true);
-          expect(tableRows[i].nativeElement).toHaveCssClass('sky-grid-multiselect-selected-row');
+          verifyCheckbox(i, true);
         }
 
         const clearAllMessage: SkyGridMessage = { type: SkyGridMessageType.ClearAll };
@@ -1237,10 +1252,50 @@ describe('Grid Component', () => {
         fixture.detectChanges();
 
         for (let i = 0; i < checkboxes.length; i++) {
-          expect(component.data[i].isSelected = false);
-          expect(checkboxes[i].nativeElement.checked = false);
-          expect(tableRows[i].nativeElement).not.toHaveCssClass('sky-grid-multiselect-selected-row');
+          verifyCheckbox(i, false);
         }
+      });
+
+      it('should properly update isSelected when multiselectSelectById method is used', () => {
+        // Select group of rows.
+        let selectedIdMap: Map<string, boolean> = new Map([
+          ['1', true],
+          ['2', false],
+          ['3', false],
+          ['4', true],
+          ['5', true],
+          ['6', false],
+          ['7', true]
+        ]);
+        component.multiselectSelectById(selectedIdMap);
+        fixture.detectChanges();
+
+        // Verify those rows are selected and displayed properly.
+        verifyCheckbox(0, true);
+        verifyCheckbox(1, false);
+        verifyCheckbox(2, false);
+        verifyCheckbox(3, true);
+        verifyCheckbox(4, true);
+        verifyCheckbox(5, false);
+        verifyCheckbox(6, true);
+
+        // Send another selection.
+        selectedIdMap = new Map([
+          ['1', false],
+          ['5', true],
+          ['6', false]
+        ]);
+        component.multiselectSelectById(selectedIdMap);
+        fixture.detectChanges();
+
+        // Verify new rows are selected and displayed properly.
+        verifyCheckbox(0, false);
+        verifyCheckbox(1, false);
+        verifyCheckbox(2, false);
+        verifyCheckbox(3, false);
+        verifyCheckbox(4, true);
+        verifyCheckbox(5, false);
+        verifyCheckbox(6, false);
       });
 
       it('should be accessible', async(() => {

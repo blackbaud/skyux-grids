@@ -170,4 +170,8 @@ export class GridTestComponent {
   public showColumn(): void {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
   }
+
+  public multiselectSelectById(selectedIdMap: Map<string, boolean>) {
+    this.grid.multiselectSelectById(selectedIdMap);
+  }
 }
