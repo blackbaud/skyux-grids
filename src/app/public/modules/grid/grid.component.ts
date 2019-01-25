@@ -103,8 +103,30 @@ let nextId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
+
   @Input()
-  public selectedColumnIds: Array<string>;
+  public set selectedColumnIds(newIds: Array<string>) {
+    const oldIds = this._selectedColumnIds;
+    this._selectedColumnIds = newIds;
+    if (this.columns) {
+      this.setDisplayedColumns();
+    }
+    if (!oldIds || !this._selectedColumnIds || !(this._selectedColumnIds.length === oldIds.length &&
+        this._selectedColumnIds.every((value, index) => value === oldIds[index]))) {
+          if (this.selectedColumnIdsSet) {
+            this.setUserConfig({
+              selectedColumnIds: newIds
+            });
+            this.selectedColumnIdsChange.emit(this._selectedColumnIds);
+            this.resetTableWidth();
+          }
+    }
+    this.selectedColumnIdsSet = true;
+  }
+
+  public get selectedColumnIds(): Array<string> {
+    return this._selectedColumnIds;
+  }
 
   @Input()
   public fit: string = 'width';
@@ -188,6 +210,8 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private startColumnWidth: number;
   private xPosStart: number;
   private isResized: boolean;
+  private _selectedColumnIds: Array<string>;
+  private selectedColumnIdsSet: boolean;
 
   private ngUnsubscribe = new Subject();
 
@@ -233,26 +257,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes.selectedColumnIds &&
-      changes.selectedColumnIds.firstChange === false
-    ) {
-      this.setDisplayedColumns();
-
-      this.setUserConfig({
-        selectedColumnIds: this.selectedColumnIds
-      });
-
-      /* istanbul ignore else */
-      if (
-        changes.selectedColumnIds.previousValue !==
-        changes.selectedColumnIds.currentValue
-      ) {
-        this.selectedColumnIdsChange.emit(this.selectedColumnIds);
-        this.resetTableWidth();
-      }
-    }
-
     if (changes.columns && this.columns) {
       this.setDisplayedColumns(true);
     }
@@ -544,16 +548,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private onHeaderDrop(newColumnIds: Array<string>) {
     // update selected columnIds
     this.selectedColumnIds = newColumnIds;
-    this.selectedColumnIdsChange.emit(newColumnIds);
-
-    // set new displayed columns
-    this.displayedColumns = this.selectedColumnIds.map(
-      columnId => this.columns.filter(column => column.id === columnId)[0]
-    );
-
-    this.setUserConfig({
-      selectedColumnIds: this.selectedColumnIds
-    });
 
     // mark for check because we are using ChangeDetectionStrategy.onPush
     this.ref.markForCheck();
