@@ -5,16 +5,13 @@ import {
 import {
   SkyGridModule
 } from './public';
-import { SkyLabelModule } from '@skyux/indicators';
 
 @NgModule({
   imports: [
-    SkyGridModule,
-    SkyLabelModule
+    SkyGridModule
   ],
   exports: [
-    SkyGridModule,
-    SkyLabelModule
+    SkyGridModule
   ],
   providers: [],
   entryComponents: []
