@@ -4,7 +4,7 @@
   id="screenshot-grid"
 >
   <sky-grid
-    fit="width"
+    fit="scroll"
     [data]="dataForSimpleGrid"
     [highlightText]="highlightText"
     [rowHighlightedId]="rowHighlightedId"
@@ -14,19 +14,15 @@
     <sky-grid-column
       field="column1"
       heading="Column1"
-      [width]="240"
     ></sky-grid-column>
     <sky-grid-column
       field="column2"
       heading="Column2"
-      [width]="40"
     ></sky-grid-column>
     <sky-grid-column
       field="column3"
       heading="Column3"
       [excludeFromHighlighting]="true"
-      [template]="statusTemplate"
-      [width]="100"
     ></sky-grid-column>
   </sky-grid>
 </div>
@@ -93,20 +89,9 @@
     <sky-grid-column
       field="column3"
       heading="Column3"
-      [template]="statusTemplate"
     ></sky-grid-column>
   </sky-grid>
 
   <p>Selected rows:</p>
   <p>{{ selectedRows }}</p>
 </div>
-
-<ng-template let-row="row" let-value="value" #statusTemplate>
-  <a>
-    <!-- <orchestration-status [status]="value">
-    </orchestration-status> -->
-        <sky-label labelType="success">
-        {{ value }}
-    </sky-label>
-  </a>
-</ng-template>
