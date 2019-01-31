@@ -54,6 +54,7 @@ export class GridTestComponent {
   public gridController = new Subject<SkyGridMessage>();
   public rowHighlightedId: string;
   public settingsKey: string;
+  public multiselectSelectedRowIds: Array<string>;
 
   public selectedColumnIds: string[] = [
     'column1',
@@ -169,9 +170,5 @@ export class GridTestComponent {
 
   public showColumn(): void {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
-  }
-
-  public multiselectSelectByIds(selectedIds: string[]) {
-    this.grid.multiselectSelectByIds(selectedIds);
   }
 }
