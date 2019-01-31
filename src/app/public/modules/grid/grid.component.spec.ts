@@ -1256,36 +1256,24 @@ describe('Grid Component', () => {
         }
       });
 
-      it('should properly update isSelected when multiselectSelectById method is used', () => {
+      it('should properly update isSelected when multiselectSelectByIds method is used', () => {
         // Select group of rows.
-        let selectedIdMap: Map<string, boolean> = new Map([
-          ['1', true],
-          ['2', false],
-          ['3', false],
-          ['4', true],
-          ['5', true],
-          ['6', false],
-          ['7', true]
-        ]);
-        component.multiselectSelectById(selectedIdMap);
+        let selectedIds = ['1', '3'];
+        component.multiselectSelectByIds(selectedIds);
         fixture.detectChanges();
 
         // Verify those rows are selected and displayed properly.
         verifyCheckbox(0, true);
         verifyCheckbox(1, false);
-        verifyCheckbox(2, false);
-        verifyCheckbox(3, true);
-        verifyCheckbox(4, true);
+        verifyCheckbox(2, true);
+        verifyCheckbox(3, false);
+        verifyCheckbox(4, false);
         verifyCheckbox(5, false);
-        verifyCheckbox(6, true);
+        verifyCheckbox(6, false);
 
         // Send another selection.
-        selectedIdMap = new Map([
-          ['1', false],
-          ['5', true],
-          ['6', false]
-        ]);
-        component.multiselectSelectById(selectedIdMap);
+        selectedIds = ['5'];
+        component.multiselectSelectByIds(selectedIds);
         fixture.detectChanges();
 
         // Verify new rows are selected and displayed properly.

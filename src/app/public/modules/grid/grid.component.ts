@@ -512,12 +512,12 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return false;
   }
 
-  public multiselectSelectById(selectedIdMap: Map<string, boolean>): void {
+  public multiselectSelectByIds(selectedIds: string[]): void {
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].isSelected = selectedIdMap.get(this.items[i].id);
+      const isSelected = (selectedIds.indexOf(this.items[i].id) > -1);
+      this.items[i].isSelected = isSelected;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows();
   }
 
   private multiselectSelectAll() {
