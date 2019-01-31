@@ -27,13 +27,13 @@ export class GridVisualComponent {
   public gridController = new Subject<SkyGridMessage>();
 
   public dataForSimpleGrid = [
-    { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
-    { id: '2', column1: '01', column2: 'Banana', column3: 'bb' },
-    { id: '3', column1: '11', column2: 'Banana', column3: 'cc' },
-    { id: '4', column1: '12', column2: 'Daikon', column3: 'dd' },
-    { id: '5', column1: '13', column2: 'Edamame', column3: 'ee' },
-    { id: '6', column1: '20', column2: 'Fig', column3: 'ff' },
-    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' }
+    { id: '1', column1: '1', column2: 'Apple', column3: 'alfalfa sprouts' },
+    { id: '2', column1: '01', column2: 'Banana', column3: 'mung beans' },
+    { id: '3', column1: '11', column2: 'Banana', column3: 'waldorf salad' },
+    { id: '4', column1: '12', column2: 'Daikon', column3: 'eggplant scampi' },
+    { id: '5', column1: '13', column2: 'Edamame', column3: 'tiger nuts' },
+    { id: '6', column1: '20', column2: 'Fig', column3: 'wolf steak' },
+    { id: '7', column1: '21', column2: 'Grape', column3: 'gado gado' }
   ];
 
   public dataForSimpleGridWithMultiselect = [
