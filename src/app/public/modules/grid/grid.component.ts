@@ -849,9 +849,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     });
   }
 
-  private arraysEqual(oldArray: any[], newArray: any[]) {
-    return oldArray.length === newArray.length &&
-    oldArray.every((value, index) =>
-      value === newArray[index]);
+  private arraysEqual(arrayA: any[], arrayB: any[]) {
+    return arrayA.length === arrayB.length &&
+    arrayA.every((value, index) =>
+      value === arrayB[index]);
   }
 }
