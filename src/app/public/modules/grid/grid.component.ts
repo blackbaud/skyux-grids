@@ -152,7 +152,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public highlightText: string;
 
   @Input()
-  public enableMultiselect: boolean;
+  public enableMultiselect: boolean = false;
 
   @Input()
   public multiselectRowId: string;
@@ -208,9 +208,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private activeResizeColumnIndex: string;
   private startColumnWidth: number;
   private xPosStart: number;
-  private isResized: boolean;
+  private isResized: boolean = false;
   private _selectedColumnIds: Array<string>;
-  private selectedColumnIdsSet: boolean;
+  private selectedColumnIdsSet: boolean = false;
 
   private ngUnsubscribe = new Subject();
 
