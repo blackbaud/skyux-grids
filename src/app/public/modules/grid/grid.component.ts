@@ -111,8 +111,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     if (this.columns) {
       this.setDisplayedColumns();
     }
-    if (!oldIds || !this._selectedColumnIds || !(this._selectedColumnIds.length === oldIds.length &&
-        this._selectedColumnIds.every((value, index) => value === oldIds[index]))) {
+    if (!oldIds || !this._selectedColumnIds || !(this.arraysEqual(this._selectedColumnIds, oldIds))) {
           if (this.selectedColumnIdsSet) {
             this.setUserConfig({
               selectedColumnIds: newIds
@@ -848,5 +847,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
           })
       );
     });
+  }
+
+  private arraysEqual(oldArray: any[], newArray: any[]) {
+    return oldArray.length === newArray.length &&
+    oldArray.every((value, index) =>
+      value === newArray[index]);
   }
 }
