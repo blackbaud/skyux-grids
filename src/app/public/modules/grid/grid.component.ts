@@ -108,18 +108,28 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public set selectedColumnIds(newIds: Array<string>) {
     const oldIds = this._selectedColumnIds;
     this._selectedColumnIds = newIds;
+
     if (this.columns) {
       this.setDisplayedColumns();
     }
-    if (!oldIds || !this._selectedColumnIds || !(this.arraysEqual(this._selectedColumnIds, oldIds))) {
-          if (this.selectedColumnIdsSet) {
-            this.setUserConfig({
-              selectedColumnIds: newIds
-            });
-            this.selectedColumnIdsChange.emit(this._selectedColumnIds);
-            this.resetTableWidth();
-          }
+
+    // Ensure that the ids have changed. The two null checks ensure that we short circuit and don't
+    // run the array equality check if it isn't needed due to one of the two values being undefined
+    if (!oldIds || !this._selectedColumnIds ||
+      !(this.arraysEqual(this._selectedColumnIds, oldIds))) {
+
+        // This variable ensures that we do not set user config options or fire the change event
+        // on the first time that the columns are set up
+        if (this.selectedColumnIdsSet) {
+          this.setUserConfig({
+            selectedColumnIds: newIds
+          });
+          this.selectedColumnIdsChange.emit(this._selectedColumnIds);
+          this.resetTableWidth();
+        }
+
     }
+
     this.selectedColumnIdsSet = true;
   }
 
