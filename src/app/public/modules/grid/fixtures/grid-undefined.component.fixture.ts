@@ -10,9 +10,9 @@ import {
 @Component({
   selector: 'sky-test-cmp',
   template: `
-    <h1>empty grid</h1>
     <sky-grid
-      [data]="data">
+      [data]="data"
+    >
       <sky-grid-column
         field="column1"
         heading="Column1"
@@ -22,6 +22,7 @@ import {
   `
 })
 export class GridUndefinedTestComponent {
+
   @ViewChild(SkyGridComponent)
   public grid: SkyGridComponent;
 

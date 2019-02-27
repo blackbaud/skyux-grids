@@ -209,7 +209,7 @@ const maxColWidth = '9999';
 //#endregion
 
 describe('Grid Component', () => {
-  describe('Basic fixture with no data', () => {
+  describe('Basic fixture with undefined data', () => {
     let component: GridUndefinedTestComponent,
       fixture: ComponentFixture<GridUndefinedTestComponent>;
 
