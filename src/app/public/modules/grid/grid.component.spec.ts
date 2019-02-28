@@ -224,7 +224,7 @@ describe('Grid Component', () => {
       component = fixture.componentInstance;
     }));
 
-    fit(`should be able to load with no exceptions`, () => {
+    it(`should be able to load with no exceptions`, () => {
       fixture.detectChanges();
       fixture.detectChanges();
       expect(component.grid.items).toBeUndefined();
