@@ -1,6 +1,6 @@
 # 3.1.3 (2019-03-07)
 
-- Fixed grid component to no longer emit extra selectedColumnIdsChange events. [#36](https://github.com/blackbaud/skyux-grids/pull/36)
+- Fixed grid component to no longer emit extra `selectedColumnIdsChange` events. [#36](https://github.com/blackbaud/skyux-grids/pull/36)
 
 # 3.1.2 (2019-02-28)
 
