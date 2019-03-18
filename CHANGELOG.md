@@ -1,3 +1,15 @@
+# 3.1.3 (2019-03-07)
+
+- Fixed grid component to no longer emit extra `selectedColumnIdsChange` events. [#36](https://github.com/blackbaud/skyux-grids/pull/36)
+
+# 3.1.2 (2019-02-28)
+
+- Fixed grid component to load properly when using RxJS version 6 or above. [#47](https://github.com/blackbaud/skyux-grids/pull/47)
+
+# 3.1.1 (2019-02-22)
+
+- Fixed grid component to no longer truncate text when table cell is stretched wider than its original width. [#38](https://github.com/blackbaud/skyux-grids/pull/38)
+
 # 3.1.0 (2019-01-16)
 
 - Added UI Config Service hooks to grid component. [#31](https://github.com/blackbaud/skyux-grids/pull/31)
