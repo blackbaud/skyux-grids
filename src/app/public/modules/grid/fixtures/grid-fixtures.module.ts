@@ -8,7 +8,7 @@ import {
 
 import {
   SkyUIConfigService,
-  SkyWindowRefService
+  SkyAppWindowRef
 } from '@skyux/core';
 
 import {
@@ -57,7 +57,7 @@ import {
     SkyGridModule
   ],
   providers: [
-    SkyWindowRefService,
+    SkyAppWindowRef,
     {
       provide: SkyUIConfigService,
       useValue: {
