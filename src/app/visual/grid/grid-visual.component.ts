@@ -25,6 +25,7 @@ export class GridVisualComponent {
   public highlightText: string;
   public selectedRows: string;
   public gridController = new Subject<SkyGridMessage>();
+  public multiselectSelectedRowIds: string[];
 
   public dataForSimpleGrid = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
@@ -78,6 +79,10 @@ export class GridVisualComponent {
 
   public clearAll() {
     this.sendMessage(SkyGridMessageType.ClearAll);
+  }
+
+  public selectRow() {
+    this.multiselectSelectedRowIds = ['2'];
   }
 
   private performSort(activeSort: ListSortFieldSelectorModel, data: any[]) {

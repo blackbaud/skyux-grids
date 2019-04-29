@@ -168,16 +168,18 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public multiselectRowId: string;
 
   @Input()
-  set multiselectSelectedRowIds(value: Array<string>) {
-    for (let i = 0; i < this.items.length; i++) {
-      this.items[i].isSelected = (value.indexOf(this.items[i].id) > -1);
+  public set multiselectSelectedRowIds(value: Array<string>) {
+    if (value) {
+      for (let i = 0; i < this.items.length; i++) {
+        this.items[i].isSelected = (value.indexOf(this.items[i].id) > -1);
+      }
+      this._multiselectSelectedRowIds = value;
+      this.ref.markForCheck();
     }
-    this._multiselectSelectedRowIds = value;
-    this.ref.markForCheck();
   }
 
-  get multiselectSelectedRowIds() {
-    return this._multiselectSelectedRowIds;
+  public get multiselectSelectedRowIds(): Array<string> {
+    return this._multiselectSelectedRowIds || [];
   }
 
   @Input()
