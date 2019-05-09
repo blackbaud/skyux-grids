@@ -1,6 +1,6 @@
 # 3.1.5 (2019-05-09)
 
-- Fixed grid component to no longer resize table width when `selectedColumnIds` is changed. [#54](https://github.com/blackbaud/skyux-grids/pull/54)
+- Fixed grid component to no longer resize table width when `selectedColumnIds` changes. [#54](https://github.com/blackbaud/skyux-grids/pull/54)
 
 # 3.1.4 (2019-04-18)
 
