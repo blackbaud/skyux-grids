@@ -1,6 +1,6 @@
 {
   "name": "@skyux/grids",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "SKY UX Grids",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
@@ -37,8 +37,8 @@
     "ng2-dragula": "1.5.0"
   },
   "devDependencies": {
-    "@blackbaud/skyux": "2.47.0",
-    "@blackbaud/skyux-builder": "1.33.1",
+    "@blackbaud/skyux": "2.49.1",
+    "@blackbaud/skyux-builder": "1.35.0",
     "@skyux-sdk/builder-plugin-skyux": "1.0.0"
   }
 }
