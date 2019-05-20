@@ -423,7 +423,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     }
   }
 
-  public onResizeColumnStart(event: MouseEvent) {
+  public onResizeColumnStart(event: MouseEvent): void {
     // If this table hasn't been resized, initialize all the resize widths.
     if (!this.isResized) {
       this.initColumnWidths();
