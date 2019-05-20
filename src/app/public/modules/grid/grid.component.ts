@@ -453,7 +453,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         return this.isDraggingResizeHandle;
       })
       .subscribe((moveEvent: any) => {
-        this.onMouseMove(moveEvent);
+        this.onResizeHandleMove(moveEvent);
       });
 
     const mouseUpEvent = Observable.fromEvent(document, 'mouseup');
@@ -485,7 +485,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.resizeColumnByIndex(this.activeResizeColumnIndex, newValue, deltaX);
   }
 
-  public onMouseMove(event: MouseEvent) {
+  public onResizeHandleMove(event: MouseEvent) {
     let deltaX = event.pageX - this.xPosStart;
     let newColWidth = this.startColumnWidth + deltaX;
 
