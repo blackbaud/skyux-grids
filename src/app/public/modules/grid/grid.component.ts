@@ -41,6 +41,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 
 import 'rxjs/add/operator/map';
 
+import 'rxjs/add/observable/merge';
+
 import 'rxjs/add/operator/take';
 
 import 'rxjs/add/operator/takeWhile';
@@ -421,7 +423,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     }
   }
 
-  public onMouseDownResizeCol(event: MouseEvent) {
+  public onResizeColumnStart(event: MouseEvent) {
     // If this table hasn't been resized, initialize all the resize widths.
     if (!this.isResized) {
       this.initColumnWidths();
@@ -443,8 +445,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     event.preventDefault();
     event.stopPropagation();
 
-    Observable
-      .fromEvent(document, 'mousemove')
+    const mouseMoveEvent = Observable.fromEvent(document, 'mousemove');
+    const touchMoveEvent = Observable.fromEvent(document, 'touchmove');
+
+    Observable.merge(mouseMoveEvent, touchMoveEvent)
       .takeWhile(() => {
         return this.isDraggingResizeHandle;
       })
@@ -452,13 +456,15 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         this.onMouseMove(moveEvent);
       });
 
-    Observable
-      .fromEvent(document, 'mouseup')
+    const mouseUpEvent = Observable.fromEvent(document, 'mouseup');
+    const touchEndEvent = Observable.fromEvent(document, 'touchend');
+
+    Observable.merge(mouseUpEvent, touchEndEvent)
       .takeWhile(() => {
         return this.isDraggingResizeHandle;
       })
-      .subscribe((mouseUpEvent: any) => {
-        this.onResizeHandleRelease(mouseUpEvent);
+      .subscribe((endEvent: any) => {
+        this.onResizeHandleRelease(endEvent);
       });
   }
 
