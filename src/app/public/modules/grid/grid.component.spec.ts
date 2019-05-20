@@ -152,6 +152,29 @@ function resizeColumn(fixture: ComponentFixture<any>, deltaX: number, columnInde
   fixture.detectChanges();
 }
 
+function resizeColumnWithTouch(fixture: ComponentFixture<any>, deltaX: number, columnIndex: number) {
+  const resizeHandles = getColumnResizeHandles(fixture);
+  let axis = getElementCords(resizeHandles[columnIndex]);
+  let event = {
+    target: resizeHandles[columnIndex].nativeElement,
+    'pageX': axis.x,
+    'preventDefault': function () { },
+    'stopPropagation': function () { }
+  };
+
+  resizeHandles[columnIndex].triggerEventHandler('touchstart', event);
+  fixture.detectChanges();
+
+  let evt = document.createEvent('UIEvent');
+  evt.initUIEvent('touchmove', false, false, window, axis.x + deltaX);
+  document.dispatchEvent(evt);
+  fixture.detectChanges();
+  evt = document.createEvent('UIEvent');
+  evt.initUIEvent('touchend', false, false, window, axis.x + deltaX);
+  document.dispatchEvent(evt);
+  fixture.detectChanges();
+}
+
 function resizeColumnByRangeInput(fixture: ComponentFixture<any>, columnIndex: number, deltaX: number) {
   const resizeInputs = getColumnRangeInputs(fixture);
   SkyAppTestUtility.fireDomEvent(resizeInputs[columnIndex].nativeElement, 'keydown', {
@@ -821,6 +844,18 @@ describe('Grid Component', () => {
           let column2 = component.columnWidthsChange.find(cwc => cwc.id === 'column2');
           expect(column2).not.toBeNull();
         }));
+
+        it('should NOT set table width if selectedColumnIds property changes and user has NOT resized columns', fakeAsync(() => {
+          // Update selected columns.
+          component.selectedColumnIds = ['column1'];
+          fixture.detectChanges();
+          tick();
+
+          const table = getTable(fixture);
+          const tableStyle = table.nativeElement.getAttribute('style');
+
+          expect(tableStyle).toBeNull();
+        }));
       });
     });
 
@@ -917,7 +952,7 @@ describe('Grid Component', () => {
       }));
 
       it('should resize columns on mousemove', fakeAsync(() => {
-        const spy = spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
+        const spy = spyOn(fixture.componentInstance.grid, 'onResizeHandleMove').and.callThrough();
         // Get initial baseline for comparison.
         let initialTableWidth = getTableWidth(fixture);
         let initialColumnWidths = getColumnWidths(fixture);
@@ -943,7 +978,7 @@ describe('Grid Component', () => {
       }));
 
       it('should not resize on mousemove unless the resize handle was clicked', fakeAsync(() => {
-        const spy = spyOn(fixture.componentInstance.grid, 'onMouseMove').and.callThrough();
+        const spy = spyOn(fixture.componentInstance.grid, 'onResizeHandleMove').and.callThrough();
         // Get initial baseline for comparison.
         let initialTableWidth = getTableWidth(fixture);
         let initialColumnWidths = getColumnWidths(fixture);
@@ -975,6 +1010,20 @@ describe('Grid Component', () => {
         // Assert max value on input ranges were properly updated.
         let expectedColumnInputs = getColumnResizeInputMaxValues(fixture);
         expect(initialMaxValues).not.toEqual(expectedColumnInputs);
+      }));
+
+      it('should support touch events', fakeAsync(() => {
+        const startSpy = spyOn(fixture.componentInstance.grid, 'onResizeColumnStart').and.callThrough();
+        const moveSpy = spyOn(fixture.componentInstance.grid, 'onResizeHandleMove').and.callThrough();
+        const releaseSpy = spyOn(fixture.componentInstance.grid, 'onResizeHandleRelease').and.callThrough();
+
+        // Resize first column with touch event.
+        resizeColumnWithTouch(fixture, 50, 0);
+
+        // Assert spys were called.
+        expect(startSpy).toHaveBeenCalled();
+        expect(moveSpy).toHaveBeenCalled();
+        expect(releaseSpy).toHaveBeenCalled();
       }));
     });
   });
