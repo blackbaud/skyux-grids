@@ -1,6 +1,6 @@
 # 3.1.6 (2019-05-28)
 
-- Fixed the grid column component to property support resizing on touch devices. [#57](https://github.com/blackbaud/skyux-grids/pull/57)
+- Fixed the grid column component to properly support resizing on touch devices. [#57](https://github.com/blackbaud/skyux-grids/pull/57)
 
 # 3.1.5 (2019-05-09)
 
