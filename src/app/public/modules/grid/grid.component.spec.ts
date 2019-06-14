@@ -31,8 +31,6 @@ import {
   Observable
 } from 'rxjs/Observable';
 
-const moment = require('moment');
-
 import {
   GridEmptyTestComponent
 } from './fixtures/grid-empty.component.fixture';
@@ -75,7 +73,8 @@ import {
   SkyGridMessageType,
   SkyGridMessage
 } from './types';
-import { element } from 'protractor';
+
+const moment = require('moment');
 
 //#region helpers
 function getColumnHeader(id: string, element: DebugElement) {
