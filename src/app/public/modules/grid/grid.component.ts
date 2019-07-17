@@ -178,7 +178,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].isSelected = (value.indexOf(this.items[i].id) > -1);
       }
-      this._selectedRowIds = value;
       this.emitSelectedRows();
       this.ref.markForCheck();
     }
@@ -240,8 +239,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private selectedColumnIdsSet: boolean = false;
 
   private ngUnsubscribe = new Subject();
-
-  private _selectedRowIds: Array<string>;
 
   constructor(
     private dragulaService: DragulaService,
