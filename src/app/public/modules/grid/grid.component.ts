@@ -184,10 +184,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     }
   }
 
-  public get selectedRowIds(): Array<string> {
-    return this._selectedRowIds || [];
-  }
-
   @Input()
   public messageStream = new Subject<SkyGridMessage>();
 
