@@ -1340,10 +1340,10 @@ describe('Grid Component', () => {
         }
       });
 
-      it('should properly update the checkboxes when multiselectSelectedRowIds is changed', () => {
+      it('should properly update the checkboxes when selectedRowIds is changed', () => {
         // Select group of rows.
         let selectedIds = ['1', '3'];
-        component.multiselectSelectedRowIds = selectedIds;
+        component.selectedRowIds = selectedIds;
         fixture.detectChanges();
 
         // Verify those rows are selected and displayed properly.
@@ -1357,7 +1357,7 @@ describe('Grid Component', () => {
 
         // Send another selection.
         selectedIds = ['5'];
-        component.multiselectSelectedRowIds = selectedIds;
+        component.selectedRowIds = selectedIds;
         fixture.detectChanges();
 
         // Verify new rows are selected and displayed properly.
@@ -1371,7 +1371,7 @@ describe('Grid Component', () => {
 
         // Send empty array.
         selectedIds = [];
-        component.multiselectSelectedRowIds = selectedIds;
+        component.selectedRowIds = selectedIds;
         fixture.detectChanges();
 
         // Verify no rows are selected.

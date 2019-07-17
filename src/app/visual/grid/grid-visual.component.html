@@ -67,7 +67,7 @@
   class="sky-btn sky-btn-primary"
   (click)="selectRow()"
 >
-  Select a row
+  Programmatically select rows 2, 5, and 7
 </button>
 
 <div
@@ -79,7 +79,7 @@
     [enableMultiselect]="true"
     [messageStream]="gridController"
     [multiselectRowId]="'myId'"
-    [multiselectSelectedRowIds]="multiselectSelectedRowIds"
+    [selectedRowIds]="selectedRowIds"
     (sortFieldChange)="sortChangedMultiselectGrid($event)"
     (multiselectSelectionChange)="onMultiselectSelectionChange($event)"
   >
@@ -102,5 +102,5 @@
   </sky-grid>
 
   <p>Selected rows:</p>
-  <p>{{ selectedRows }}</p>
+  <p>{{ selectedRowIdsDisplay }}</p>
 </div>

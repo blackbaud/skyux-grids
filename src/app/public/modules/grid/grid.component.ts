@@ -173,18 +173,19 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public multiselectRowId: string;
 
   @Input()
-  public set multiselectSelectedRowIds(value: Array<string>) {
+  public set selectedRowIds(value: Array<string>) {
     if (value) {
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].isSelected = (value.indexOf(this.items[i].id) > -1);
       }
-      this._multiselectSelectedRowIds = value;
+      this._selectedRowIds = value;
+      this.emitSelectedRows();
       this.ref.markForCheck();
     }
   }
 
-  public get multiselectSelectedRowIds(): Array<string> {
-    return this._multiselectSelectedRowIds || [];
+  public get selectedRowIds(): Array<string> {
+    return this._selectedRowIds || [];
   }
 
   @Input()
@@ -244,7 +245,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   private ngUnsubscribe = new Subject();
 
-  private _multiselectSelectedRowIds: Array<string>;
+  private _selectedRowIds: Array<string>;
 
   constructor(
     private dragulaService: DragulaService,
