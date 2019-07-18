@@ -31,6 +31,8 @@ import {
   Observable
 } from 'rxjs/Observable';
 
+import 'rxjs/add/observable/throw';
+
 import {
   GridEmptyTestComponent
 } from './fixtures/grid-empty.component.fixture';
@@ -1349,8 +1351,7 @@ describe('Grid Component', () => {
 
   describe('multiselect with interactive elements', () => {
     let fixture: ComponentFixture<GridInteractiveTestComponent>,
-      component: GridInteractiveTestComponent,
-      element: DebugElement;
+      component: GridInteractiveTestComponent
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
@@ -1361,7 +1362,6 @@ describe('Grid Component', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(GridInteractiveTestComponent);
       component = fixture.componentInstance;
-      element = fixture.debugElement as DebugElement;
       component.enableMultiselect = true;
       component.multiselectRowId = 'id';
       fixture.detectChanges();
@@ -1609,14 +1609,11 @@ describe('Grid Component', () => {
       fixture.detectChanges();
       fixture.detectChanges();
 
-      let addCalled: boolean;
-
       mockDragulaService.drag.emit([
         undefined,
         {
           classList: {
             add(cls: string) {
-              addCalled = true;
               expect(cls).toBe('sky-grid-header-dragging');
             }
           }
