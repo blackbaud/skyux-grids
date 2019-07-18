@@ -1351,7 +1351,8 @@ describe('Grid Component', () => {
 
   describe('multiselect with interactive elements', () => {
     let fixture: ComponentFixture<GridInteractiveTestComponent>,
-      component: GridInteractiveTestComponent
+      component: GridInteractiveTestComponent;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
