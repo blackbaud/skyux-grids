@@ -1615,18 +1615,40 @@ describe('Grid Component', () => {
     it('should set dragula options for locked and resizable columns', () => {
       const setOptionsSpy = spyOn(mockDragulaService, 'setOptions').and
         .callFake((bagId: any, options: any) => {
-          const moveOption = options.moves(
-            undefined,
+          const moveOptionValid = options.moves(
+            {
+              querySelector(selector: string) {
+                return (selector === '.sky-grid-header');
+              }
+            },
             undefined,
             {
               matches(selector: string) {
+                return (selector === '.sky-grid-header');
+              }
+            }
+          );
+
+          const moveOptionLockedHeader = options.moves(
+            {
+              querySelector(selector: string) {
                 return (selector === '.sky-grid-header-locked');
+              }
+            },
+            undefined,
+            {
+              matches(selector: string) {
+                return (selector === '.sky-grid-header');
               }
             }
           );
 
           const moveOptionFromResize = options.moves(
-            undefined,
+            {
+              querySelector(selector: string) {
+                return (selector === '.sky-grid-header');
+              }
+            },
             undefined,
             {
               matches(selector: string) {
@@ -1635,8 +1657,12 @@ describe('Grid Component', () => {
             }
           );
 
-          const moveOptionUndefined = options.moves(
-            undefined,
+          const moveOptionUndefinedHandle = options.moves(
+            {
+              querySelector(selector: string) {
+                return (selector === '.sky-grid-header');
+              }
+            },
             undefined,
             undefined
           );
@@ -1652,10 +1678,11 @@ describe('Grid Component', () => {
             }
           );
 
-          expect(moveOption).toBe(false);
-          expect(moveOptionFromResize).toBe(false);
-          expect(moveOptionUndefined).toBe(false);
-          expect(acceptsOption).toBe(false);
+          expect(moveOptionValid).toBeTruthy();
+          expect(moveOptionLockedHeader).toBeFalsy();
+          expect(moveOptionFromResize).toBeFalsy();
+          expect(moveOptionUndefinedHandle).toBeFalsy();
+          expect(acceptsOption).toBeFalsy();
         });
 
       fixture.detectChanges();
