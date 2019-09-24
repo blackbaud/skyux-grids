@@ -1617,8 +1617,8 @@ describe('Grid Component', () => {
         .callFake((bagId: any, options: any) => {
           const moveOptionValid = options.moves(
             {
-              querySelector(selector: string) {
-                return (selector === '.sky-grid-header');
+              querySelector(selector: string): Node {
+                return undefined;
               }
             },
             undefined,
@@ -1631,8 +1631,11 @@ describe('Grid Component', () => {
 
           const moveOptionLockedHeader = options.moves(
             {
-              querySelector(selector: string) {
-                return (selector === '.sky-grid-header-locked');
+              querySelector(selector: string): Node {
+                // NOTE: We need an element to return here but the fixture isn't yet rendered due
+                // to the timing we need so the doucment element is enough to suffice what we are
+                // testing here.
+                return document;
               }
             },
             undefined,
@@ -1645,8 +1648,8 @@ describe('Grid Component', () => {
 
           const moveOptionFromResize = options.moves(
             {
-              querySelector(selector: string) {
-                return (selector === '.sky-grid-header');
+              querySelector(selector: string): Node {
+                return undefined;
               }
             },
             undefined,
@@ -1659,8 +1662,8 @@ describe('Grid Component', () => {
 
           const moveOptionUndefinedHandle = options.moves(
             {
-              querySelector(selector: string) {
-                return (selector === '.sky-grid-header');
+              querySelector(selector: string): Node {
+                return undefined;
               }
             },
             undefined,
@@ -1982,6 +1985,7 @@ describe('Grid Component', () => {
       const spy = spyOn(console, 'warn');
 
       spyOn(uiConfigService, 'setConfig').and.callFake(() => {
+        // tslint:disable-next-line: deprecation
         return Observable.throw(new Error());
       });
 
@@ -2008,6 +2012,7 @@ describe('Grid Component', () => {
 
     it('should suppress errors when getting config', () => {
       spyOn(uiConfigService, 'getConfig').and.callFake(() => {
+        // tslint:disable-next-line: deprecation
         return Observable.throw(new Error());
       });
 
