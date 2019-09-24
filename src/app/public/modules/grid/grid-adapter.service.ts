@@ -49,17 +49,49 @@ export class SkyGridAdapterService {
 
     dragulaService.setOptions('sky-grid-heading', {
       moves: (el: HTMLElement, container: HTMLElement, handle: HTMLElement) => {
-        return handle !== undefined && !handle.matches(GRID_HEADER_LOCKED_SELECTOR) && !handle.matches(GRID_HEADER_RESIZE_HANDLE);
+        const columns = container.querySelectorAll('th div');
+        let isLeftOfLocked = false;
+
+        for (let i = (columns.length - 1); i >= 0; i--) {
+          if (columns[i].classList.contains('sky-grid-header-locked')) {
+            isLeftOfLocked = true;
+          }
+
+          if (columns[i] === handle) {
+            break;
+          }
+        }
+
+        return handle !== undefined
+          && !handle.matches(GRID_HEADER_LOCKED_SELECTOR)
+          && !handle.matches(GRID_HEADER_RESIZE_HANDLE)
+          && !isLeftOfLocked;
       },
       accepts: (
         el: HTMLElement,
         target: HTMLElement,
         source: HTMLElement,
         sibling: HTMLElement) => {
-          return sibling === undefined
-            || !sibling
-            || (!sibling.matches(GRID_HEADER_LOCKED_SELECTOR) && !sibling.matches(GRID_HEADER_RESIZE_HANDLE));
+
+        const columns = source.querySelectorAll('th div');
+        const siblingDiv = sibling.querySelector('div');
+        let isLeftOfLocked = false;
+
+        for (let i = (columns.length - 1); i >= 0; i--) {
+          if (columns[i].classList.contains('sky-grid-header-locked')) {
+            isLeftOfLocked = true;
+          }
+
+          if (columns[i] === siblingDiv) {
+            break;
+          }
         }
+
+        return (sibling === undefined
+          || !sibling
+          || (!sibling.matches(GRID_HEADER_LOCKED_SELECTOR) && !sibling.matches(GRID_HEADER_RESIZE_HANDLE)))
+          && !isLeftOfLocked;
+      }
     });
   }
 

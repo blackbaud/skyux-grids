@@ -1617,7 +1617,19 @@ describe('Grid Component', () => {
         .callFake((bagId: any, options: any) => {
           const moveOption = options.moves(
             undefined,
-            undefined,
+            {
+              querySelectorAll(selector: string) {
+                return [
+                  {
+                    classList: {
+                      contains(classSelector: string) {
+                        return false;
+                      }
+                    }
+                  }
+                ];
+              }
+            },
             {
               matches(selector: string) {
                 return (selector === '.sky-grid-header-locked');
@@ -1627,7 +1639,19 @@ describe('Grid Component', () => {
 
           const moveOptionFromResize = options.moves(
             undefined,
-            undefined,
+            {
+              querySelectorAll(selector: string) {
+                return [
+                  {
+                    classList: {
+                      contains(classSelector: string) {
+                        return false;
+                      }
+                    }
+                  }
+                ];
+              }
+            },
             {
               matches(selector: string) {
                 return (selector === '.sky-grid-resize-handle');
@@ -1637,15 +1661,42 @@ describe('Grid Component', () => {
 
           const moveOptionUndefined = options.moves(
             undefined,
-            undefined,
+            {
+              querySelectorAll(selector: string) {
+                return [
+                  {
+                    classList: {
+                      contains(classSelector: string) {
+                        return false;
+                      }
+                    }
+                  }
+                ];
+              }
+            },
             undefined
           );
 
           const acceptsOption = options.accepts(
             undefined,
             undefined,
-            undefined,
             {
+              querySelectorAll(selector: string) {
+                return [
+                  {
+                    classList: {
+                      contains(classSelector: string) {
+                        return false;
+                      }
+                    }
+                  }
+                ];
+              }
+            },
+            {
+              querySelector(selector: string) {
+
+              },
               matches(selector: string) {
                 return (selector === '.sky-grid-header-locked');
               }
