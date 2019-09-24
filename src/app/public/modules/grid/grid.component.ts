@@ -546,7 +546,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   // Prevent touch devices from inadvertently scrolling grid while dragging columns.
-  public onDrag(event: any): void {
+  public onTouchMove(event: any): void {
     event.preventDefault();
   }
 
