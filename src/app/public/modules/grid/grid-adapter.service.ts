@@ -62,8 +62,8 @@ export class SkyGridAdapterService {
           }
         }
 
-        return handle !== undefined
-          && !handle.matches(GRID_HEADER_LOCKED_SELECTOR)
+        return !el.querySelector(GRID_HEADER_LOCKED_SELECTOR)
+          && handle !== undefined
           && !handle.matches(GRID_HEADER_RESIZE_HANDLE)
           && !isLeftOfLocked;
       },

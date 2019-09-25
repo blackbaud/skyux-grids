@@ -1615,8 +1615,12 @@ describe('Grid Component', () => {
     it('should set dragula options for locked and resizable columns', () => {
       const setOptionsSpy = spyOn(mockDragulaService, 'setOptions').and
         .callFake((bagId: any, options: any) => {
-          const moveOption = options.moves(
-            undefined,
+          const moveOptionValid = options.moves(
+            {
+              querySelector(selector: string): Node {
+                return undefined;
+              }
+            },
             {
               querySelectorAll(selector: string) {
                 return [
@@ -1632,13 +1636,34 @@ describe('Grid Component', () => {
             },
             {
               matches(selector: string) {
-                return (selector === '.sky-grid-header-locked');
+                return (selector === '.sky-grid-header');
+              }
+            }
+          );
+
+          const moveOptionLockedHeader = options.moves(
+            {
+              querySelector(selector: string): Node {
+                // NOTE: We need an element to return here but the fixture isn't yet rendered due
+                // to the timing we need so the doucment element is enough to suffice what we are
+                // testing here.
+                return document;
+              }
+            },
+            undefined,
+            {
+              matches(selector: string) {
+                return (selector === '.sky-grid-header');
               }
             }
           );
 
           const moveOptionFromResize = options.moves(
-            undefined,
+            {
+              querySelector(selector: string): Node {
+                return undefined;
+              }
+            },
             {
               querySelectorAll(selector: string) {
                 return [
@@ -1659,8 +1684,12 @@ describe('Grid Component', () => {
             }
           );
 
-          const moveOptionUndefined = options.moves(
-            undefined,
+          const moveOptionUndefinedHandle = options.moves(
+            {
+              querySelector(selector: string): Node {
+                return undefined;
+              }
+            },
             {
               querySelectorAll(selector: string) {
                 return [
@@ -1703,15 +1732,26 @@ describe('Grid Component', () => {
             }
           );
 
-          expect(moveOption).toBe(false);
-          expect(moveOptionFromResize).toBe(false);
-          expect(moveOptionUndefined).toBe(false);
-          expect(acceptsOption).toBe(false);
+          expect(moveOptionValid).toBeTruthy();
+          expect(moveOptionLockedHeader).toBeFalsy();
+          expect(moveOptionFromResize).toBeFalsy();
+          expect(moveOptionUndefinedHandle).toBeFalsy();
+          expect(acceptsOption).toBeFalsy();
         });
 
       fixture.detectChanges();
       fixture.detectChanges();
       expect(setOptionsSpy).toHaveBeenCalled();
+    });
+
+    it('should prevent default behavior when dragging columns on mobile devices', () => {
+      fixture.detectChanges();
+      fixture.detectChanges();
+      const eventSpy = jasmine.createSpyObj('event', ['preventDefault']);
+
+      SkyGridComponent.prototype.onTouchMove(eventSpy);
+
+      expect(eventSpy.preventDefault).toHaveBeenCalled();
     });
 
     it('should pass accessibility', async(() => {
@@ -1996,6 +2036,7 @@ describe('Grid Component', () => {
       const spy = spyOn(console, 'warn');
 
       spyOn(uiConfigService, 'setConfig').and.callFake(() => {
+        // tslint:disable-next-line: deprecation
         return Observable.throw(new Error());
       });
 
@@ -2022,6 +2063,7 @@ describe('Grid Component', () => {
 
     it('should suppress errors when getting config', () => {
       spyOn(uiConfigService, 'getConfig').and.callFake(() => {
+        // tslint:disable-next-line: deprecation
         return Observable.throw(new Error());
       });
 
