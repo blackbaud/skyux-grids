@@ -55,6 +55,7 @@ export class SkyGridAdapterService {
         for (let i = (columns.length - 1); i >= 0; i--) {
           if (columns[i].classList.contains('sky-grid-header-locked')) {
             isLeftOfLocked = true;
+            break;
           }
 
           if (columns[i] === handle) {
@@ -73,6 +74,10 @@ export class SkyGridAdapterService {
         source: HTMLElement,
         sibling: HTMLElement) => {
 
+        if (sibling === undefined || !sibling) {
+          return true;
+        }
+
         const columns = source.querySelectorAll('th div');
         const siblingDiv = sibling.querySelector('div');
         let isLeftOfLocked = false;
@@ -80,6 +85,7 @@ export class SkyGridAdapterService {
         for (let i = (columns.length - 1); i >= 0; i--) {
           if (columns[i].classList.contains('sky-grid-header-locked')) {
             isLeftOfLocked = true;
+            break;
           }
 
           if (columns[i] === siblingDiv) {
@@ -87,9 +93,8 @@ export class SkyGridAdapterService {
           }
         }
 
-        return (sibling === undefined
-          || !sibling
-          || (!sibling.matches(GRID_HEADER_LOCKED_SELECTOR) && !sibling.matches(GRID_HEADER_RESIZE_HANDLE)))
+        return ((!sibling.matches(GRID_HEADER_LOCKED_SELECTOR)
+          && !sibling.matches(GRID_HEADER_RESIZE_HANDLE)))
           && !isLeftOfLocked;
       }
     });
