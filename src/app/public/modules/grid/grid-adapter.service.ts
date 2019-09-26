@@ -82,7 +82,7 @@ export class SkyGridAdapterService {
     this.renderer.setStyle(el.nativeElement, style, value);
   }
 
-  private isLeftOfLocked(sourceColumn: HTMLElement, columns: NodeListOf<Element>) {
+  private isLeftOfLocked(sourceColumn: HTMLElement, columns: NodeListOf<Element>): boolean {
     for (let i = (columns.length - 1); i >= 0; i--) {
       if (columns[i].classList.contains('sky-grid-header-locked')) {
         return true;
