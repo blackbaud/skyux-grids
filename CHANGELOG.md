@@ -1,6 +1,6 @@
 # 3.2.1 (2019-09-27)
 
-- Fixed the grid component to restrict how users can reorder the columns beside locked columns. You can no longer reorder the columns on the left side of a locked column, and you can no longer move columns from the right side of a locked column to the left side.
+- Fixed the grid component to restrict how users reorder the columns beside locked columns. You can no longer reorder the columns on the left side of a locked column, and you can no longer move columns from the right side of a locked column to the left side.
  [#72](https://github.com/blackbaud/skyux-grids/pull/72)
 - Fixed the grid component to prevent users from reordering locked columns with the sort indicator. [#71](https://github.com/blackbaud/skyux-grids/pull/71)
 - Fixed the grid component to prevent scrolling when users reorder columns on mobile devices. [#70](https://github.com/blackbaud/skyux-grids/pull/70)
