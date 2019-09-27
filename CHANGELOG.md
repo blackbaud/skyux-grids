@@ -1,3 +1,9 @@
+# 3.2.1 (2019-09-27)
+
+- Fixed the grid component to not allow for reordering a column to the left of a locked column. [#72](https://github.com/blackbaud/skyux-grids/pull/72)
+- Fixed the grid component to not allow for reordering a locked column via the sort indicator. [#71](https://github.com/blackbaud/skyux-grids/pull/71)
+- Fixed the grid component to not scroll when reordering columns on mobile devices. [#70](https://github.com/blackbaud/skyux-grids/pull/70)
+
 # 3.2.0 (2019-07-19)
 
 - Added `selectedRowIds` input property to programmatically select rows on the grid component. [#39](https://github.com/blackbaud/skyux-grids/pull/39)
