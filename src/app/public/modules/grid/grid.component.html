@@ -49,6 +49,16 @@
                 [icon]="getCaretIconNames(column)"
               >
               </sky-icon>
+              <sky-help-inline
+                *ngIf="column.inLineHelp"
+                [skyPopover]="skyPopover"
+                skyPopoverTrigger="mouseenter"
+                skyPopoverPlacement="below">
+              </sky-help-inline>
+              <sky-popover
+                #skyPopover>
+                  {{ showHelpText() }}
+              </sky-popover>
             </div>
             <span
               *ngIf="(fit==='width' && !last) || (fit==='scroll')"
