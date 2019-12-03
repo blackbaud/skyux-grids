@@ -52,8 +52,9 @@
               <sky-help-inline
                 *ngIf="column.inLineHelp"
                 [skyPopover]="skyPopover"
-                skyPopoverTrigger="mouseenter"
-                skyPopoverPlacement="below">
+                skyPopoverPlacement="below"
+                (mouseup)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()">
               </sky-help-inline>
               <sky-popover
                 #skyPopover>
