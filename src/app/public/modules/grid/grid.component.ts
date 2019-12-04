@@ -635,7 +635,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     });
   }
 
-  private applySelectedRows() {
+  private applySelectedRows(): void {
     if (this.items && this.items.length > 0 && this.selectedRowIds) {
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].isSelected = (this.selectedRowIds.indexOf(this.items[i].id) > -1);
