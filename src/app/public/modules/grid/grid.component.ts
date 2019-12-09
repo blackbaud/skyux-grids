@@ -207,13 +207,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   @Output()
   public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
 
-  /**
-   * @internal
-   * Fires when users select a row. This event will not emit when rows are selected programmatically.
-   */
-  @Output()
-  public multiselectUserChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
-
   public items: Array<any>;
   public displayedColumns: Array<SkyGridColumnModel>;
   public currentSortField: BehaviorSubject<ListSortFieldSelectorModel>;
@@ -417,7 +410,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   public onMultiselectCheckboxChange() {
     this.emitSelectedRows('checkboxChange');
-    this.multiselectUserChange.emit();
   }
 
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
@@ -550,7 +542,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
         this.emitSelectedRows('rowClick');
-        this.multiselectUserChange.emit();
       }
     }
   }
