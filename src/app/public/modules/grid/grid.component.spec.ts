@@ -1189,7 +1189,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, 'id'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['1', '2', '5']
+          selectedRowIds: ['1', '2', '5'],
+          source: 'checkboxChange'
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1214,7 +1215,8 @@ describe('Grid Component', () => {
           // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
           // In this example, 'id'.
           let expectedRows: SkyGridSelectedRowsModelChange = {
-            selectedRowIds: ['1', '2', '5']
+            selectedRowIds: ['1', '2', '5'],
+            source: 'rowClick'
           };
           expect(component.selectedRowsChange).toEqual(expectedRows);
         });
@@ -1244,7 +1246,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, 'customId'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['101', '102', '105']
+          selectedRowIds: ['101', '102', '105'],
+          source: 'checkboxChange'
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1273,7 +1276,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, there is no match so it should fall back to the 'id' property.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['1', '2', '5']
+          selectedRowIds: ['1', '2', '5'],
+          source: 'checkboxChange'
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1333,6 +1337,12 @@ describe('Grid Component', () => {
           verifyCheckbox(i, true);
         }
 
+        let expectedRows: SkyGridSelectedRowsModelChange = {
+          selectedRowIds: ['1', '2', '3', '4', '5', '6', '7'],
+          source: 'selectAll'
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
+
         const clearAllMessage: SkyGridMessage = { type: SkyGridMessageType.ClearAll };
         fixture.componentInstance.gridController.next(clearAllMessage);
         fixture.detectChanges();
@@ -1340,6 +1350,12 @@ describe('Grid Component', () => {
         for (let i = 0; i < checkboxes.length; i++) {
           verifyCheckbox(i, false);
         }
+
+        expectedRows = {
+          selectedRowIds: [],
+          source: 'clearAll'
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
       });
 
       it('should check checkboxes when selectedRowIds is set on init', () => {

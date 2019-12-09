@@ -83,7 +83,8 @@ import {
   SkyGridColumnWidthModelChange,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
-  SkyGridMessageType
+  SkyGridMessageType,
+  SkyGridSelectedRowsSource
 } from './types';
 
 import {
@@ -177,7 +178,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     if (value) {
       this._selectedRowIds = value;
       this.applySelectedRows();
-      this.emitSelectedRows();
+      this.emitSelectedRows('selectedRowIdsChange');
     }
   }
 
@@ -415,7 +416,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public onMultiselectCheckboxChange() {
-    this.emitSelectedRows();
+    this.emitSelectedRows('checkboxChange');
     this.multiselectUserChange.emit();
   }
 
@@ -548,7 +549,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
-        this.emitSelectedRows();
+        this.emitSelectedRows('rowClick');
         this.multiselectUserChange.emit();
       }
     }
@@ -571,7 +572,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = true;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows();
+    this.emitSelectedRows('selectAll');
   }
 
   private multiselectClearAll() {
@@ -579,7 +580,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = false;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows();
+    this.emitSelectedRows('clearAll');
   }
 
   private handleIncomingMessages(message: SkyGridMessage) {
@@ -798,9 +799,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return text.filter(val => val).join(delimiter);
   }
 
-  private emitSelectedRows() {
+  private emitSelectedRows(source: SkyGridSelectedRowsSource) {
     let selectedRows: SkyGridSelectedRowsModelChange = {
-      selectedRowIds: this.getSelectedRows()
+      selectedRowIds: this.getSelectedRows(),
+      source: source
     };
     this.multiselectSelectionChange.emit(selectedRows);
   }
