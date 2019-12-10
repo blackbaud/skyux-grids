@@ -5,8 +5,3 @@ export enum SkyGridSelectedRowsSource {
   SelectAll,
   SelectedRowIdsChange
 }
-  'clearAll' |
-  'selectAll' |
-  'rowClick' |
-  'checkboxChange' |
-  'selectedRowIdsChange';

@@ -71,9 +71,10 @@ import {
 } from './';
 
 import {
-  SkyGridSelectedRowsModelChange,
+  SkyGridMessage,
   SkyGridMessageType,
-  SkyGridMessage
+  SkyGridSelectedRowsModelChange,
+  SkyGridSelectedRowsSource
 } from './types';
 
 const moment = require('moment');
@@ -1190,7 +1191,7 @@ describe('Grid Component', () => {
         // In this example, 'id'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: ['1', '2', '5'],
-          source: 'checkboxChange'
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1216,7 +1217,7 @@ describe('Grid Component', () => {
           // In this example, 'id'.
           let expectedRows: SkyGridSelectedRowsModelChange = {
             selectedRowIds: ['1', '2', '5'],
-            source: 'rowClick'
+            source: SkyGridSelectedRowsSource.RowClick
           };
           expect(component.selectedRowsChange).toEqual(expectedRows);
         });
@@ -1247,7 +1248,7 @@ describe('Grid Component', () => {
         // In this example, 'customId'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: ['101', '102', '105'],
-          source: 'checkboxChange'
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1277,7 +1278,7 @@ describe('Grid Component', () => {
         // In this example, there is no match so it should fall back to the 'id' property.
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: ['1', '2', '5'],
-          source: 'checkboxChange'
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1339,7 +1340,7 @@ describe('Grid Component', () => {
 
         let expectedRows: SkyGridSelectedRowsModelChange = {
           selectedRowIds: ['1', '2', '3', '4', '5', '6', '7'],
-          source: 'selectAll'
+          source: SkyGridSelectedRowsSource.SelectAll
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
 
@@ -1353,7 +1354,7 @@ describe('Grid Component', () => {
 
         expectedRows = {
           selectedRowIds: [],
-          source: 'clearAll'
+          source: SkyGridSelectedRowsSource.ClearAll
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       });
