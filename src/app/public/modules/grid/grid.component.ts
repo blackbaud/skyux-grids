@@ -207,7 +207,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public items: Array<any>;
   public displayedColumns: Array<SkyGridColumnModel>;
   public currentSortField: BehaviorSubject<ListSortFieldSelectorModel>;
-  public popoverText: string;
 
   @ContentChildren(SkyGridColumnComponent, { descendants: true })
   private columnComponents: QueryList<SkyGridColumnComponent>;
@@ -549,15 +548,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   // Prevent touch devices from inadvertently scrolling grid while dragging columns.
   public onTouchMove(event: any): void {
     event.preventDefault();
-  }
-
-  public showHelpText(): string {
-    this.columns.forEach(column => {
-      if (column.inLineHelp) {
-        this.popoverText = column.inLineHelp;
-      }
-    });
-    return this.popoverText;
   }
 
   private multiselectSelectAll() {

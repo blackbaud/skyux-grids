@@ -54,11 +54,12 @@
                 [skyPopover]="skyPopover"
                 skyPopoverPlacement="below"
                 (mouseup)="$event.stopPropagation()"
-                (mousedown)="$event.stopPropagation()">
+                (mousedown)="$event.stopPropagation()"
+                (keydown.enter)="$event.stopPropagation()">
               </sky-help-inline>
               <sky-popover
                 #skyPopover>
-                  {{ showHelpText() }}
+                  {{ column.inLineHelp }}
               </sky-popover>
             </div>
             <span
