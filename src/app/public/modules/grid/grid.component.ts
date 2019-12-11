@@ -178,7 +178,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     if (value) {
       this._selectedRowIds = value;
       this.applySelectedRows();
-      this.emitSelectedRows('selectedRowIdsChange');
+      this.emitSelectedRows(SkyGridSelectedRowsSource.SelectedRowIdsChange);
     }
   }
 
@@ -409,7 +409,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public onMultiselectCheckboxChange() {
-    this.emitSelectedRows('checkboxChange');
+    this.emitSelectedRows(SkyGridSelectedRowsSource.CheckboxChange);
   }
 
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
@@ -541,7 +541,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
-        this.emitSelectedRows('rowClick');
+        this.emitSelectedRows(SkyGridSelectedRowsSource.RowClick);
       }
     }
   }
@@ -563,7 +563,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = true;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows('selectAll');
+    this.emitSelectedRows(SkyGridSelectedRowsSource.SelectAll);
   }
 
   private multiselectClearAll() {
@@ -571,7 +571,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = false;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows('clearAll');
+    this.emitSelectedRows(SkyGridSelectedRowsSource.ClearAll);
   }
 
   private handleIncomingMessages(message: SkyGridMessage) {
