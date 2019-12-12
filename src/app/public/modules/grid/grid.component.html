@@ -50,18 +50,12 @@
               >
               </sky-icon>
               <sky-help-inline
-                *ngIf="column.inLineHelp"
-                [skyPopover]="skyPopover"
-                skyPopoverPlacement="below"
+                *ngIf="column.inLineHelpPopover"
                 (mouseup)="$event.stopPropagation()"
                 (mousedown)="$event.stopPropagation()"
                 (keydown.enter)="$event.stopPropagation()"
                 (keydown.space)="$event.stopPropagation()">
               </sky-help-inline>
-              <sky-popover
-                #skyPopover>
-                  {{ column.inLineHelp }}
-              </sky-popover>
             </div>
             <span
               *ngIf="(fit==='width' && !last) || (fit==='scroll')"

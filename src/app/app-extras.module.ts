@@ -9,11 +9,15 @@ import {
 import {
   SkyGridModule
 } from './public';
+import {
+  SkyPopoverModule
+} from '@skyux/popovers';
 
 @NgModule({
   exports: [
     SkyAppLinkModule,
-    SkyGridModule
+    SkyGridModule,
+    SkyPopoverModule
   ]
 })
 export class AppExtrasModule { }

@@ -1,6 +1,8 @@
+import { TemplateRef } from '@angular/core';
+
 export interface SkyGridColumnDescriptionModelChange {
   value?: string;
   id?: string;
   field?: string;
-  inLineHelp?: string;
+  inLineHelpPopover?: TemplateRef<any>;
 }

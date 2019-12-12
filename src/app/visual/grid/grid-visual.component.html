@@ -14,12 +14,14 @@
     <sky-grid-column
       field="column1"
       heading="Column1"
-      inLineHelp="Test inline help column 1"
+      inLineHelpPopover="myInLineHelpPopover"
     ></sky-grid-column>
+    <sky-popover #myInLineHelpPopover>
+        This is a numeric column. Click <a href="#">here</a> to learn more.
+    </sky-popover>
     <sky-grid-column
       field="column2"
       heading="Column2"
-      inLineHelp="Test inline help column 2"
     ></sky-grid-column>
     <sky-grid-column
       field="column3"
@@ -96,12 +98,10 @@
     <sky-grid-column
       field="column2"
       heading="Column2"
-      inLineHelp="Multiselect, test inline help column 2"
     ></sky-grid-column>
     <sky-grid-column
       field="column3"
       heading="Column3"
-      inLineHelp="Multiselect, test inline help column 3"
     ></sky-grid-column>
   </sky-grid>
 

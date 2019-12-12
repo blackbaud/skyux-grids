@@ -28,7 +28,7 @@ export class SkyGridColumnComponent implements OnChanges {
   public heading: string;
 
   @Input()
-  public inLineHelp: string;
+  public inLineHelpPopover: TemplateRef<any>;
 
   @Input()
   public width: number;
@@ -78,7 +78,7 @@ export class SkyGridColumnComponent implements OnChanges {
         value: this.heading,
         id: this.id,
         field: this.field,
-        inLineHelp: this.inLineHelp
+        inLineHelpPopover: this.inLineHelpPopover
       });
     }
     if (changes.description && changes.description.firstChange === false) {
@@ -87,7 +87,7 @@ export class SkyGridColumnComponent implements OnChanges {
         value: this.description,
         id: this.id,
         field: this.field,
-        inLineHelp: this.inLineHelp
+        inLineHelpPopover: this.inLineHelpPopover
       });
     }
   }
