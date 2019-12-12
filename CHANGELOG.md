@@ -1,6 +1,6 @@
 # 3.3.0 (2019-12-11)
 
-- Added the `source` property to the `multiselectSelectionChange` event that defines the source of the change. [#80](https://github.com/blackbaud/skyux-grids/pull/80)
+- Added the `source` property to `SkyGridSelectedRowsModelChange` that defines the source of the change. [#80](https://github.com/blackbaud/skyux-grids/pull/80)
 - Fixed the grid component to allow selecting rows on init by using the `selectedRowIds` property. [#78](https://github.com/blackbaud/skyux-grids/pull/78)
 
 # 3.2.1 (2019-09-27)
