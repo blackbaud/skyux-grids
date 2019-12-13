@@ -152,4 +152,22 @@ describe('Grid', () => {
       screenshotName: 'grid-multiselect-selected-xs'
     });
   });
+
+  it('should match previous screenshot with inline help', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-help-lg'
+    });
+  });
+
+  it('should match previous screenshot with inline help (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-help-xs'
+    });
+  });
 });
