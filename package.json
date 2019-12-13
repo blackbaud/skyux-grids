@@ -30,9 +30,11 @@
     "@skyux/i18n": "^3.5.0",
     "@skyux/list-builder-common": "^3.0.0",
     "@skyux/forms": "^3.0.0",
-    "@skyux/indicators": "^3.0.0"
+    "@skyux/indicators": "^3.0.0",
+    "@skyux/popovers": "3.4.0"
   },
   "dependencies": {
+    "@skyux/popovers": "3.4.0",
     "dragula": "3.7.2",
     "ng2-dragula": "1.5.0"
   },

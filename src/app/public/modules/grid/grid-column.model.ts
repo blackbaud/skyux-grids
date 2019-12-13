@@ -7,6 +7,7 @@ export class SkyGridColumnModel {
   public id: string;
   public field: string;
   public heading: string;
+  public inLineHelpPopover: TemplateRef<any>;
   public type: string;
   public width: number;
   public hidden: boolean;
@@ -24,6 +25,7 @@ export class SkyGridColumnModel {
       this.type = data.type;
       this.field = data.field;
       this.heading = data.heading;
+      this.inLineHelpPopover = data.inLineHelpPopover;
       this.width = data.width ? Number(data.width) : undefined;
       this.hidden = data.hidden;
       this.locked = data.locked;
