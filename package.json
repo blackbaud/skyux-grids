@@ -31,10 +31,9 @@
     "@skyux/list-builder-common": "^3.0.0",
     "@skyux/forms": "^3.0.0",
     "@skyux/indicators": "^3.0.0",
-    "@skyux/popovers": "3.4.0"
+    "@skyux/popovers": "^3.4.0"
   },
   "dependencies": {
-    "@skyux/popovers": "3.4.0",
     "dragula": "3.7.2",
     "ng2-dragula": "1.5.0"
   },
@@ -68,6 +67,7 @@
     "@skyux/list-builder-common": "3.0.0",
     "@skyux/modals": "3.0.6",
     "@skyux/omnibar-interop": "3.1.0",
+    "@skyux/popovers": "3.4.0",
     "@skyux/router": "3.1.1",
     "@skyux/theme": "3.7.0",
     "@types/core-js": "2.5.2",

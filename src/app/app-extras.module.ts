@@ -3,15 +3,16 @@ import {
 } from '@angular/core';
 
 import {
+  SkyPopoverModule
+} from '@skyux/popovers';
+
+import {
   SkyAppLinkModule
 } from '@skyux/router';
 
 import {
   SkyGridModule
 } from './public';
-import {
-  SkyPopoverModule
-} from '@skyux/popovers';
 
 @NgModule({
   exports: [

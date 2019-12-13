@@ -49,12 +49,13 @@
                 [icon]="getCaretIconNames(column)"
               >
               </sky-icon>
-              <sky-help-inline
-                *ngIf="column.inLineHelpPopover"
-                (mouseup)="$event.stopPropagation()"
-                (mousedown)="$event.stopPropagation()"
+              <sky-help-inline *ngIf="column.inlineHelpPopover"
+                [skyPopover]="column.inlineHelpPopover"
                 (keydown.enter)="$event.stopPropagation()"
-                (keydown.space)="$event.stopPropagation()">
+                (keydown.space)="$event.stopPropagation()"
+                (mousedown)="$event.stopPropagation()"
+                (mouseup)="$event.stopPropagation()"
+              >
               </sky-help-inline>
             </div>
             <span

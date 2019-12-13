@@ -27,8 +27,12 @@ export class SkyGridColumnComponent implements OnChanges {
   @Input()
   public heading: string;
 
+  /**
+   * Specifies a template to display inside an inline help popup for this column.
+   * This property accepts [an Angular TemplateRef](https://angular.io/api/core/TemplateRef) class.
+   */
   @Input()
-  public inLineHelpPopover: TemplateRef<any>;
+  public inlineHelpPopover: TemplateRef<any>;
 
   @Input()
   public width: number;
@@ -77,8 +81,7 @@ export class SkyGridColumnComponent implements OnChanges {
       this.headingModelChanges.emit({
         value: this.heading,
         id: this.id,
-        field: this.field,
-        inLineHelpPopover: this.inLineHelpPopover
+        field: this.field
       });
     }
     if (changes.description && changes.description.firstChange === false) {
@@ -86,8 +89,7 @@ export class SkyGridColumnComponent implements OnChanges {
       this.descriptionModelChanges.emit({
         value: this.description,
         id: this.id,
-        field: this.field,
-        inLineHelpPopover: this.inLineHelpPopover
+        field: this.field
       });
     }
   }

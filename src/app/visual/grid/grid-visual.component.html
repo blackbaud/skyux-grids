@@ -14,11 +14,8 @@
     <sky-grid-column
       field="column1"
       heading="Column1"
-      inLineHelpPopover="myInLineHelpPopover"
+      [inlineHelpPopover]="myinlineHelpPopover"
     ></sky-grid-column>
-    <sky-popover #myInLineHelpPopover>
-        This is a numeric column. Click <a href="#">here</a> to learn more.
-    </sky-popover>
     <sky-grid-column
       field="column2"
       heading="Column2"
@@ -29,6 +26,10 @@
       [excludeFromHighlighting]="true"
     ></sky-grid-column>
   </sky-grid>
+
+  <sky-popover #myinlineHelpPopover>
+    This is a numeric column. Click <a href="#">here</a> to learn more.
+  </sky-popover>
 </div>
 
 <p>
