@@ -567,7 +567,7 @@ describe('Grid Component', () => {
         expect(popupContent.innerHTML.trim()).toEqual('Help content for column 1.');
 
         // Open column 4 help popup.
-        popupContent.remove();
+        popupContent.parentNode.removeChild(popupContent);
         inlineHelp4.click();
         tick();
         fixture.detectChanges();
