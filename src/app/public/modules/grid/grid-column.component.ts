@@ -11,6 +11,10 @@ import {
 } from '@angular/core';
 
 import {
+  SkyPopoverComponent
+} from '@skyux/popovers';
+
+import {
   SkyGridColumnHeadingModelChange,
   SkyGridColumnDescriptionModelChange
 } from './types';
@@ -32,7 +36,7 @@ export class SkyGridColumnComponent implements OnChanges {
    * This property accepts [an Angular TemplateRef](https://angular.io/api/core/TemplateRef) class.
    */
   @Input()
-  public inlineHelpPopover: TemplateRef<any>;
+  public inlineHelpPopover: TemplateRef<SkyPopoverComponent>;
 
   @Input()
   public width: number;
