@@ -114,26 +114,26 @@
     [data]="dataForSimpleGrid"
   >
     <sky-grid-column
-      heading="Column1"
       field="column1"
-      [inlineHelpPopover]="myinlineHelpPopover"
+      heading="Column1"
+      [inlineHelpPopover]="myInlineHelpPopover"
     ></sky-grid-column>
     <sky-grid-column
-      heading="Column2"
       field="column2"
+      heading="Column2"
     ></sky-grid-column>
     <sky-grid-column
-      heading="Column3"
       field="column3"
-      [inlineHelpPopover]="myinlineHelpPopover2"
+      heading="Column3"
+      [inlineHelpPopover]="myInlineHelpPopover2"
     ></sky-grid-column>
   </sky-grid>
 
-  <sky-popover #myinlineHelpPopover>
+  <sky-popover #myInlineHelpPopover>
     This is a numeric column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 
-  <sky-popover #myinlineHelpPopover2>
+  <sky-popover #myInlineHelpPopover2>
     This is a string column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 </div>
