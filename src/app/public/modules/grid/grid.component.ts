@@ -80,6 +80,7 @@ import {
 import {
   SkyGridColumnDescriptionModelChange,
   SkyGridColumnHeadingModelChange,
+  SkyGridColumnInlineHelpPopoverModelChange,
   SkyGridColumnWidthModelChange,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
@@ -429,6 +430,21 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     /* istanbul ignore else */
     if (foundColumnModel) {
       foundColumnModel.heading = change.value;
+      this.ref.markForCheck();
+    }
+  }
+
+  public updateInlineHelpPopover(change: SkyGridColumnInlineHelpPopoverModelChange) {
+    const foundColumnModel = this.columns.find((column: SkyGridColumnModel) => {
+      return (
+        change.id !== undefined && change.id === column.id ||
+        change.field !== undefined && change.field === column.field
+      );
+    });
+
+    /* istanbul ignore else */
+    if (foundColumnModel) {
+      foundColumnModel.inlineHelpPopover = change.value;
       this.ref.markForCheck();
     }
   }
@@ -909,6 +925,13 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         comp.descriptionModelChanges
           .subscribe((change: SkyGridColumnDescriptionModelChange) => {
             this.updateColumnDescription(change);
+          })
+      );
+      this.subscriptions.push(
+        comp.inlineHelpPopoverModelChanges
+          .subscribe((change: SkyGridColumnInlineHelpPopoverModelChange) => {
+            console.log('change');
+            this.updateInlineHelpPopover(change);
           })
       );
     });

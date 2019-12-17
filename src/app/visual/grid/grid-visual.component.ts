@@ -54,6 +54,14 @@ export class GridVisualComponent {
 
   public selectedRows: string;
 
+  public isReady: boolean = false;
+
+  constructor() {
+    setTimeout(() => {
+      this.isReady = true;
+    }, 3000);
+  }
+
   public sortChangedSimpleGrid(activeSort: ListSortFieldSelectorModel): void {
     this.dataForSimpleGrid = this.performSort(activeSort, this.dataForSimpleGrid);
   }

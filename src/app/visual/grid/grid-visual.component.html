@@ -1,4 +1,4 @@
-<h1>Simple grid</h1>
+<!-- <h1>Simple grid</h1>
 
 <div
   id="screenshot-grid"
@@ -103,7 +103,7 @@
 
   <p>Selected rows:</p>
   <p>{{ selectedRowIdsDisplay }}</p>
-</div>
+</div> -->
 
 <h1>Grid with inline help</h1>
 
@@ -133,7 +133,7 @@
     This is a numeric column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 
-  <sky-popover #myinlineHelpPopover2>
+  <sky-popover #myinlineHelpPopover2 *ngIf="isReady">
     This is a string column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 </div>
