@@ -33,10 +33,10 @@ export class SkyGridColumnComponent implements OnChanges {
 
   /**
    * Specifies a template to display inside an inline help popup for this column.
-   * This property accepts [an Angular TemplateRef](https://angular.io/api/core/TemplateRef) class.
+   * This property accepts a SkyPopoverComponent.
    */
   @Input()
-  public inlineHelpPopover: TemplateRef<SkyPopoverComponent>;
+  public inlineHelpPopover: SkyPopoverComponent;
 
   @Input()
   public width: number;
