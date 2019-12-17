@@ -11,6 +11,7 @@
       #gridTable>
       <thead>
         <tr dragula="sky-grid-heading">
+          <th style="padding: 0;"></th>
           <th *ngIf="enableMultiselect"
             class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
             scope="col"
@@ -84,7 +85,7 @@
       <tbody class="sky-grid-tbody">
         <tr
           class="sky-grid-row"
-          *ngFor="let item of items"
+          *ngFor="let item of items; let i = index"
           [attr.aria-current]="isRowHighlighted(item.id) ? true : null"
           [attr.aria-selected]="item.isSelected"
           [attr.sky-cmp-id]="item.id"
@@ -95,6 +96,9 @@
           }"
           (click)="onRowClick($event, item)"
         >
+          <td class="sky-grid-inline-delete-cell">
+            <sky-inline-delete *ngIf="i==2"></sky-inline-delete>
+          </td>
           <td *ngIf="enableMultiselect"
             class="sky-grid-multiselect-cell sky-grid-header-locked"
           >

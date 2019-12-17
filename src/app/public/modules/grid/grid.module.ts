@@ -29,6 +29,10 @@ import {
 } from '@skyux/indicators';
 
 import {
+  SkyInlineDeleteModule
+} from '@skyux/layout';
+
+import {
   SkyGridComponent
 } from './grid.component';
 
@@ -57,7 +61,8 @@ import {
     DragulaModule,
     FormsModule,
     SkyCheckboxModule,
-    SkyGridsResourcesModule
+    SkyGridsResourcesModule,
+    SkyInlineDeleteModule
   ],
   exports: [
     SkyGridComponent,
