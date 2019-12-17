@@ -2072,6 +2072,20 @@ describe('Grid Component', () => {
       expect(col1.description).toBe('Column1 Description');
     }));
 
+    it('should handle async column inline help', fakeAsync(() => {
+      fixture.detectChanges();
+
+      const missingInlineHelp = fixture.nativeElement.querySelector('sky-help-inline');
+      expect(missingInlineHelp).toBeNull();
+
+      tick(110); // wait for setTimeout
+      fixture.detectChanges();
+      tick();
+
+      const inlineHelp = fixture.nativeElement.querySelector('sky-help-inline');
+      expect(inlineHelp).not.toBeNull();
+    }));
+
     it('should support the item `field` property if `id` not provided', fakeAsync(() => {
       fixture.detectChanges();
 
