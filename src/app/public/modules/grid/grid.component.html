@@ -50,6 +50,9 @@
               >
               </sky-icon>
               <sky-help-inline *ngIf="column.inlineHelpPopover"
+                [ngClass]="{
+                  'sky-grid-help-inline-sort-hidden' : getHelpInlineClass(column.field) | async
+                }"
                 [skyPopover]="column.inlineHelpPopover"
                 (keydown.enter)="$event.stopPropagation()"
                 (keydown.space)="$event.stopPropagation()"

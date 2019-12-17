@@ -408,6 +408,12 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       });
   }
 
+  public getHelpInlineClass(columnField: string): Observable<boolean> {
+    return this.getCaretVisibility(columnField).map((visibility: string) => {
+      return visibility === 'hidden';
+    });
+  }
+
   public onMultiselectCheckboxChange() {
     this.emitSelectedRows(SkyGridSelectedRowsSource.CheckboxChange);
   }
