@@ -116,7 +116,7 @@
     <sky-grid-column
       field="column1"
       heading="Column1"
-      [inlineHelpPopover]="myInlineHelpPopover"
+      [inlineHelpPopover]="staticPopoverRef"
     ></sky-grid-column>
     <sky-grid-column
       field="column2"
@@ -125,15 +125,18 @@
     <sky-grid-column
       field="column3"
       heading="Column3"
-      [inlineHelpPopover]="myInlineHelpPopover2"
+      [inlineHelpPopover]="asyncPopover"
     ></sky-grid-column>
   </sky-grid>
 
-  <sky-popover #myInlineHelpPopover>
+  <sky-popover #staticPopoverRef>
     This is a numeric column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 
-  <sky-popover #myInlineHelpPopover2>
+  <sky-popover
+    [popoverTitle]="'This popover is asynchronous!'"
+    #asyncPopoverRef
+  >
     This is a string column. Click <a href="#">here</a> to learn more.
   </sky-popover>
 </div>
