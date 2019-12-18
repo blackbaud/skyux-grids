@@ -67,7 +67,7 @@ export class GridVisualComponent {
   constructor() {
     setTimeout(() => {
       this.asyncPopover = this.popoverTemplate;
-    }, 3000);
+    }, 1000);
   }
 
   public sortChangedSimpleGrid(activeSort: ListSortFieldSelectorModel): void {

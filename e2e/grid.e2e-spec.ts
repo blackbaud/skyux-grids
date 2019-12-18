@@ -5,6 +5,7 @@ import {
 
 import {
   element,
+  browser,
   by
 } from 'protractor';
 
@@ -157,6 +158,7 @@ describe('Grid', () => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
     SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-inline-help-lg'
     });
@@ -166,6 +168,7 @@ describe('Grid', () => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-inline-help-xs'
     });
