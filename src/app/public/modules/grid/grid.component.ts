@@ -231,6 +231,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private tableContainerElementRef: ElementRef;
   @ViewChild('gridTable')
   private tableElementRef: ElementRef;
+  @ViewChild('topScrollBar')
+  private topScrollElementRef: ElementRef;
+  @ViewChild('topScrollBarContainer')
+  private topScrollContainerElementRef: ElementRef;
   @ViewChild('resizeBar')
   private resizeBar: ElementRef;
   private tableWidth: number;
@@ -240,6 +244,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private xPosStart: number;
   private isResized: boolean = false;
   private selectedColumnIdsSet: boolean = false;
+  private scrollTriggered: boolean = false;
 
   private ngUnsubscribe = new Subject();
 
@@ -288,6 +293,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     );
 
     this.applySelectedRows();
+    setTimeout(() => {
+      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableElementRef.nativeElement.scrollWidth}px`);
+    }, 100);
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -580,6 +588,28 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     event.preventDefault();
   }
 
+  public onTopScroll(event: any): void {
+    if (this.scrollTriggered) {
+      this.scrollTriggered = false;
+      console.log(event);
+      console.log(this.topScrollContainerElementRef.nativeElement.scrollLeft);
+      this.tableContainerElementRef.nativeElement.scrollTo(this.topScrollContainerElementRef.nativeElement.scrollLeft, 0);
+    } else {
+      this.scrollTriggered = true;
+    }
+  }
+
+  public onGridScroll(event: any): void {
+    if (this.scrollTriggered) {
+      this.scrollTriggered = false;
+      console.log(event);
+      console.log(this.tableContainerElementRef.nativeElement.scrollLeft);
+      this.topScrollContainerElementRef.nativeElement.scrollTo(this.tableContainerElementRef.nativeElement.scrollLeft, 0);
+    } else {
+      this.scrollTriggered = true;
+    }
+  }
+
   private multiselectSelectAll() {
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].isSelected = true;
@@ -708,6 +738,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.updateMaxRange();
     } else {
       this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth + deltaX}px`);
+      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableWidth + deltaX}px`);
       column.width = newColWidth;
     }
 
@@ -737,6 +768,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     // 'scroll' tables should be allowed to expand outside of their constraints.
     if (this.fit === 'scroll') {
       this.gridAdapter.setStyle(this.tableElementRef, 'min-width', 'auto');
+      this.gridAdapter.setStyle(this.topScrollElementRef, 'min-width', 'auto');
     }
 
     // Update max limits for input ranges.
@@ -782,6 +814,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.ref.detectChanges();
       this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
       this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
+      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableWidth}px`);
       this.ref.detectChanges();
     });
   }

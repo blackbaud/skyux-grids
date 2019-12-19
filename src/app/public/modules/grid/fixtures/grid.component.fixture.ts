@@ -55,6 +55,7 @@ export class GridTestComponent {
   public rowHighlightedId: string;
   public settingsKey: string;
   public selectedRowIds: Array<string>;
+  public dynamicWidth: number;
 
   public selectedColumnIds: string[] = [
     'column1',

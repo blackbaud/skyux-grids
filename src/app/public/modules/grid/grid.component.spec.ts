@@ -192,6 +192,10 @@ function getTable(fixture: ComponentFixture<any>) {
   return fixture.debugElement.query(By.css('.sky-grid-table'));
 }
 
+function getTableContainer(fixture: ComponentFixture<any>) {
+  return fixture.debugElement.query(By.css('.sky-grid-table-container'));
+}
+
 function getTableRows(fixture: ComponentFixture<any>) {
   return fixture.debugElement.queryAll(By.css('tbody tr'));
 }
@@ -199,6 +203,14 @@ function getTableRows(fixture: ComponentFixture<any>) {
 function getTableWidth(fixture: ComponentFixture<any>) {
   const table = getTable(fixture);
   return table.nativeElement.offsetWidth;
+}
+
+function getTopScroll(fixture: ComponentFixture<any>) {
+  return fixture.debugElement.query(By.css('.sky-grid-top-scroll'));
+}
+
+function getTopScrollWidth(fixture: ComponentFixture<any>) {
+  return getTopScroll(fixture).nativeElement.offsetWidth;
 }
 
 function cloneItems(items: any[]): any[] {
@@ -518,6 +530,48 @@ describe('Grid Component', () => {
       it('should maintain column width when provided by consumer', () => {
         verifyConsumerColumnWidthsAreMaintained();
       });
+
+      it('should set top scroll width to the tables width', async(() => {
+        fixture.componentInstance.dynamicWidth = 1000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
+        });
+      }));
+
+      it('should trigger a scroll to the grid when the top scroll bar scrolls', async(() => {
+        fixture.componentInstance.dynamicWidth = 1000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll')
+          let tableContainerScrollSpy = spyOn(getTableContainer(fixture).nativeElement, 'scrollTo');
+          getTopScroll(fixture).nativeElement.scrollTo(400);
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
+        });
+      }));
+
+      it('should trigger a scroll to the top scroll when the grid scrolls', async(() => {
+        fixture.componentInstance.dynamicWidth = 1000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll')
+          let topScrollSpy = spyOn(getTopScroll(fixture).nativeElement, 'scrollTo');
+          getTableContainer(fixture).nativeElement.scrollTo(400);
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
+        });
+      }));
 
       it('should highlight rows when rowHighlightedId is defined', () => {
         const tableRows = getTableRows(fixture);
@@ -1271,6 +1325,7 @@ describe('Grid Component', () => {
         component.multiselectRowId = 'customId';
         component.enableMultiselect = true;
         fixture.detectChanges();
+        tick(100);
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
@@ -1301,6 +1356,7 @@ describe('Grid Component', () => {
         component.multiselectRowId = 'foobar';
         component.enableMultiselect = true;
         fixture.detectChanges();
+        tick(100);
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
@@ -1567,6 +1623,7 @@ describe('Grid Component', () => {
 
     it('should add the dragging class to the header on dragula drag', fakeAsync(() => {
       fixture.detectChanges();
+      tick(100);
       fixture.detectChanges();
 
       let addCalled: boolean;
@@ -1590,6 +1647,7 @@ describe('Grid Component', () => {
 
     it('should remove the dragging class to the header of dragula draggend', fakeAsync(() => {
       fixture.detectChanges();
+      tick(100);
       fixture.detectChanges();
 
       let removeCalled: boolean;
@@ -1623,6 +1681,7 @@ describe('Grid Component', () => {
         ];
 
         fixture.detectChanges();
+        tick(100);
         fixture.detectChanges();
 
         component.grid.selectedColumnIdsChange.subscribe(() => {

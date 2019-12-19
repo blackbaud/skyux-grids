@@ -173,4 +173,22 @@ describe('Grid', () => {
       screenshotName: 'grid-inline-help-xs'
     });
   });
+
+  it('should match previous screenshot with scrollbars', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid-scrollbars');
+    expect('#screenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-scrollbars-lg'
+    });
+  });
+
+  it('should match previous screenshot with scrollbars (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid-scrollbars');
+    expect('#sscreenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-scrollbars-xs'
+    });
+  });
 });
