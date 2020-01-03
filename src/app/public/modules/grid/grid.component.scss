@@ -8,10 +8,6 @@ $sky-grid-resize-handle-width: 5px;
   display: block;
 }
 
-.sky-grid-table-container {
-  overflow: auto;
-}
-
 .sky-grid-table {
   position: relative;
   table-layout: fixed;
@@ -48,10 +44,14 @@ $sky-grid-resize-handle-width: 5px;
 }
 
 .sky-grid-heading {
-  position: relative;
-  @include sky-border(dark, top, bottom, left, right);
+  position: sticky;
+  top:0;
+  box-shadow: 0 0 0 1px #cdcfd2;
   border-right-width: 0px;
   padding: 0;
+
+  // Prevent relative-positioned objects from scrolling on top of headers (multiselect checkboxes).
+  z-index: 1;
 
   cursor: pointer;
   background-color: $sky-color-white;

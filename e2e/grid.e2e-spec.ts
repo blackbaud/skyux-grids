@@ -4,9 +4,10 @@ import {
 } from '@skyux-sdk/e2e';
 
 import {
-  element,
   browser,
-  by
+  by,
+  element,
+  protractor
 } from 'protractor';
 
 describe('Grid', () => {
@@ -171,6 +172,19 @@ describe('Grid', () => {
     browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-inline-help-xs'
+    });
+  });
+
+  it('should match previous screenshot when headers are frozen on scroll', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid').then(() => {
+      // Scroll down 50 pixels to initiate the frozen headers.
+      browser.executeScript(`window.scrollTo(0, ${window.scrollY + 50});`).then(() => {
+        expect('#screenshot-grid-frozen-headers').toMatchBaselineScreenshot(done, {
+          screenshotName: 'grid-frozen-headers'
+        });
+      });
     });
   });
 });
