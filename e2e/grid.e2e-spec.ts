@@ -6,8 +6,7 @@ import {
 import {
   browser,
   by,
-  element,
-  protractor
+  element
 } from 'protractor';
 
 describe('Grid', () => {
@@ -178,13 +177,10 @@ describe('Grid', () => {
   it('should match previous screenshot when headers are frozen on scroll', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
-    SkyHostBrowser.scrollTo('#screenshot-grid').then(() => {
-      // Scroll down 50 pixels to initiate the frozen headers.
-      browser.executeScript(`window.scrollTo(0, ${window.scrollY + 50});`).then(() => {
-        expect('#screenshot-grid-frozen-headers').toMatchBaselineScreenshot(done, {
-          screenshotName: 'grid-frozen-headers'
-        });
-      });
+    SkyHostBrowser.scrollTo('#screenshot-grid-scrollable');
+    browser.driver.executeScript(`document.getElementById('screenshot-grid-scrollable').scrollTop = 50;`);
+    expect('#screenshot-grid-scrollable').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-frozen-headers'
     });
   });
 });
