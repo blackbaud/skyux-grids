@@ -546,21 +546,13 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           const topScroll = getTopScroll(fixture).nativeElement;
-          topScroll.scrollLeft = '0';
+          topScroll.scrollLeft = '400';
 
+          fixture.componentInstance.grid.onTopScroll(undefined);
+          let tableContainerScrollSpy = spyOnProperty(topScroll, 'scrollLeft');
           fixture.detectChanges();
           fixture.whenStable().then(() => {
-
-            topScroll.scrollLeft = '400';
-            let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
-            let tableContainerScrollSpy = spyOnProperty(topScroll, 'scrollLeft');
-            SkyAppTestUtility.fireDomEvent(topScroll, 'scroll');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-
-              expect(topScrollSpy).toHaveBeenCalled();
-              expect(tableContainerScrollSpy).toHaveBeenCalled();
-            });
+            expect(tableContainerScrollSpy).toHaveBeenCalled();
           });
         });
       }));
@@ -570,20 +562,14 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           const tableContainer = getTableContainer(fixture).nativeElement;
-          tableContainer.scrollLeft = '0';
+
+          tableContainer.scrollLeft = '400';
+          fixture.componentInstance.grid.onGridScroll(undefined);
+          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
+          SkyAppTestUtility.fireDomEvent(tableContainer, 'scroll');
           fixture.detectChanges();
           fixture.whenStable().then(() => {
-
-            tableContainer.scrollLeft = '400';
-            let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
-            let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
-            SkyAppTestUtility.fireDomEvent(tableContainer, 'scroll');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-
-              expect(topScrollSpy).toHaveBeenCalled();
-              expect(tableContainerScrollSpy).toHaveBeenCalled();
-            });
+            expect(topScrollSpy).toHaveBeenCalled();
           });
         });
       }));
