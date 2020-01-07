@@ -545,11 +545,13 @@ describe('Grid Component', () => {
         fixture.componentInstance.dynamicWidth = 1000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+          getTopScroll(fixture).nativeElement.scrollLeft = '0';
+
           fixture.detectChanges();
 
           let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
           let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft');
-          getTopScroll(fixture).nativeElement.scrollTo(400);
+          getTopScroll(fixture).nativeElement.scrollLeft = '400';
           fixture.detectChanges();
 
           expect(topScrollSpy).toHaveBeenCalled();
@@ -561,11 +563,12 @@ describe('Grid Component', () => {
         fixture.componentInstance.dynamicWidth = 1000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+          getTableContainer(fixture).nativeElement.scrollLeft = '0';
           fixture.detectChanges();
 
           let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
           let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
-          getTableContainer(fixture).nativeElement.scrollTo(400);
+          getTableContainer(fixture).nativeElement.scrollLeft = '400';
           fixture.detectChanges();
 
           expect(topScrollSpy).toHaveBeenCalled();
