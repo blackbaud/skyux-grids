@@ -548,7 +548,7 @@ describe('Grid Component', () => {
           fixture.detectChanges();
 
           let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
-          let tableContainerScrollSpy = spyOn(getTableContainer(fixture).nativeElement, 'scrollTo');
+          let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft');
           getTopScroll(fixture).nativeElement.scrollTo(400);
           fixture.detectChanges();
 
@@ -564,7 +564,7 @@ describe('Grid Component', () => {
           fixture.detectChanges();
 
           let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
-          let topScrollSpy = spyOn(getTopScroll(fixture).nativeElement, 'scrollTo');
+          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
           getTableContainer(fixture).nativeElement.scrollTo(400);
           fixture.detectChanges();
 
