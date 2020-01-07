@@ -548,14 +548,18 @@ describe('Grid Component', () => {
           getTopScroll(fixture).nativeElement.scrollLeft = '0';
 
           fixture.detectChanges();
+          fixture.whenStable().then(() => {
 
-          let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
-          let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft');
-          getTopScroll(fixture).nativeElement.scrollLeft = '400';
-          fixture.detectChanges();
+            let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
+            let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft');
+            getTopScroll(fixture).nativeElement.scrollLeft = '400';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
 
-          expect(topScrollSpy).toHaveBeenCalled();
-          expect(tableContainerScrollSpy).toHaveBeenCalled();
+              expect(topScrollSpy).toHaveBeenCalled();
+              expect(tableContainerScrollSpy).toHaveBeenCalled();
+            });
+          });
         });
       }));
 
@@ -565,14 +569,18 @@ describe('Grid Component', () => {
         fixture.whenStable().then(() => {
           getTableContainer(fixture).nativeElement.scrollLeft = '0';
           fixture.detectChanges();
+          fixture.whenStable().then(() => {
 
-          let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
-          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
-          getTableContainer(fixture).nativeElement.scrollLeft = '400';
-          fixture.detectChanges();
+            let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
+            let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
+            getTableContainer(fixture).nativeElement.scrollLeft = '400';
+            fixture.detectChanges();
+            fixture.whenStable().then(() => {
 
-          expect(topScrollSpy).toHaveBeenCalled();
-          expect(tableContainerScrollSpy).toHaveBeenCalled();
+              expect(topScrollSpy).toHaveBeenCalled();
+              expect(tableContainerScrollSpy).toHaveBeenCalled();
+            });
+          });
         });
       }));
 
