@@ -46,8 +46,11 @@ $sky-grid-resize-handle-width: 5px;
 .sky-grid-heading {
   position: sticky;
   top:0;
-  box-shadow: 0 0 0 1px #cdcfd2;
-  padding: 0;
+
+  // Borders don't stick when combining `position: sticky` with `border-collapse: separate`.
+  // Using box-shadow as a fake border replacement.
+  // https://stackoverflow.com/questions/50361698/border-style-do-not-work-with-sticky-position-element
+  box-shadow: 0 0 0 1px $sky-text-color-icon-borderless;
 
   // Prevent relative-positioned objects from scrolling on top of headers (multiselect checkboxes).
   z-index: 1;
@@ -55,6 +58,7 @@ $sky-grid-resize-handle-width: 5px;
   cursor: pointer;
   background-color: $sky-color-white;
 
+  padding: 0;
   overflow: visible;
   text-align: left;
   background-clip: padding-box; // IE/Edge fix.
