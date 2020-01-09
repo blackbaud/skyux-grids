@@ -206,6 +206,10 @@ function getTableWidth(fixture: ComponentFixture<any>) {
 }
 
 function getTopScroll(fixture: ComponentFixture<any>) {
+  return fixture.debugElement.query(By.css('.sky-grid-top-scroll'));
+}
+
+function getTopScrollContainer(fixture: ComponentFixture<any>) {
   return fixture.debugElement.query(By.css('.sky-grid-top-scroll-container'));
 }
 
@@ -549,9 +553,9 @@ describe('Grid Component', () => {
 
           let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll').and.callThrough();
           let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft', 'set');
-          getTopScroll(fixture).nativeElement.scrollLeft = '400';
-          SkyAppTestUtility.fireDomEvent(getTopScroll(fixture).nativeElement, 'scroll');
-          SkyAppTestUtility.fireDomEvent(getTopScroll(fixture).nativeElement, 'scroll');
+          getTopScrollContainer(fixture).nativeElement.scrollLeft = '400';
+          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
+          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
           fixture.detectChanges();
 
           expect(topScrollSpy).toHaveBeenCalled();
@@ -567,7 +571,7 @@ describe('Grid Component', () => {
           fixture.detectChanges();
 
           let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll').and.callThrough();
-          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft', 'set');
+          let topScrollSpy = spyOnProperty(getTopScrollContainer(fixture).nativeElement, 'scrollLeft', 'set');
           getTableContainer(fixture).nativeElement.scrollLeft = '400';
           SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
           SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
