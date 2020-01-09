@@ -46,9 +46,13 @@ $sky-grid-resize-handle-width: 5px;
 .sky-grid-heading {
   position: sticky;
   top:0;
-  box-shadow: 0 0 0 1px #cdcfd2;
+  box-shadow: 1px 0 0 1px #cdcfd2;
   border-right-width: 0px;
   padding: 0;
+
+  // After adding the box-shadow false borders above, the lack of borders results in a 1px gap.
+  // This style creates an invisible border to prevent any visual tests from failing.
+  border-left: 1px solid $sky-color-white;
 
   // Prevent relative-positioned objects from scrolling on top of headers (multiselect checkboxes).
   z-index: 1;
