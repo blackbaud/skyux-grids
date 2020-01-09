@@ -187,7 +187,7 @@ describe('Grid', () => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid-scrollbars');
-    expect('#sscreenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
+    expect('#screenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-scrollbars-xs'
     });
   });
