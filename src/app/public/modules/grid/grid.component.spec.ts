@@ -545,15 +545,15 @@ describe('Grid Component', () => {
         fixture.componentInstance.dynamicWidth = 1000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-          const topScroll = getTopScroll(fixture).nativeElement;
-          topScroll.scrollLeft = '400';
-
-          fixture.componentInstance.grid.onTopScroll(undefined);
-          let tableContainerScrollSpy = spyOnProperty(topScroll, 'scrollLeft');
           fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(tableContainerScrollSpy).toHaveBeenCalled();
-          });
+
+          let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll');
+          let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft');
+          getTopScroll(fixture).nativeElement.scrollTo(400);
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
         });
       }));
 
@@ -561,16 +561,15 @@ describe('Grid Component', () => {
         fixture.componentInstance.dynamicWidth = 1000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
-          const tableContainer = getTableContainer(fixture).nativeElement;
-
-          tableContainer.scrollLeft = '400';
-          fixture.componentInstance.grid.onGridScroll(undefined);
-          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
-          SkyAppTestUtility.fireDomEvent(tableContainer, 'scroll');
           fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            expect(topScrollSpy).toHaveBeenCalled();
-          });
+
+          let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll');
+          let topScrollSpy = spyOnProperty(getTopScroll(fixture).nativeElement, 'scrollLeft');
+          getTableContainer(fixture).nativeElement.scrollTo(400);
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
         });
       }));
 
