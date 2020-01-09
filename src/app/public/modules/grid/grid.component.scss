@@ -53,6 +53,7 @@ $sky-grid-resize-handle-width: 5px;
   // After adding the box-shadow false borders above, the lack of borders results in a 1px gap.
   // This style creates an invisible border to prevent any visual tests from failing.
   border-left: 1px solid $sky-color-white;
+  border-bottom: 1px solid $sky-color-white;
 
   // Prevent relative-positioned objects from scrolling on top of headers (multiselect checkboxes).
   z-index: 1;
