@@ -47,6 +47,9 @@ $sky-grid-resize-handle-width: 5px;
 .sky-grid-heading {
   padding: 0;
 
+  @include sky-border(dark, top, bottom, left);
+  border-right-width: 0px;
+
   position: sticky;
   top: 0;
 
@@ -60,22 +63,7 @@ $sky-grid-resize-handle-width: 5px;
   text-align: left;
   background-clip: padding-box; // IE/Edge fix.
 
-  // The borders of a sticky header will continue to scroll in Edge.
-  // By placing the borders on the :after, they are truly sticky and will not scroll.
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    @include sky-border(dark, top, bottom, left);
-    border-right-width: 0px;
-  }
-
-  &:first-child:after {
+  &:first-child {
     border-left: 1px solid transparent;
   }
 
@@ -255,4 +243,13 @@ th.sky-grid-multiselect-cell {
   width: $sky-grid-resize-handle-width;
   background: black;
   opacity: 0.6;
+}
+
+
+// The borders of a sticky header will continue to scroll in Edge. We can use box-shadow instead.
+@supports (-webkit-appearance:none) {
+  .sky-grid-heading {
+    border: none;
+    box-shadow: 0 0 1px $sky-text-color-icon-borderless;
+  }
 }
