@@ -245,7 +245,6 @@ th.sky-grid-multiselect-cell {
   opacity: 0.6;
 }
 
-
 // The borders of a sticky header will continue to scroll in Edge. We can use box-shadow instead.
 @supports (-webkit-appearance:none) {
   .sky-grid-heading {
