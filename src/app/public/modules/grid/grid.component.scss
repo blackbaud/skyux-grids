@@ -26,7 +26,6 @@ $sky-grid-resize-handle-width: 5px;
 }
 
 .sky-grid-row {
-  @include sky-border(row, bottom);
 
   &:nth-child(odd) {
     background-color: $sky-color-gray-01;
@@ -38,6 +37,8 @@ $sky-grid-resize-handle-width: 5px;
   }
 
   .sky-grid-cell {
+    // Border must be on the table cell to be visible when using `table-layout: separate`.
+    @include sky-border(row, bottom);
     padding: 0;
     min-width: 10px;
   }
@@ -50,6 +51,8 @@ $sky-grid-resize-handle-width: 5px;
 
   position: sticky;
   top: 0;
+
+  // Prevent relative-positioned objects from scrolling on top of headers (multiselect checkboxes.
   z-index: 1;
 
   cursor: pointer;
