@@ -250,6 +250,6 @@ th.sky-grid-multiselect-cell {
 @supports (-webkit-appearance:none) {
   .sky-grid-heading {
     border: none;
-    box-shadow: 0 0 1px $sky-text-color-icon-borderless;
+    box-shadow: 0 0 0 1px $sky-text-color-icon-borderless;
   }
 }
