@@ -8,14 +8,10 @@ $sky-grid-resize-handle-width: 5px;
   display: block;
 }
 
-.sky-grid-table-container {
-  overflow: auto;
-}
-
 .sky-grid-table {
   position: relative;
   table-layout: fixed;
-  border-collapse: collapse;
+  border-spacing: 0;
   margin: 0;
   font-size: $sky-font-size-base;
   min-width: 100%;
@@ -48,10 +44,13 @@ $sky-grid-resize-handle-width: 5px;
 }
 
 .sky-grid-heading {
-  position: relative;
   @include sky-border(dark, top, bottom, left, right);
   border-right-width: 0px;
   padding: 0;
+
+  position: sticky;
+  top: 0;
+  z-index: 1;
 
   cursor: pointer;
   background-color: $sky-color-white;
