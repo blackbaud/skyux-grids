@@ -3,6 +3,9 @@
   "name": "skyux-grids",
   "mode": "easy",
   "compileMode": "aot",
+  "host": {
+    "url": "https://developer.blackbaud.com"
+  },
   "plugins": [
     "@skyux-sdk/builder-plugin-skyux"
   ],
