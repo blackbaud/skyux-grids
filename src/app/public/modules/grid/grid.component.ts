@@ -14,7 +14,8 @@ import {
   ElementRef,
   ViewChildren,
   ViewChild,
-  OnInit
+  OnInit,
+  HostListener
 } from '@angular/core';
 
 import {
@@ -122,18 +123,18 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     if (!oldIds || !this._selectedColumnIds ||
       !(this.arraysEqual(this._selectedColumnIds, oldIds))) {
 
-        // This variable ensures that we do not set user config options or fire the change event
-        // on the first time that the columns are set up
-        if (this.selectedColumnIdsSet) {
-          this.setUserConfig({
-            selectedColumnIds: newIds
-          });
-          this.selectedColumnIdsChange.emit(this._selectedColumnIds);
+      // This variable ensures that we do not set user config options or fire the change event
+      // on the first time that the columns are set up
+      if (this.selectedColumnIdsSet) {
+        this.setUserConfig({
+          selectedColumnIds: newIds
+        });
+        this.selectedColumnIdsChange.emit(this._selectedColumnIds);
 
-          if (this.isResized) {
-            this.resetTableWidth();
-          }
+        if (this.isResized) {
+          this.resetTableWidth();
         }
+      }
 
     }
 
@@ -223,6 +224,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public maxColWidth = 9999; // This is an arbitrary number, as the input range picker won't work without a value.
   public columnResizeStep = 10;
   public showResizeBar: boolean = false;
+  public showTopScroll: boolean = false;
   @ViewChildren('gridCol')
   private columnElementRefs: QueryList<ElementRef>;
   @ViewChildren('colSizeRange')
@@ -231,8 +233,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private tableContainerElementRef: ElementRef;
   @ViewChild('gridTable')
   private tableElementRef: ElementRef;
-  @ViewChild('topScrollBar')
-  private topScrollElementRef: ElementRef;
   @ViewChild('topScrollBarContainer')
   private topScrollContainerElementRef: ElementRef;
   @ViewChild('resizeBar')
@@ -257,7 +257,8 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     private ref: ChangeDetectorRef,
     private gridAdapter: SkyGridAdapterService,
     private skyWindow: SkyAppWindowRef,
-    private uiConfigService: SkyUIConfigService
+    private uiConfigService: SkyUIConfigService,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.displayedColumns = new Array<SkyGridColumnModel>();
     this.items = new Array<any>();
@@ -293,9 +294,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     );
 
     this.applySelectedRows();
+
     setTimeout(() => {
-      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableElementRef.nativeElement.scrollWidth}px`);
-    }, 100);
+      this.changeDetector.markForCheck();
+    });
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -320,6 +322,15 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  @HostListener('window:resize')
+  public onWindowResize() {
+    this.changeDetector.markForCheck();
+  }
+
+  public getTopScrollWidth(): string {
+    return this.tableElementRef.nativeElement.scrollWidth;
   }
 
   public getTableClassNames() {
@@ -563,6 +574,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     this.activeResizeColumnIndex = undefined;
 
     event.stopPropagation();
+    this.changeDetector.markForCheck();
   }
 
   public onRowClick(event: any, selectedItem: ListItemModel) {
@@ -736,7 +748,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.updateMaxRange();
     } else {
       this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth + deltaX}px`);
-      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableWidth + deltaX}px`);
       column.width = newColWidth;
     }
 
@@ -753,6 +764,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private initColumnWidths() {
     // Establish table width.
     this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
+    this.showTopScroll = true;
 
     // Set column widths based on the width initially given by the browser.
     // computedWidth prevents accidental overflow for browsers with sub-pixel widths.
@@ -766,7 +778,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     // 'scroll' tables should be allowed to expand outside of their constraints.
     if (this.fit === 'scroll') {
       this.gridAdapter.setStyle(this.tableElementRef, 'min-width', 'auto');
-      this.gridAdapter.setStyle(this.topScrollElementRef, 'min-width', 'auto');
     }
 
     // Update max limits for input ranges.
@@ -812,7 +823,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.ref.detectChanges();
       this.tableWidth = this.tableElementRef.nativeElement.offsetWidth;
       this.gridAdapter.setStyle(this.tableElementRef, 'width', `${this.tableWidth}px`);
-      this.gridAdapter.setStyle(this.topScrollElementRef, 'width', `${this.tableWidth}px`);
       this.ref.detectChanges();
     });
   }
@@ -969,7 +979,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   private arraysEqual(arrayA: any[], arrayB: any[]) {
     return arrayA.length === arrayB.length &&
-    arrayA.every((value, index) =>
-      value === arrayB[index]);
+      arrayA.every((value, index) =>
+        value === arrayB[index]);
   }
 }

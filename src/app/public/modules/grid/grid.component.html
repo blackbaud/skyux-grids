@@ -1,12 +1,12 @@
 <div class="sky-grid">
-  <div
+  <div *ngIf="showTopScroll"
     class="sky-grid-top-scroll-container"
     (scroll)="onTopScroll($event)"
     #topScrollBarContainer
   >
     <div
       class="sky-grid-top-scroll"
-      #topScrollBar
+      [style.width.px]="getTopScrollWidth()"
     ></div>
   </div>
   <div
