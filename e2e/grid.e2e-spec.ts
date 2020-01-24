@@ -4,9 +4,9 @@ import {
 } from '@skyux-sdk/e2e';
 
 import {
+  element,
   browser,
-  by,
-  element
+  by
 } from 'protractor';
 
 describe('Grid', () => {
@@ -171,16 +171,6 @@ describe('Grid', () => {
     browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-inline-help-xs'
-    });
-  });
-
-  it('should match previous screenshot when headers are frozen on scroll', (done) => {
-    SkyHostBrowser.get('visual/grid');
-    SkyHostBrowser.setWindowBreakpoint('lg');
-    SkyHostBrowser.scrollTo('#screenshot-grid-scrollable');
-    browser.driver.executeScript(`document.getElementById('screenshot-grid-scrollable').scrollTop = 50;`);
-    expect('#screenshot-grid-scrollable').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-frozen-headers'
     });
   });
 });
