@@ -4,9 +4,9 @@ import {
 } from '@skyux-sdk/e2e';
 
 import {
+  element,
   browser,
-  by,
-  element
+  by
 } from 'protractor';
 
 describe('Grid', () => {
@@ -192,13 +192,4 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot when headers are frozen on scroll', (done) => {
-    SkyHostBrowser.get('visual/grid');
-    SkyHostBrowser.setWindowBreakpoint('lg');
-    SkyHostBrowser.scrollTo('#screenshot-grid-scrollable');
-    browser.driver.executeScript(`document.getElementById('screenshot-grid-scrollable').scrollTop = 50;`);
-    expect('#screenshot-grid-scrollable').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-frozen-headers'
-    });
-  });
 });
