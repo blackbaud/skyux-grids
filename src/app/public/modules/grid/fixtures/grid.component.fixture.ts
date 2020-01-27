@@ -32,38 +32,10 @@ const moment = require('moment');
   templateUrl: './grid.component.fixture.html'
 })
 export class GridTestComponent {
-  @ViewChild(SkyGridComponent)
-  public grid: SkyGridComponent;
 
-  @ContentChildren(TemplateRef)
-  public templates: QueryList<TemplateRef<any>>;
-
-  @ViewChildren(TemplateRef)
-  public viewtemplates: QueryList<TemplateRef<any>>;
-
-  public hasToolbar = false;
-  public searchedData: any;
-  public searchText: string;
   public activeSortSelector: ListSortFieldSelectorModel;
-  public sortField: ListSortFieldSelectorModel;
-  public columnWidthsChange: Array<SkyGridColumnWidthModelChange>;
-  public fitType: string = 'scroll';
-  public enableMultiselect: boolean = false;
-  public multiselectRowId: string;
-  public selectedRowsChange: SkyGridSelectedRowsModelChange;
-  public gridController = new Subject<SkyGridMessage>();
-  public rowHighlightedId: string;
-  public settingsKey: string;
-  public selectedRowIds: Array<string>;
-  public dynamicWidth: number;
 
-  public selectedColumnIds: string[] = [
-    'column1',
-    'column2',
-    'column3',
-    'column4',
-    'column5'
-  ];
+  public columnWidthsChange: Array<SkyGridColumnWidthModelChange>;
 
   public data: any[] = [
     {
@@ -124,6 +96,49 @@ export class GridTestComponent {
       customId: '107'
     }
   ];
+
+  public dynamicWidth: number;
+
+  public enableMultiselect: boolean = false;
+
+  public fitType: string = 'scroll';
+
+  public gridController = new Subject<SkyGridMessage>();
+
+  public hasToolbar = false;
+
+  public multiselectRowId: string;
+
+  public rowHighlightedId: string;
+
+  public searchedData: any;
+
+  public searchText: string;
+
+  public selectedRowsChange: SkyGridSelectedRowsModelChange;
+
+  public selectedRowIds: Array<string>;
+
+  public settingsKey: string;
+
+  public sortField: ListSortFieldSelectorModel;
+
+  public selectedColumnIds: string[] = [
+    'column1',
+    'column2',
+    'column3',
+    'column4',
+    'column5'
+  ];
+
+  @ViewChild(SkyGridComponent)
+  public grid: SkyGridComponent;
+
+  @ContentChildren(TemplateRef)
+  public templates: QueryList<TemplateRef<any>>;
+
+  @ViewChildren(TemplateRef)
+  public viewtemplates: QueryList<TemplateRef<any>>;
 
   public searchFunction: (data: any, searchText: string) => boolean =
     (data: any, searchText: string) => {

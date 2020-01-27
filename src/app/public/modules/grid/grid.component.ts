@@ -1,21 +1,20 @@
 import {
-  Component,
-  Input,
-  OnDestroy,
-  Output,
-  ContentChildren,
-  QueryList,
-  ChangeDetectionStrategy,
   AfterContentInit,
   ChangeDetectorRef,
-  SimpleChanges,
-  EventEmitter,
-  OnChanges,
+  ChangeDetectionStrategy,
+  ContentChildren,
+  Component,
   ElementRef,
-  ViewChildren,
-  ViewChild,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  HostListener
+  Output,
+  QueryList,
+  SimpleChanges,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
 
 import {
@@ -110,6 +109,45 @@ let nextId = 0;
 export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
 
   @Input()
+  public columns: Array<SkyGridColumnModel>;
+
+  @Input()
+  public data: Array<any>;
+
+  @Input()
+  public enableMultiselect: boolean = false;
+
+  @Input()
+  public fit: string = 'width';
+
+  @Input()
+  public hasToolbar: boolean = false;
+
+  @Input()
+  public height: number;
+
+  @Input()
+  public highlightText: string;
+
+  @Input()
+  public messageStream = new Subject<SkyGridMessage>();
+
+  @Input()
+  public multiselectRowId: string;
+
+  @Input()
+  public rowHighlightedId: string;
+
+  @Input()
+  public settingsKey: string;
+
+  @Input()
+  public sortField: ListSortFieldSelectorModel;
+
+  @Input()
+  public width: number;
+
+  @Input()
   public set selectedColumnIds(newIds: Array<string>) {
     const oldIds = this._selectedColumnIds;
     this._selectedColumnIds = newIds;
@@ -146,36 +184,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   @Input()
-  public fit: string = 'width';
-
-  @Input()
-  public width: number;
-
-  @Input()
-  public height: number;
-
-  @Input()
-  public data: Array<any>;
-
-  @Input()
-  public columns: Array<SkyGridColumnModel>;
-
-  @Input()
-  public hasToolbar: boolean = false;
-
-  @Input()
-  public sortField: ListSortFieldSelectorModel;
-
-  @Input()
-  public highlightText: string;
-
-  @Input()
-  public enableMultiselect: boolean = false;
-
-  @Input()
-  public multiselectRowId: string;
-
-  @Input()
   public set selectedRowIds(value: Array<string>) {
     if (value) {
       this._selectedRowIds = value;
@@ -188,14 +196,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return this._selectedRowIds;
   }
 
-  @Input()
-  public messageStream = new Subject<SkyGridMessage>();
+  @Output()
+  public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
 
-  @Input()
-  public rowHighlightedId: string;
-
-  @Input()
-  public settingsKey: string;
+  @Output()
+  public multiselectSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -203,28 +208,19 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   @Output()
   public sortFieldChange = new EventEmitter<ListSortFieldSelectorModel>();
 
-  @Output()
-  public multiselectSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
-
-  @Output()
-  public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
-
-  public items: Array<any>;
-  public displayedColumns: Array<SkyGridColumnModel>;
+  public columnResizeStep = 10;
   public currentSortField: BehaviorSubject<ListSortFieldSelectorModel>;
+  public displayedColumns: Array<SkyGridColumnModel>;
+  public gridId: number = ++nextId;
+  public items: Array<any>;
+  public maxColWidth = 9999; // This is an arbitrary number, as the input range picker won't work without a value.
+  public minColWidth = 50;
+  public showResizeBar: boolean = false;
+  public showTopScroll: boolean = false;
 
   @ContentChildren(SkyGridColumnComponent, { descendants: true })
   private columnComponents: QueryList<SkyGridColumnComponent>;
 
-  private subscriptions: Subscription[] = [];
-
-  // Column resizing.
-  public gridId: number = ++nextId;
-  public minColWidth = 50;
-  public maxColWidth = 9999; // This is an arbitrary number, as the input range picker won't work without a value.
-  public columnResizeStep = 10;
-  public showResizeBar: boolean = false;
-  public showTopScroll: boolean = false;
   @ViewChildren('gridCol')
   private columnElementRefs: QueryList<ElementRef>;
   @ViewChildren('colSizeRange')
@@ -233,23 +229,23 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private tableContainerElementRef: ElementRef;
   @ViewChild('gridTable')
   private tableElementRef: ElementRef;
-  @ViewChild('topScrollBarContainer')
+  @ViewChild('topScrollContainer')
   private topScrollContainerElementRef: ElementRef;
   @ViewChild('resizeBar')
   private resizeBar: ElementRef;
-  private tableWidth: number;
-  private isDraggingResizeHandle: boolean = false;
-  private activeResizeColumnIndex: string;
-  private startColumnWidth: number;
-  private xPosStart: number;
-  private isResized: boolean = false;
-  private selectedColumnIdsSet: boolean = false;
-  private scrollTriggered: boolean = false;
 
+  private activeResizeColumnIndex: string;
+  private isDraggingResizeHandle: boolean = false;
+  private isResized: boolean = false;
   private ngUnsubscribe = new Subject();
+  private startColumnWidth: number;
+  private subscriptions: Subscription[] = [];
+  private tableWidth: number;
+  private scrollTriggered: boolean = false;
+  private selectedColumnIdsSet: boolean = false;
+  private xPosStart: number;
 
   private _selectedColumnIds: Array<string>;
-
   private _selectedRowIds: Array<string>;
 
   constructor(
@@ -295,9 +291,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.applySelectedRows();
 
-    setTimeout(() => {
-      this.changeDetector.markForCheck();
-    });
+    this.changeDetector.markForCheck();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -322,11 +316,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-  }
-
-  @HostListener('window:resize')
-  public onWindowResize() {
-    this.changeDetector.markForCheck();
   }
 
   public getTopScrollWidth(): string {

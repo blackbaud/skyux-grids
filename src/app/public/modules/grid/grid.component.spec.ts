@@ -80,19 +80,19 @@ import {
 const moment = require('moment');
 
 //#region helpers
-function getColumnHeader(id: string, element: DebugElement) {
+function getColumnHeader(id: string, element: DebugElement): DebugElement {
   return element.query(
     By.css('th[sky-cmp-id="' + id + '"]')
   );
 }
 
-function getCell(rowId: string, columnId: string, element: DebugElement) {
+function getCell(rowId: string, columnId: string, element: DebugElement): DebugElement {
   return element.query(
     By.css('tr[sky-cmp-id="' + rowId + '"] sky-grid-cell[sky-cmp-id="' + columnId + '"]')
   );
 }
 
-function getElementCords(elementRef: any) {
+function getElementCords(elementRef: any): any {
   const rect = (elementRef.nativeElement as HTMLElement).getBoundingClientRect();
   const coords = {
     x: Math.round(rect.left + (rect.width / 2)),
@@ -102,7 +102,7 @@ function getElementCords(elementRef: any) {
   return coords;
 }
 
-function getColumnWidths(fixture: ComponentFixture<any>) {
+function getColumnWidths(fixture: ComponentFixture<any>): number[] {
   let expectedColumnWidths = new Array<number>();
   const tableHeaders = fixture.debugElement.queryAll(By.css('.sky-grid-heading'));
   tableHeaders.forEach(th => {
@@ -112,15 +112,15 @@ function getColumnWidths(fixture: ComponentFixture<any>) {
   return expectedColumnWidths;
 }
 
-function getColumnResizeHandles(fixture: ComponentFixture<any>) {
+function getColumnResizeHandles(fixture: ComponentFixture<any>): DebugElement[] {
   return fixture.debugElement.queryAll(By.css('.sky-grid-resize-handle'));
 }
 
-function getColumnRangeInputs(fixture: ComponentFixture<any>) {
+function getColumnRangeInputs(fixture: ComponentFixture<any>): DebugElement[] {
   return fixture.debugElement.queryAll(By.css('.sky-grid-column-input-aria-only'));
 }
 
-function getColumnResizeInputMaxValues(fixture: ComponentFixture<any>) {
+function getColumnResizeInputMaxValues(fixture: ComponentFixture<any>): number[] {
   let resizeInputs = getColumnRangeInputs(fixture);
   let maxValues = new Array<number>();
 
@@ -130,7 +130,7 @@ function getColumnResizeInputMaxValues(fixture: ComponentFixture<any>) {
   return maxValues;
 }
 
-function resizeColumn(fixture: ComponentFixture<any>, deltaX: number, columnIndex: number) {
+function resizeColumn(fixture: ComponentFixture<any>, deltaX: number, columnIndex: number): void {
   const resizeHandles = getColumnResizeHandles(fixture);
   let axis = getElementCords(resizeHandles[columnIndex]);
   let event = {
@@ -155,7 +155,7 @@ function resizeColumn(fixture: ComponentFixture<any>, deltaX: number, columnInde
   fixture.detectChanges();
 }
 
-function resizeColumnWithTouch(fixture: ComponentFixture<any>, deltaX: number, columnIndex: number) {
+function resizeColumnWithTouch(fixture: ComponentFixture<any>, deltaX: number, columnIndex: number): void {
   const resizeHandles = getColumnResizeHandles(fixture);
   let axis = getElementCords(resizeHandles[columnIndex]);
   let event = {
@@ -178,7 +178,7 @@ function resizeColumnWithTouch(fixture: ComponentFixture<any>, deltaX: number, c
   fixture.detectChanges();
 }
 
-function resizeColumnByRangeInput(fixture: ComponentFixture<any>, columnIndex: number, deltaX: number) {
+function resizeColumnByRangeInput(fixture: ComponentFixture<any>, columnIndex: number, deltaX: number): void {
   const resizeInputs = getColumnRangeInputs(fixture);
   SkyAppTestUtility.fireDomEvent(resizeInputs[columnIndex].nativeElement, 'keydown', {
     keyboardEventInit: { key: 'ArrowRight' }
@@ -188,32 +188,32 @@ function resizeColumnByRangeInput(fixture: ComponentFixture<any>, columnIndex: n
   SkyAppTestUtility.fireDomEvent(resizeInputs[columnIndex].nativeElement, 'change', {});
 }
 
-function getTable(fixture: ComponentFixture<any>) {
+function getTable(fixture: ComponentFixture<any>): DebugElement {
   return fixture.debugElement.query(By.css('.sky-grid-table'));
 }
 
-function getTableContainer(fixture: ComponentFixture<any>) {
+function getTableContainer(fixture: ComponentFixture<any>): DebugElement {
   return fixture.debugElement.query(By.css('.sky-grid-table-container'));
 }
 
-function getTableRows(fixture: ComponentFixture<any>) {
+function getTableRows(fixture: ComponentFixture<any>): DebugElement[] {
   return fixture.debugElement.queryAll(By.css('tbody tr'));
 }
 
-function getTableWidth(fixture: ComponentFixture<any>) {
+function getTableWidth(fixture: ComponentFixture<any>): number {
   const table = getTable(fixture);
   return table.nativeElement.offsetWidth;
 }
 
-function getTopScroll(fixture: ComponentFixture<any>) {
+function getTopScroll(fixture: ComponentFixture<any>): DebugElement {
   return fixture.debugElement.query(By.css('.sky-grid-top-scroll'));
 }
 
-function getTopScrollContainer(fixture: ComponentFixture<any>) {
+function getTopScrollContainer(fixture: ComponentFixture<any>): DebugElement {
   return fixture.debugElement.query(By.css('.sky-grid-top-scroll-container'));
 }
 
-function getTopScrollWidth(fixture: ComponentFixture<any>) {
+function getTopScrollWidth(fixture: ComponentFixture<any>): number {
   return getTopScroll(fixture).nativeElement.offsetWidth;
 }
 
@@ -221,27 +221,27 @@ function cloneItems(items: any[]): any[] {
   return JSON.parse(JSON.stringify(items));
 }
 
-function isWithin(actual: number, base: number, distance: number) {
+function isWithin(actual: number, base: number, distance: number): boolean {
   return Math.abs(actual - base) <= distance;
 }
 
-function verifyWidthsMatch(actual: number, expected: number) {
+function verifyWidthsMatch(actual: number, expected: number): void {
   expect(isWithin(actual, expected, 5)).toEqual(true);
 }
 
-function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]) {
+function verifyAllWidthsMatch(actualWidths: number[], expectedWidths: number[]): void {
   expect(actualWidths.length).toEqual(expectedWidths.length);
   for (let i = 0; i < actualWidths.length; i++) {
     expect(isWithin(actualWidths[i], expectedWidths[i], 1)).toEqual(true);
   }
 }
 
-function showColumn2(fixture: ComponentFixture<any>) {
+function showColumn2(fixture: ComponentFixture<any>): void {
   let button = fixture.debugElement.query(By.css('#show-column-button'));
   button.nativeElement.click();
 }
 
-function hideColumn2(fixture: ComponentFixture<any>) {
+function hideColumn2(fixture: ComponentFixture<any>): void {
   let button = fixture.debugElement.query(By.css('#hide-column-button'));
   button.nativeElement.click();
 }
@@ -303,7 +303,7 @@ describe('Grid Component', () => {
     });
 
     //#region helpers
-    function verifyHeaders(useAllHeaders = false, hiddenCol = false) {
+    function verifyHeaders(useAllHeaders = false, hiddenCol = false): void {
       let headerCount = useAllHeaders ? 7 : 5;
       if (hiddenCol) {
         headerCount = 6;
@@ -359,7 +359,7 @@ describe('Grid Component', () => {
       }
     }
 
-    function verifyConsumerColumnWidthsAreMaintained() {
+    function verifyConsumerColumnWidthsAreMaintained(): void {
       for (let i = 0; i < component.grid.displayedColumns.length; i++) {
         let col = component.grid.displayedColumns[i];
         if (col.width) {
@@ -537,6 +537,7 @@ describe('Grid Component', () => {
 
       it('should set top scroll width to the tables width', async(() => {
         fixture.componentInstance.dynamicWidth = 1000;
+        resizeColumn(fixture, 50, 0);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           fixture.detectChanges();
@@ -547,6 +548,7 @@ describe('Grid Component', () => {
 
       it('should trigger a scroll to the grid when the top scroll bar scrolls', (done) => {
         fixture.componentInstance.dynamicWidth = 1000;
+        resizeColumn(fixture, 50, 0);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           fixture.detectChanges();
@@ -566,6 +568,7 @@ describe('Grid Component', () => {
 
       it('should trigger a scroll to the top scroll when the grid scrolls', (done) => {
         fixture.componentInstance.dynamicWidth = 1000;
+        resizeColumn(fixture, 50, 0);
         fixture.detectChanges();
         fixture.whenStable().then(() => {
           fixture.detectChanges();
@@ -1158,11 +1161,11 @@ describe('Grid Component', () => {
     });
 
     //#region multiselect helpers
-    function getMultiselectInputs() {
+    function getMultiselectInputs(): DebugElement[] {
       return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
     }
 
-    function verifyCheckbox(index: number, checked: boolean) {
+    function verifyCheckbox(index: number, checked: boolean): void {
       const checkboxes = getMultiselectInputs();
       const tableRows = getTableRows(fixture);
 
@@ -1335,7 +1338,7 @@ describe('Grid Component', () => {
         component.multiselectRowId = 'customId';
         component.enableMultiselect = true;
         fixture.detectChanges();
-        tick(100);
+
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
@@ -1366,7 +1369,7 @@ describe('Grid Component', () => {
         component.multiselectRowId = 'foobar';
         component.enableMultiselect = true;
         fixture.detectChanges();
-        tick(100);
+
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
@@ -1570,11 +1573,11 @@ describe('Grid Component', () => {
       fixture.detectChanges();
     });
 
-    function getMultiselectInputs() {
+    function getMultiselectInputs(): DebugElement[] {
       return fixture.debugElement.queryAll(By.css('tbody .sky-grid-multiselect-cell input'));
     }
 
-    function getButtons() {
+    function getButtons(): DebugElement[] {
       return fixture.debugElement.queryAll(By.css('tbody td button'));
     }
 
@@ -1633,7 +1636,7 @@ describe('Grid Component', () => {
 
     it('should add the dragging class to the header on dragula drag', fakeAsync(() => {
       fixture.detectChanges();
-      tick(100);
+
       fixture.detectChanges();
 
       let addCalled: boolean;
@@ -1657,7 +1660,7 @@ describe('Grid Component', () => {
 
     it('should remove the dragging class to the header of dragula draggend', fakeAsync(() => {
       fixture.detectChanges();
-      tick(100);
+
       fixture.detectChanges();
 
       let removeCalled: boolean;
@@ -1691,7 +1694,7 @@ describe('Grid Component', () => {
         ];
 
         fixture.detectChanges();
-        tick(100);
+
         fixture.detectChanges();
 
         component.grid.selectedColumnIdsChange.subscribe(() => {
@@ -1994,7 +1997,7 @@ describe('Grid Component', () => {
       component = fixture.componentInstance;
     });
 
-    function verifyHeaders(hideColumn = false) {
+    function verifyHeaders(hideColumn = false): void {
       const headerCount = hideColumn ? 1 : 2;
 
       expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(headerCount);
@@ -2006,7 +2009,7 @@ describe('Grid Component', () => {
       }
     }
 
-    function verifyData(hideColumn = false) {
+    function verifyData(hideColumn = false): void {
       for (let i = 0; i < component.data.length; i++) {
         const row = component.data[i];
 
@@ -2113,7 +2116,7 @@ describe('Grid Component', () => {
       element = fixture.debugElement as DebugElement;
     });
 
-    function verifyColumnHeaders(id: string) {
+    function verifyColumnHeaders(id: string): void {
       expect(getColumnHeader(id, element).nativeElement.textContent.trim()).toBe('');
 
       tick(110); // wait for setTimeout
