@@ -20,6 +20,7 @@ import {
 } from '@angular/core/testing';
 
 import {
+  SkyAppWindowRef,
   SkyUIConfigService
 } from '@skyux/core';
 
@@ -535,57 +536,6 @@ describe('Grid Component', () => {
         verifyConsumerColumnWidthsAreMaintained();
       });
 
-      it('should set top scroll width to the tables width', async(() => {
-        fixture.componentInstance.dynamicWidth = 1000;
-        resizeColumn(fixture, 50, 0);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-
-          expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
-        });
-      }));
-
-      it('should trigger a scroll to the grid when the top scroll bar scrolls', (done) => {
-        fixture.componentInstance.dynamicWidth = 1000;
-        resizeColumn(fixture, 50, 0);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-
-          let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll').and.callThrough();
-          let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft', 'set');
-          getTopScrollContainer(fixture).nativeElement.scrollLeft = '400';
-          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
-          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
-          fixture.detectChanges();
-
-          expect(topScrollSpy).toHaveBeenCalled();
-          expect(tableContainerScrollSpy).toHaveBeenCalled();
-          done();
-        });
-      });
-
-      it('should trigger a scroll to the top scroll when the grid scrolls', (done) => {
-        fixture.componentInstance.dynamicWidth = 1000;
-        resizeColumn(fixture, 50, 0);
-        fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-
-          let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll').and.callThrough();
-          let topScrollSpy = spyOnProperty(getTopScrollContainer(fixture).nativeElement, 'scrollLeft', 'set');
-          getTableContainer(fixture).nativeElement.scrollLeft = '400';
-          SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
-          SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
-          fixture.detectChanges();
-
-          expect(topScrollSpy).toHaveBeenCalled();
-          expect(tableContainerScrollSpy).toHaveBeenCalled();
-          done();
-        });
-      });
-
       it('should highlight rows when rowHighlightedId is defined', () => {
         const tableRows = getTableRows(fixture);
 
@@ -967,6 +917,79 @@ describe('Grid Component', () => {
 
           expect(tableStyle).toBeNull();
         }));
+      });
+    });
+
+    describe('top scroll', () => {
+      it('should set top scroll width to the tables width on load when needed', async(() => {
+        fixture.componentInstance.dynamicWidth = 5000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
+        });
+      }));
+
+      it('should set top scroll width to the tables width on window resize when needed', async(() => {
+        fixture.detectChanges();
+        spyOnProperty(TestBed.get(SkyAppWindowRef), 'nativeWindow', 'get').and.returnValue({ innerWidth: 100 });
+        SkyAppTestUtility.fireDomEvent(window, 'resize');
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
+        });
+      }));
+
+      it('should set top scroll width to the tables width after resize', async(() => {
+        fixture.detectChanges();
+        resizeColumn(fixture, 5000, 0);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
+        });
+      }));
+
+      it('should trigger a scroll to the grid when the top scroll bar scrolls', (done) => {
+        fixture.componentInstance.dynamicWidth = 5000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          let topScrollSpy = spyOn(fixture.componentInstance.grid, 'onTopScroll').and.callThrough();
+          let tableContainerScrollSpy = spyOnProperty(getTableContainer(fixture).nativeElement, 'scrollLeft', 'set');
+          getTopScrollContainer(fixture).nativeElement.scrollLeft = '400';
+          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
+          SkyAppTestUtility.fireDomEvent(getTopScrollContainer(fixture).nativeElement, 'scroll');
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
+          done();
+        });
+      });
+
+      it('should trigger a scroll to the top scroll when the grid scrolls', (done) => {
+        fixture.componentInstance.dynamicWidth = 5000;
+        fixture.detectChanges();
+        fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
+          let tableContainerScrollSpy = spyOn(fixture.componentInstance.grid, 'onGridScroll').and.callThrough();
+          let topScrollSpy = spyOnProperty(getTopScrollContainer(fixture).nativeElement, 'scrollLeft', 'set');
+          getTableContainer(fixture).nativeElement.scrollLeft = '400';
+          SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
+          SkyAppTestUtility.fireDomEvent(getTableContainer(fixture).nativeElement, 'scroll');
+          fixture.detectChanges();
+
+          expect(topScrollSpy).toHaveBeenCalled();
+          expect(tableContainerScrollSpy).toHaveBeenCalled();
+          done();
+        });
       });
     });
 

@@ -6,6 +6,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -291,7 +292,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.applySelectedRows();
 
-    this.changeDetector.markForCheck();
+    this.checkUserColumnWidthsForScroll();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -316,6 +317,13 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  @HostListener('window:resize')
+  public onWindowResize() {
+    if (!this.showTopScroll) {
+      this.checkUserColumnWidthsForScroll();
+    }
   }
 
   public getTopScrollWidth(): string {
@@ -607,6 +615,22 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     } else {
       this.scrollTriggered = true;
     }
+  }
+
+  private checkUserColumnWidthsForScroll(): void {
+    let columnsWidthTotal = 0;
+    const windowSize = this.skyWindow.nativeWindow.innerWidth;
+    this.columnComponents.forEach(item => {
+      if (!this.showTopScroll && item.width) {
+        columnsWidthTotal = columnsWidthTotal + item.width;
+        if (columnsWidthTotal > windowSize) {
+          this.showTopScroll = true;
+          setTimeout(() => {
+            this.changeDetector.markForCheck();
+          });
+        }
+      }
+    });
   }
 
   private multiselectSelectAll() {
