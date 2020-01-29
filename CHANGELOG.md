@@ -1,3 +1,12 @@
+# 3.4.0 (2019-12-18)
+
+- Added the `inlineHelpPopover` property to the grid column component. [#83](https://github.com/blackbaud/skyux-grids/pull/83) (Thanks, [@Blackbaud-DustinLunsford](https://github.com/Blackbaud-DustinLunsford)!)
+
+# 3.3.0 (2019-12-11)
+
+- Added the `source` property to `SkyGridSelectedRowsModelChange`, which defines the source of the change. [#80](https://github.com/blackbaud/skyux-grids/pull/80)
+- Fixed the grid component to allow selecting rows on init by using the `selectedRowIds` property. [#78](https://github.com/blackbaud/skyux-grids/pull/78)
+
 # 3.2.1 (2019-09-27)
 
 - Fixed the grid component to restrict how users reorder the columns beside locked columns. You can no longer reorder the columns on the left side of a locked column, and you can no longer move columns from the right side of a locked column to the left side.

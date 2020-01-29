@@ -80,10 +80,12 @@ import {
 import {
   SkyGridColumnDescriptionModelChange,
   SkyGridColumnHeadingModelChange,
+  SkyGridColumnInlineHelpPopoverModelChange,
   SkyGridColumnWidthModelChange,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
-  SkyGridMessageType
+  SkyGridMessageType,
+  SkyGridSelectedRowsSource
 } from './types';
 
 import {
@@ -175,12 +177,14 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   @Input()
   public set selectedRowIds(value: Array<string>) {
     if (value) {
-      for (let i = 0; i < this.items.length; i++) {
-        this.items[i].isSelected = (value.indexOf(this.items[i].id) > -1);
-      }
-      this.emitSelectedRows();
-      this.ref.markForCheck();
+      this._selectedRowIds = value;
+      this.applySelectedRows();
+      this.emitSelectedRows(SkyGridSelectedRowsSource.SelectedRowIdsChange);
     }
+  }
+
+  public get selectedRowIds(): Array<string> {
+    return this._selectedRowIds;
   }
 
   @Input()
@@ -235,10 +239,13 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   private startColumnWidth: number;
   private xPosStart: number;
   private isResized: boolean = false;
-  private _selectedColumnIds: Array<string>;
   private selectedColumnIdsSet: boolean = false;
 
   private ngUnsubscribe = new Subject();
+
+  private _selectedColumnIds: Array<string>;
+
+  private _selectedRowIds: Array<string>;
 
   constructor(
     private dragulaService: DragulaService,
@@ -279,6 +286,8 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         this.onHeaderDrop(selectedColumnIds);
       }
     );
+
+    this.applySelectedRows();
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -400,8 +409,14 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       });
   }
 
-  public onMultiselectChange() {
-    this.emitSelectedRows();
+  public getHelpInlineClass(columnField: string): Observable<boolean> {
+    return this.getCaretVisibility(columnField).map((visibility: string) => {
+      return visibility === 'hidden';
+    });
+  }
+
+  public onMultiselectCheckboxChange() {
+    this.emitSelectedRows(SkyGridSelectedRowsSource.CheckboxChange);
   }
 
   public updateColumnHeading(change: SkyGridColumnHeadingModelChange) {
@@ -415,6 +430,21 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     /* istanbul ignore else */
     if (foundColumnModel) {
       foundColumnModel.heading = change.value;
+      this.ref.markForCheck();
+    }
+  }
+
+  public updateInlineHelpPopover(change: SkyGridColumnInlineHelpPopoverModelChange) {
+    const foundColumnModel = this.columns.find((column: SkyGridColumnModel) => {
+      return (
+        change.id !== undefined && change.id === column.id ||
+        change.field !== undefined && change.field === column.field
+      );
+    });
+
+    /* istanbul ignore else */
+    if (foundColumnModel) {
+      foundColumnModel.inlineHelpPopover = change.value;
       this.ref.markForCheck();
     }
   }
@@ -533,7 +563,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       if (event.target === event.currentTarget || !this.isInteractiveElement(event)) {
         selectedItem.isSelected = !selectedItem.isSelected;
         this.ref.markForCheck();
-        this.emitSelectedRows();
+        this.emitSelectedRows(SkyGridSelectedRowsSource.RowClick);
       }
     }
   }
@@ -555,7 +585,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = true;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows();
+    this.emitSelectedRows(SkyGridSelectedRowsSource.SelectAll);
   }
 
   private multiselectClearAll() {
@@ -563,7 +593,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       this.items[i].isSelected = false;
     }
     this.ref.markForCheck();
-    this.emitSelectedRows();
+    this.emitSelectedRows(SkyGridSelectedRowsSource.ClearAll);
   }
 
   private handleIncomingMessages(message: SkyGridMessage) {
@@ -626,6 +656,15 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       }
       return new ListItemModel(item.id, item, checked);
     });
+  }
+
+  private applySelectedRows(): void {
+    if (this.items && this.items.length > 0 && this.selectedRowIds) {
+      for (let i = 0; i < this.items.length; i++) {
+        this.items[i].isSelected = (this.selectedRowIds.indexOf(this.items[i].id) > -1);
+      }
+      this.ref.markForCheck();
+    }
   }
 
   private setSortHeaders() {
@@ -773,9 +812,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return text.filter(val => val).join(delimiter);
   }
 
-  private emitSelectedRows() {
+  private emitSelectedRows(source: SkyGridSelectedRowsSource) {
     let selectedRows: SkyGridSelectedRowsModelChange = {
-      selectedRowIds: this.getSelectedRows()
+      selectedRowIds: this.getSelectedRows(),
+      source: source
     };
     this.multiselectSelectionChange.emit(selectedRows);
   }
@@ -885,6 +925,12 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
         comp.descriptionModelChanges
           .subscribe((change: SkyGridColumnDescriptionModelChange) => {
             this.updateColumnDescription(change);
+          })
+      );
+      this.subscriptions.push(
+        comp.inlineHelpPopoverModelChanges
+          .subscribe((change: SkyGridColumnInlineHelpPopoverModelChange) => {
+            this.updateInlineHelpPopover(change);
           })
       );
     });

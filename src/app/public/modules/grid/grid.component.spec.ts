@@ -71,9 +71,10 @@ import {
 } from './';
 
 import {
-  SkyGridSelectedRowsModelChange,
+  SkyGridMessage,
   SkyGridMessageType,
-  SkyGridMessage
+  SkyGridSelectedRowsModelChange,
+  SkyGridSelectedRowsSource
 } from './types';
 
 const moment = require('moment');
@@ -536,6 +537,47 @@ describe('Grid Component', () => {
         // Row should NOT have the highlight class.
         expect(tableRows[0].nativeElement).not.toHaveCssClass('sky-grid-row-highlight');
       });
+
+      it('should show inline help component when inlineHelpPopover is provided', () => {
+        const header1 = getColumnHeader('column1', element);
+        const header2 = getColumnHeader('column2', element);
+        const header4 = getColumnHeader('column4', element);
+
+        // Coulumns 1 and 3 should have inline help icons.
+        expect(header1.nativeElement.querySelector('sky-help-inline')).not.toBeNull();
+        expect(header2.nativeElement.querySelector('sky-help-inline')).toBeNull();
+        expect(header4.nativeElement.querySelector('sky-help-inline')).not.toBeNull();
+      });
+
+      it('should handle different inlineHelpPopover content for different columns', fakeAsync(() => {
+        const header1 = getColumnHeader('column1', element);
+        const header4 = getColumnHeader('column4', element);
+        const inlineHelp1 = header1.nativeElement.querySelector('sky-help-inline');
+        const inlineHelp4 = header4.nativeElement.querySelector('sky-help-inline');
+
+        // Open column 1 help popup.
+        inlineHelp1.click();
+        tick();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        let popupContent = element.nativeElement.querySelector('.sky-popover-body');
+
+        // Expect column 1 popup to contain column 1 content.
+        expect(popupContent.innerHTML.trim()).toEqual('Help content for column 1.');
+
+        // Open column 4 help popup.
+        popupContent.parentNode.removeChild(popupContent);
+        inlineHelp4.click();
+        tick();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        popupContent = element.nativeElement.querySelector('.sky-popover-body');
+
+        // Expect column 4 popup to contain column 4 content.
+        expect(popupContent.innerHTML.trim()).toEqual('Help content for column 4.');
+      }));
 
       it('should pass accessibility', async(() => {
         fixture.detectChanges();
@@ -1189,7 +1231,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, 'id'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['1', '2', '5']
+          selectedRowIds: ['1', '2', '5'],
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1214,7 +1257,8 @@ describe('Grid Component', () => {
           // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
           // In this example, 'id'.
           let expectedRows: SkyGridSelectedRowsModelChange = {
-            selectedRowIds: ['1', '2', '5']
+            selectedRowIds: ['1', '2', '5'],
+            source: SkyGridSelectedRowsSource.RowClick
           };
           expect(component.selectedRowsChange).toEqual(expectedRows);
         });
@@ -1244,7 +1288,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, 'customId'.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['101', '102', '105']
+          selectedRowIds: ['101', '102', '105'],
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1273,7 +1318,8 @@ describe('Grid Component', () => {
         // Values should match the row value of the consumer-provided key in 'multiselectRowId'.
         // In this example, there is no match so it should fall back to the 'id' property.
         let expectedRows: SkyGridSelectedRowsModelChange = {
-          selectedRowIds: ['1', '2', '5']
+          selectedRowIds: ['1', '2', '5'],
+          source: SkyGridSelectedRowsSource.CheckboxChange
         };
         expect(component.selectedRowsChange).toEqual(expectedRows);
       }));
@@ -1333,6 +1379,12 @@ describe('Grid Component', () => {
           verifyCheckbox(i, true);
         }
 
+        let expectedRows: SkyGridSelectedRowsModelChange = {
+          selectedRowIds: ['1', '2', '3', '4', '5', '6', '7'],
+          source: SkyGridSelectedRowsSource.SelectAll
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
+
         const clearAllMessage: SkyGridMessage = { type: SkyGridMessageType.ClearAll };
         fixture.componentInstance.gridController.next(clearAllMessage);
         fixture.detectChanges();
@@ -1340,6 +1392,32 @@ describe('Grid Component', () => {
         for (let i = 0; i < checkboxes.length; i++) {
           verifyCheckbox(i, false);
         }
+
+        expectedRows = {
+          selectedRowIds: [],
+          source: SkyGridSelectedRowsSource.ClearAll
+        };
+        expect(component.selectedRowsChange).toEqual(expectedRows);
+      });
+
+      it('should check checkboxes when selectedRowIds is set on init', () => {
+        // Re-initialize component with 1 and 3 pre-selected.
+        fixture = TestBed.createComponent(GridTestComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement as DebugElement;
+        component.enableMultiselect = true;
+        component.selectedRowIds = ['1', '3'];
+        fixture.detectChanges();
+        fixture.detectChanges();
+
+        // Verify those rows are selected and displayed properly.
+        verifyCheckbox(0, true);
+        verifyCheckbox(1, false);
+        verifyCheckbox(2, true);
+        verifyCheckbox(3, false);
+        verifyCheckbox(4, false);
+        verifyCheckbox(5, false);
+        verifyCheckbox(6, false);
       });
 
       it('should properly update the checkboxes when selectedRowIds is changed', () => {
@@ -1992,6 +2070,20 @@ describe('Grid Component', () => {
       tick();
 
       expect(col1.description).toBe('Column1 Description');
+    }));
+
+    it('should handle async column inline help', fakeAsync(() => {
+      fixture.detectChanges();
+
+      const missingInlineHelp = fixture.nativeElement.querySelector('sky-help-inline');
+      expect(missingInlineHelp).toBeNull();
+
+      tick(110); // wait for setTimeout
+      fixture.detectChanges();
+      tick();
+
+      const inlineHelp = fixture.nativeElement.querySelector('sky-help-inline');
+      expect(inlineHelp).not.toBeNull();
     }));
 
     it('should support the item `field` property if `id` not provided', fakeAsync(() => {

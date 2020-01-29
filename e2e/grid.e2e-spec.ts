@@ -5,6 +5,7 @@ import {
 
 import {
   element,
+  browser,
   by
 } from 'protractor';
 
@@ -150,6 +151,26 @@ describe('Grid', () => {
     checkboxes.get(3).click();
     expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
       screenshotName: 'grid-multiselect-selected-xs'
+    });
+  });
+
+  it('should match previous screenshot with inline help', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    browser.driver.sleep(2000); // Wait for async inline help to show.
+    expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-help-lg'
+    });
+  });
+
+  it('should match previous screenshot with inline help (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
+    browser.driver.sleep(2000); // Wait for async inline help to show.
+    expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-help-xs'
     });
   });
 });
