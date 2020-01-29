@@ -320,7 +320,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   @HostListener('window:resize')
-  public onWindowResize() {
+  public onWindowResize(): void {
     if (!this.showTopScroll) {
       this.checkUserColumnWidthsForScroll();
     }
