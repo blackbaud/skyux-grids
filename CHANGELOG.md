@@ -1,4 +1,4 @@
-# 3.5.0 (2019-02-03)
+# 3.5.0 (2020-02-03)
 
 - Added a horizontal scroll bar to the top of the grid component. [#87](https://github.com/blackbaud/skyux-grids/pull/87)
 
