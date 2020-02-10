@@ -21,7 +21,7 @@ $sky-grid-resize-handle-width: 5px;
   min-width: 100%;
 
   &.sky-grid-fit {
-    width: 100%;
+    max-width: 100%;
   }
 }
 
@@ -141,6 +141,10 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
+.sky-grid-inline-delete-heading {
+  padding: 0;
+}
+
 .sky-grid-multiselect-cell {
   padding: 0;
   text-align: center;
@@ -250,5 +254,4 @@ th.sky-grid-multiselect-cell {
    position: absolute;
    display: block;
    width: 100%;
-   height: 36px;
  }

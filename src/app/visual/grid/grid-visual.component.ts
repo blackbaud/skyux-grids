@@ -16,6 +16,7 @@ import {
 } from '@skyux/popovers';
 
 import {
+  SkyGridInlineDeleteConfig,
   SkyGridMessageType,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange
@@ -28,6 +29,16 @@ import {
 export class GridVisualComponent {
 
   public asyncPopover: SkyPopoverComponent;
+
+  public dataForInlineDeleteGrid = [
+    { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
+    { id: '2', column1: '01', column2: 'Banana', column3: 'bb' },
+    { id: '3', column1: '11', column2: 'Banana', column3: 'cc' },
+    { id: '4', column1: '12', column2: 'Daikon', column3: 'dd' },
+    { id: '5', column1: '13', column2: 'Edamame', column3: 'ee' },
+    { id: '6', column1: '20', column2: 'Fig', column3: 'ff' },
+    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' }
+  ];
 
   public dataForSimpleGrid = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
@@ -52,6 +63,8 @@ export class GridVisualComponent {
   public gridController = new Subject<SkyGridMessage>();
 
   public highlightText: string;
+
+  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[] = [];
 
   public rowHighlightedId: string;
 
@@ -101,6 +114,23 @@ export class GridVisualComponent {
 
   public clearAll(): void {
     this.sendMessage(SkyGridMessageType.ClearAll);
+  }
+
+  public cancelInlineDelete(id: string): void {
+    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
+  }
+
+  public deleteItem(id: string): void {
+    this.inlineDeleteConfigs.push({ id: id, pending: false});
+  }
+
+  public finishInlineDelete(id: string): void {
+    this.inlineDeleteConfigs.find(item => item.id === id).pending = true;
+
+    setTimeout(() => {
+      this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
+      this.dataForInlineDeleteGrid = this.dataForInlineDeleteGrid.filter(data => data.id !== id);
+    }, 5000);
   }
 
   public selectRow(): void {

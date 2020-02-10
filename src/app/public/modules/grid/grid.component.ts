@@ -82,6 +82,7 @@ import {
   SkyGridColumnHeadingModelChange,
   SkyGridColumnInlineHelpPopoverModelChange,
   SkyGridColumnWidthModelChange,
+  SkyGridInlineDeleteConfig,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
   SkyGridMessageType,
@@ -172,6 +173,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   public enableMultiselect: boolean = false;
 
   @Input()
+  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[];
+
+  @Input()
   public multiselectRowId: string;
 
   @Input()
@@ -195,6 +199,12 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   @Input()
   public settingsKey: string;
+
+  @Output()
+  public inlineDeleteCancelTriggered = new EventEmitter<any>();
+
+  @Output()
+  public inlineDeleteDeleteTriggered = new EventEmitter<any>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -573,6 +583,14 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
       return id === this.rowHighlightedId;
     }
     return false;
+  }
+
+  public getRowHeight(index: number): string {
+    return this.gridAdapter.getRowHeight(this.tableElementRef, index);
+  }
+
+  public getInlineDeleteItem(id: any) {
+    return this.inlineDeleteConfigs.find(inlineDelete => inlineDelete.id === id);
   }
 
   // Prevent touch devices from inadvertently scrolling grid while dragging columns.

@@ -11,7 +11,9 @@
       #gridTable>
       <thead>
         <tr dragula="sky-grid-heading">
-          <th style="padding: 0;"></th>
+          <th *ngIf="inlineDeleteConfigs && inlineDeleteConfigs.length > 0"
+            class="sky-grid-inline-delete-heading"
+          ></th>
           <th *ngIf="enableMultiselect"
             class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
             scope="col"
@@ -107,8 +109,15 @@
           }"
           (click)="onRowClick($event, item)"
         >
-          <td class="sky-grid-inline-delete-cell">
-            <sky-inline-delete *ngIf="i==2"></sky-inline-delete>
+          <td *ngIf="inlineDeleteConfigs && inlineDeleteConfigs.length > 0"
+            class="sky-grid-cell sky-grid-inline-delete-cell"
+            [ngStyle]='{ "height": getInlineDeleteItem(item.data.id) ? getRowHeight(i) : undefined }'
+          >
+            <sky-inline-delete *ngIf="getInlineDeleteItem(item.data.id)"
+              [pending]="getInlineDeleteItem(item.data.id).pending"
+              (cancelTriggered)="inlineDeleteCancelTriggered.emit(item.data.id)"
+              (deleteTriggered)="inlineDeleteDeleteTriggered.emit(item.data.id)"
+            ></sky-inline-delete>
           </td>
           <td *ngIf="enableMultiselect"
             class="sky-grid-multiselect-cell sky-grid-header-locked"
