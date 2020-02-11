@@ -606,7 +606,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     return this.gridAdapter.getRowHeight(this.tableElementRef, index);
   }
 
-  public getInlineDeleteItem(id: any) {
+  public getInlineDeleteItem(id: any): SkyGridInlineDeleteConfig {
     return this.inlineDeleteConfigs.find(inlineDelete => inlineDelete.id === id);
   }
 

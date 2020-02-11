@@ -12,8 +12,8 @@ import {
 const GRID_HEADER_DRAGGING_CLASS = 'sky-grid-header-dragging';
 const GRID_HEADER_LOCKED_SELECTOR = '.sky-grid-header-locked';
 const GRID_HEADER_RESIZE_HANDLE = '.sky-grid-resize-handle';
-const GRID_MULTISELECT_SELECTOR = '.sky-grid-multiselect-cell';
 const GRID_INLINE_DELETE_SELECTOR = '.sky-grid-inline-delete-heading';
+const GRID_MULTISELECT_SELECTOR = '.sky-grid-multiselect-cell';
 
 @Injectable()
 export class SkyGridAdapterService {

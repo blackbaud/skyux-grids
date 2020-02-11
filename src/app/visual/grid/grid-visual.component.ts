@@ -30,7 +30,7 @@ export class GridVisualComponent {
 
   public asyncPopover: SkyPopoverComponent;
 
-  public dataForInlineDeleteGrid = [
+  public dataForInlineDeleteGrid: any = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
     { id: '2', column1: '01', column2: 'Banana', column3: 'bb' },
     { id: '3', column1: '11', column2: 'Banana', column3: 'cc' },
