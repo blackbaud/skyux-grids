@@ -1,3 +1,11 @@
+# 3.5.1 (2020-02-10)
+
+- Fixed the grid component to properly watch for undefined columns when getting a column's visual styles. [#96](https://github.com/blackbaud/skyux-grids/pull/96)
+
+# 3.5.0 (2020-02-03)
+
+- Added a horizontal scroll bar to the top of the grid component. [#87](https://github.com/blackbaud/skyux-grids/pull/87)
+
 # 3.4.0 (2019-12-18)
 
 - Added the `inlineHelpPopover` property to the grid column component. [#83](https://github.com/blackbaud/skyux-grids/pull/83) (Thanks, [@Blackbaud-DustinLunsford](https://github.com/Blackbaud-DustinLunsford)!)
