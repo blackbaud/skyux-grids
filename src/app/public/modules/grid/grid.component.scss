@@ -22,6 +22,7 @@ $sky-grid-resize-handle-width: 5px;
 
   &.sky-grid-fit {
     max-width: 100%;
+    width: 100%;
   }
 }
 
@@ -143,6 +144,7 @@ $sky-grid-resize-handle-width: 5px;
 
 .sky-grid-inline-delete-heading {
   padding: 0;
+  width: 0;
 }
 
 .sky-grid-multiselect-cell {

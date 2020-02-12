@@ -129,7 +129,7 @@ export class GridVisualComponent {
 
     setTimeout(() => {
       this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
-      this.dataForInlineDeleteGrid = this.dataForInlineDeleteGrid.filter(data => data.id !== id);
+      this.dataForInlineDeleteGrid = this.dataForInlineDeleteGrid.filter((data: any) => data.id !== id);
     }, 5000);
   }
 

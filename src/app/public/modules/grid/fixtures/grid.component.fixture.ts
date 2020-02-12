@@ -21,6 +21,7 @@ import {
 
 import {
   SkyGridColumnWidthModelChange,
+  SkyGridInlineDeleteConfig,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange
 } from '../types';
@@ -107,6 +108,8 @@ export class GridTestComponent {
 
   public hasToolbar = false;
 
+  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[] = [];
+
   public multiselectRowId: string;
 
   public rowHighlightedId: string;
@@ -157,17 +160,17 @@ export class GridTestComponent {
       if (value1 && typeof value1 === 'string') {
         value1 = value1.toLowerCase();
       }
-        if (value2 && typeof value2 === 'string') {
+      if (value2 && typeof value2 === 'string') {
         value2 = value2.toLowerCase();
       }
-        if (value1 === value2) {
+      if (value1 === value2) {
         return 0;
       }
-        let result = value1 > value2 ? 1 : -1;
-        if (descending) {
+      let result = value1 > value2 ? 1 : -1;
+      if (descending) {
         result *= -1;
       }
-        return result;
+      return result;
     }).slice();
 
   }
@@ -186,5 +189,16 @@ export class GridTestComponent {
 
   public showColumn(): void {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
+  }
+
+  public cancelInlineDelete(id: string): void {
+    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
+  }
+  public deleteItem(id: string): void {
+    this.inlineDeleteConfigs = this.inlineDeleteConfigs.concat(this.inlineDeleteConfigs, [{ id: id, pending: false }]);
+  }
+
+  public finishInlineDelete(id: string): void {
+    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
   }
 }

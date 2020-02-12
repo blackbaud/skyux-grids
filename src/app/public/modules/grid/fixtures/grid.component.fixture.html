@@ -5,6 +5,7 @@
   [hasToolbar]="hasToolbar"
   [height]="400"
   [enableMultiselect]="enableMultiselect"
+  [inlineDeleteConfigs]="inlineDeleteConfigs"
   [messageStream]="gridController"
   [multiselectRowId]="multiselectRowId"
   [selectedRowIds]="selectedRowIds"
@@ -15,6 +16,8 @@
   [width]="600"
   (sortFieldChange)="onSort($event)"
   (columnWidthChange)="onResize($event)"
+  (inlineDeleteCancelTriggered)="cancelInlineDelete($event)"
+  (inlineDeleteDeleteTriggered)="finishInlineDelete($event)"
   (multiselectSelectionChange)="onMultiselectChange($event)">
   <sky-grid-column
     field="column1"
