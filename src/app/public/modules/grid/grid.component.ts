@@ -599,6 +599,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   public onTopScroll(event: any): void {
     /* sanity check */
+    /* istanbul ignore else */
     if (this.tableContainerElementRef) {
       if (this.scrollTriggered) {
         this.scrollTriggered = false;
@@ -612,6 +613,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
 
   public onGridScroll(event: any): void {
     /* sanity check */
+    /* istanbul ignore else */
     if (this.topScrollContainerElementRef) {
       if (this.scrollTriggered) {
         this.scrollTriggered = false;
