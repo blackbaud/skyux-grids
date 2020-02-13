@@ -632,12 +632,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     if (this.columnElementRefs && this.columnElementRefs.length > 0) {
       let columnsWidthTotal = 0;
       const windowSize = this.skyWindow.nativeWindow.innerWidth;
-      this.columnElementRefs.forEach((col, index) => {
+      this.columnElementRefs.forEach(col => {
         if (!this.showTopScroll) {
           let computedWidth = parseFloat(window.getComputedStyle(col.nativeElement).width);
           let offsetWidth = col.nativeElement.offsetWidth;
           let width = Math.max(computedWidth || offsetWidth, this.minColWidth);
-          this.getColumnModelByIndex(index).width = width;
           columnsWidthTotal = columnsWidthTotal + width;
           if (columnsWidthTotal > windowSize) {
             this.showTopScroll = true;
