@@ -598,22 +598,28 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public onTopScroll(event: any): void {
-    if (this.scrollTriggered) {
-      this.scrollTriggered = false;
-      this.tableContainerElementRef.nativeElement.scrollLeft =
-        this.topScrollContainerElementRef.nativeElement.scrollLeft;
-    } else {
-      this.scrollTriggered = true;
+    /* sanity check */
+    if (this.tableContainerElementRef) {
+      if (this.scrollTriggered) {
+        this.scrollTriggered = false;
+        this.tableContainerElementRef.nativeElement.scrollLeft =
+          this.topScrollContainerElementRef.nativeElement.scrollLeft;
+      } else {
+        this.scrollTriggered = true;
+      }
     }
   }
 
   public onGridScroll(event: any): void {
-    if (this.scrollTriggered) {
-      this.scrollTriggered = false;
-      this.topScrollContainerElementRef.nativeElement.scrollLeft =
-        this.tableContainerElementRef.nativeElement.scrollLeft;
-    } else {
-      this.scrollTriggered = true;
+    /* sanity check */
+    if (this.topScrollContainerElementRef) {
+      if (this.scrollTriggered) {
+        this.scrollTriggered = false;
+        this.topScrollContainerElementRef.nativeElement.scrollLeft =
+          this.tableContainerElementRef.nativeElement.scrollLeft;
+      } else {
+        this.scrollTriggered = true;
+      }
     }
   }
 
