@@ -192,4 +192,26 @@ describe('Grid', () => {
     });
   });
 
+  it('should match previous screenshot with inline delete', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-delete');
+    element.all(by.css('#screenshot-grid-inline-delete .sky-dropdown-button')).get(0).click();
+    element.all(by.css('#screenshot-grid-inline-delete .sky-dropdown-item button')).get(0).click();
+    expect('#screenshot-grid-inline-delete').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-delete-lg'
+    });
+  });
+
+  it('should match previous screenshot with inline delete (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid-inline-delete');
+    element.all(by.css('#screenshot-grid-inline-delete .sky-dropdown-button')).get(0).click();
+    element.all(by.css('#screenshot-grid-inline-delete .sky-dropdown-item button')).get(0).click();
+    expect('#screenshot-grid-inline-delete').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-inline-delete-xs'
+    });
+  });
+
 });

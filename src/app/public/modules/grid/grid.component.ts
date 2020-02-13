@@ -1,5 +1,6 @@
 import {
   AfterContentInit,
+  AfterViewInit,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
   ContentChildren,
@@ -108,7 +109,7 @@ let nextId = 0;
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, OnDestroy {
+export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
 
   @Input()
   public columns: Array<SkyGridColumnModel>;
@@ -301,7 +302,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
     );
 
     this.applySelectedRows();
+  }
 
+  public ngAfterViewInit() {
     this.checkUserColumnWidthsForScroll();
   }
 
@@ -616,39 +619,52 @@ export class SkyGridComponent implements OnInit, AfterContentInit, OnChanges, On
   }
 
   public onTopScroll(event: any): void {
-    if (this.scrollTriggered) {
-      this.scrollTriggered = false;
-      this.tableContainerElementRef.nativeElement.scrollLeft =
-        this.topScrollContainerElementRef.nativeElement.scrollLeft;
-    } else {
-      this.scrollTriggered = true;
+    /* sanity check */
+    /* istanbul ignore else */
+    if (this.tableContainerElementRef) {
+      if (this.scrollTriggered) {
+        this.scrollTriggered = false;
+        this.tableContainerElementRef.nativeElement.scrollLeft =
+          this.topScrollContainerElementRef.nativeElement.scrollLeft;
+      } else {
+        this.scrollTriggered = true;
+      }
     }
   }
 
   public onGridScroll(event: any): void {
-    if (this.scrollTriggered) {
-      this.scrollTriggered = false;
-      this.topScrollContainerElementRef.nativeElement.scrollLeft =
-        this.tableContainerElementRef.nativeElement.scrollLeft;
-    } else {
-      this.scrollTriggered = true;
+    /* sanity check */
+    /* istanbul ignore else */
+    if (this.topScrollContainerElementRef) {
+      if (this.scrollTriggered) {
+        this.scrollTriggered = false;
+        this.topScrollContainerElementRef.nativeElement.scrollLeft =
+          this.tableContainerElementRef.nativeElement.scrollLeft;
+      } else {
+        this.scrollTriggered = true;
+      }
     }
   }
 
   private checkUserColumnWidthsForScroll(): void {
-    let columnsWidthTotal = 0;
-    const windowSize = this.skyWindow.nativeWindow.innerWidth;
-    this.columnComponents.forEach(item => {
-      if (!this.showTopScroll && item.width) {
-        columnsWidthTotal = columnsWidthTotal + item.width;
-        if (columnsWidthTotal > windowSize) {
-          this.showTopScroll = true;
-          setTimeout(() => {
-            this.changeDetector.markForCheck();
-          });
+    if (this.columnElementRefs && this.columnElementRefs.length > 0) {
+      let columnsWidthTotal = 0;
+      const windowSize = this.skyWindow.nativeWindow.innerWidth;
+      this.columnElementRefs.forEach(col => {
+        if (!this.showTopScroll) {
+          let computedWidth = parseFloat(window.getComputedStyle(col.nativeElement).width);
+          let offsetWidth = col.nativeElement.offsetWidth;
+          let width = Math.max(computedWidth || offsetWidth, this.minColWidth);
+          columnsWidthTotal = columnsWidthTotal + width;
+          if (columnsWidthTotal > windowSize) {
+            this.showTopScroll = true;
+            setTimeout(() => {
+              this.changeDetector.markForCheck();
+            });
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   private multiselectSelectAll() {
