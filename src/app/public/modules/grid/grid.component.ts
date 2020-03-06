@@ -84,7 +84,7 @@ import {
   SkyGridColumnHeadingModelChange,
   SkyGridColumnInlineHelpPopoverModelChange,
   SkyGridColumnWidthModelChange,
-  SkyGridInlineDeleteConfig,
+  SkyGridRowDeleteConfig,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
   SkyGridMessageType,
@@ -148,9 +148,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   public sortField: ListSortFieldSelectorModel;
 
   @Input()
-  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[];
-
-  @Input()
   public width: number;
 
   @Input()
@@ -203,16 +200,16 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   }
 
   @Output()
-  public inlineDeleteCancelTriggered = new EventEmitter<any>();
-
-  @Output()
-  public inlineDeleteDeleteTriggered = new EventEmitter<any>();
-
-  @Output()
   public columnWidthChange = new EventEmitter<Array<SkyGridColumnWidthModelChange>>();
 
   @Output()
   public multiselectSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
+
+  @Output()
+  public rowDeleteCancel = new EventEmitter<any>();
+
+  @Output()
+  public rowDeleteConfirm = new EventEmitter<any>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -224,6 +221,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   public currentSortField: BehaviorSubject<ListSortFieldSelectorModel>;
   public displayedColumns: Array<SkyGridColumnModel>;
   public gridId: number = ++nextId;
+  public rowDeleteConfigs: SkyGridRowDeleteConfig[] = [];
   public items: Array<any>;
   public maxColWidth = 9999; // This is an arbitrary number, as the input range picker won't work without a value.
   public minColWidth = 50;
@@ -609,8 +607,18 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     return this.gridAdapter.getRowHeight(this.tableElementRef, index);
   }
 
-  public getInlineDeleteItem(id: any): SkyGridInlineDeleteConfig {
-    return this.inlineDeleteConfigs.find(inlineDelete => inlineDelete.id === id);
+  public cancelRowDelete(id: any) {
+    this.rowDeleteConfigs = this.rowDeleteConfigs.filter(config => config.id !== id);
+    this.rowDeleteCancel.emit(id);
+  }
+
+  public confirmRowDelete(id: any) {
+    this.rowDeleteConfigs.find(config => config.id === id).pending = true;
+    this.rowDeleteConfirm.emit(id);
+  }
+
+  public getRowDeleteItem(id: any): SkyGridRowDeleteConfig {
+    return this.rowDeleteConfigs.find(rowDelete => rowDelete.id === id);
   }
 
   // Prevent touch devices from inadvertently scrolling grid while dragging columns.
@@ -692,6 +700,24 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
       case SkyGridMessageType.ClearAll:
         this.multiselectClearAll();
+        break;
+      case SkyGridMessageType.PromptDeleteRow:
+        /* sanity check */
+        if (message.data && message.data.promptDeleteRow) {
+          const existingConfig = this.rowDeleteConfigs
+            .find(config => config.id === message.data.promptDeleteRow.id);
+          if (existingConfig) {
+            existingConfig.pending = false;
+          } else {
+            this.rowDeleteConfigs.push({ id: message.data.promptDeleteRow.id, pending: false });
+          }
+        }
+        break;
+      case SkyGridMessageType.AbortDeleteRow:
+        /* sanity check */
+        if (message.data && message.data.abortDeleteRow) {
+          this.rowDeleteConfigs = this.rowDeleteConfigs.filter(config => config.id !== message.data.abortDeleteRow.id);
+        }
         break;
     }
   }

@@ -1,3 +1,5 @@
+<p>{{ rowDeleteConfigs }}</p>
+<p>{{ rowDeleteConfigs.length }}</p>
 <div class="sky-grid">
   <div *ngIf="showTopScroll"
     class="sky-grid-top-scroll-container"
@@ -22,8 +24,8 @@
       #gridTable>
       <thead>
         <tr dragula="sky-grid-heading">
-          <th *ngIf="inlineDeleteConfigs && inlineDeleteConfigs.length > 0"
-            class="sky-grid-inline-delete-heading"
+          <th *ngIf="rowDeleteConfigs && rowDeleteConfigs.length > 0"
+            class="sky-grid-row-delete-heading"
           ></th>
           <th *ngIf="enableMultiselect"
             class="sky-grid-heading sky-grid-multiselect-cell sky-grid-header-locked"
@@ -120,14 +122,14 @@
           }"
           (click)="onRowClick($event, item)"
         >
-          <td *ngIf="inlineDeleteConfigs && inlineDeleteConfigs.length > 0"
-            class="sky-grid-cell sky-grid-inline-delete-cell"
-            [ngStyle]='{ "height": getInlineDeleteItem(item.data.id) ? getRowHeight(i) : undefined }'
+          <td *ngIf="rowDeleteConfigs && rowDeleteConfigs.length > 0"
+            class="sky-grid-cell sky-grid-row-delete-cell"
+            [ngStyle]='{ "height": getRowDeleteItem(item.data.id) ? getRowHeight(i) : undefined }'
           >
-            <sky-inline-delete *ngIf="getInlineDeleteItem(item.data.id)"
-              [pending]="getInlineDeleteItem(item.data.id).pending"
-              (cancelTriggered)="inlineDeleteCancelTriggered.emit(item.data.id)"
-              (deleteTriggered)="inlineDeleteDeleteTriggered.emit(item.data.id)"
+            <sky-inline-delete *ngIf="getRowDeleteItem(item.data.id)"
+              [pending]="getRowDeleteItem(item.data.id).pending"
+              (cancelTriggered)="cancelRowDelete(item.data.id)"
+              (deleteTriggered)="confirmRowDelete(item.data.id)"
             ></sky-inline-delete>
           </td>
           <td *ngIf="enableMultiselect"

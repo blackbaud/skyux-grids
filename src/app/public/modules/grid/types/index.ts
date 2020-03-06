@@ -2,7 +2,7 @@ export * from './grid-column-description-model-change';
 export * from './grid-column-heading-model-change';
 export * from './grid-column-inline-help-popover-model-change';
 export * from './grid-column-width-model-change';
-export * from './grid-inline-delete-config';
+export * from './grid-row-delete-config';
 export * from './grid-message';
 export * from './grid-message-type';
 export * from './grid-selected-rows-model-change';

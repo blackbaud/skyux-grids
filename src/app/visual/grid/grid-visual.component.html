@@ -173,16 +173,16 @@
   </sky-grid>
 </div>
 
-<h1>Grid with inline delete</h1>
+<h1>Grid with row delete</h1>
 
 <div
-  id="screenshot-grid-inline-delete"
+  id="screenshot-grid-row-delete"
 >
   <sky-grid
-    [data]="dataForInlineDeleteGrid"
-    [inlineDeleteConfigs]="inlineDeleteConfigs"
-    (inlineDeleteCancelTriggered)="cancelInlineDelete($event)"
-    (inlineDeleteDeleteTriggered)="finishInlineDelete($event)"
+    [data]="dataForRowDeleteGrid"
+    [messageStream]="gridController"
+    (rowDeleteCancel)="cancelRowDelete($event)"
+    (rowDeleteConfirm)="finishRowDelete($event)"
   >
     <sky-grid-column
       id="contsm"

@@ -12,7 +12,7 @@ import {
 const GRID_HEADER_DRAGGING_CLASS = 'sky-grid-header-dragging';
 const GRID_HEADER_LOCKED_SELECTOR = '.sky-grid-header-locked';
 const GRID_HEADER_RESIZE_HANDLE = '.sky-grid-resize-handle';
-const GRID_INLINE_DELETE_SELECTOR = '.sky-grid-inline-delete-heading';
+const GRID_ROW_DELETE_SELECTOR = '.sky-grid-row-delete-heading';
 const GRID_MULTISELECT_SELECTOR = '.sky-grid-multiselect-cell';
 
 @Injectable()
@@ -38,7 +38,7 @@ export class SkyGridAdapterService {
 
     dragulaService.drop.subscribe(([, , container]: Array<HTMLElement>) => {
       let columnIds: string[] = [];
-      let nodes = container.querySelectorAll(`th:not(${GRID_MULTISELECT_SELECTOR}):not(${GRID_INLINE_DELETE_SELECTOR})`);
+      let nodes = container.querySelectorAll(`th:not(${GRID_MULTISELECT_SELECTOR}):not(${GRID_ROW_DELETE_SELECTOR})`);
       for (let i = 0; i < nodes.length; i++) {
         let el = nodes[i];
         let id = el.getAttribute('sky-cmp-id');
@@ -57,7 +57,7 @@ export class SkyGridAdapterService {
           && handle !== undefined
           && !handle.matches(GRID_HEADER_RESIZE_HANDLE)
           && !handle.matches(GRID_MULTISELECT_SELECTOR)
-          && !handle.matches(GRID_INLINE_DELETE_SELECTOR)
+          && !handle.matches(GRID_ROW_DELETE_SELECTOR)
           && !isLeftOfLocked;
       },
       accepts: (

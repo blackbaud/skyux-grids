@@ -16,7 +16,6 @@ import {
 } from '@skyux/popovers';
 
 import {
-  SkyGridInlineDeleteConfig,
   SkyGridMessageType,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange
@@ -30,7 +29,7 @@ export class GridVisualComponent {
 
   public asyncPopover: SkyPopoverComponent;
 
-  public dataForInlineDeleteGrid: any = [
+  public dataForRowDeleteGrid: any = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
     { id: '2', column1: '01', column2: 'Banana', column3: 'bb' },
     { id: '3', column1: '11', column2: 'Banana', column3: 'cc' },
@@ -63,8 +62,6 @@ export class GridVisualComponent {
   public gridController = new Subject<SkyGridMessage>();
 
   public highlightText: string;
-
-  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[] = [];
 
   public rowHighlightedId: string;
 
@@ -116,20 +113,26 @@ export class GridVisualComponent {
     this.sendMessage(SkyGridMessageType.ClearAll);
   }
 
-  public cancelInlineDelete(id: string): void {
-    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
+  public cancelRowDelete(id: string): void {
+    console.log('Item with id ' + id + ' has not been deleted');
   }
 
   public deleteItem(id: string): void {
-    this.inlineDeleteConfigs.push({ id: id, pending: false});
+    this.gridController.next({
+      type: SkyGridMessageType.PromptDeleteRow,
+      data: {
+        promptDeleteRow: {
+          id: id
+        }
+      }
+    });
   }
 
-  public finishInlineDelete(id: string): void {
-    this.inlineDeleteConfigs.find(item => item.id === id).pending = true;
-
+  public finishRowDelete(id: string): void {
     setTimeout(() => {
-      this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
-      this.dataForInlineDeleteGrid = this.dataForInlineDeleteGrid.filter((data: any) => data.id !== id);
+      console.log('Item with id ' + id + ' has been deleted');
+      // IF WORKED
+      this.dataForRowDeleteGrid = this.dataForRowDeleteGrid.filter((data: any) => data.id !== id);
     }, 5000);
   }
 

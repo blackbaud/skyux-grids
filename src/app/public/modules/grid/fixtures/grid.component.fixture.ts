@@ -21,9 +21,10 @@ import {
 
 import {
   SkyGridColumnWidthModelChange,
-  SkyGridInlineDeleteConfig,
+  SkyGridRowDeleteConfig,
   SkyGridMessage,
-  SkyGridSelectedRowsModelChange
+  SkyGridSelectedRowsModelChange,
+  SkyGridMessageType
 } from '../types';
 
 const moment = require('moment');
@@ -108,7 +109,7 @@ export class GridTestComponent {
 
   public hasToolbar = false;
 
-  public inlineDeleteConfigs: SkyGridInlineDeleteConfig[] = [];
+  public rowDeleteConfigs: SkyGridRowDeleteConfig[] = [];
 
   public multiselectRowId: string;
 
@@ -191,14 +192,22 @@ export class GridTestComponent {
     this.selectedColumnIds = ['column1', 'column2', 'column3', 'column4', 'column5'];
   }
 
-  public cancelInlineDelete(id: string): void {
-    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
-  }
-  public deleteItem(id: string): void {
-    this.inlineDeleteConfigs = this.inlineDeleteConfigs.concat(this.inlineDeleteConfigs, [{ id: id, pending: false }]);
+  public cancelRowDelete(id: string): void {
+    return;
   }
 
-  public finishInlineDelete(id: string): void {
-    this.inlineDeleteConfigs = this.inlineDeleteConfigs.filter(item => item.id !== id);
+  public deleteItem(id: string): void {
+    this.gridController.next({
+      type: SkyGridMessageType.PromptDeleteRow,
+      data: {
+        promptDeleteRow: {
+          id: id
+        }
+      }
+    });
+  }
+
+  public finishRowDelete(id: string): void {
+    return;
   }
 }

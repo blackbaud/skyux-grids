@@ -142,7 +142,7 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
-.sky-grid-inline-delete-heading {
+.sky-grid-row-delete-heading {
   padding: 0;
   width: 0;
 }
@@ -252,7 +252,7 @@ tr {
   position: relative;
 }
 
-.sky-grid-inline-delete-cell {
+.sky-grid-row-delete-cell {
   padding: 0;
   position: absolute;
   display: block;
