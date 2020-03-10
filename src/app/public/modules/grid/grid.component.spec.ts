@@ -993,29 +993,105 @@ describe('Grid Component', () => {
       });
     });
 
-    fdescribe('row delete', () => {
+    describe('row delete', () => {
 
-      fit('should show row delete elements correctly when configs are set', async(() => {
+      it('should show row delete elements correctly', fakeAsync(() => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
-          fixture.componentInstance.deleteItem('1');
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            fixture.detectChanges();
-            expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
-            expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
-            expect(fixture.nativeElement.querySelectorAll('.sky-row-delete-standard').length).toBe(1);
-            fixture.componentInstance.deleteItem('2');
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-              expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
-              expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
-              expect(fixture.nativeElement.querySelectorAll('.sky-row-delete-standard').length).toBe(2);
-            });
-          });
-        });
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+        fixture.componentInstance.deleteItem('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        fixture.componentInstance.deleteItem('2');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(2);
+      }));
+
+      it('should cancel row delete elements correctly via the message stream', fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+        fixture.componentInstance.deleteItem('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        fixture.componentInstance.cancelRowDelete('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+      }));
+
+      it('should cancel row delete elements correctly via click', fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+        fixture.componentInstance.deleteItem('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        fixture.nativeElement.querySelectorAll('.sky-inline-delete .sky-btn-default')[0].click();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+      }));
+
+      it('should update the pending status of a row being deleted correctly', fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).toBeNull();
+
+        fixture.componentInstance.deleteItem('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        expect(fixture.nativeElement
+          .querySelectorAll('.sky-grid-row-delete-cell .sky-wait-mask-loading-blocking').length)
+          .toBe(0);
+
+        fixture.nativeElement.querySelectorAll('.sky-inline-delete-button')[0].click();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        expect(fixture.nativeElement
+          .querySelectorAll('.sky-grid-row-delete-cell .sky-wait-mask-loading-blocking').length)
+          .toBe(1);
+
+        fixture.componentInstance.deleteItem('1');
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
+        expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
+        expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
+        expect(fixture.nativeElement
+          .querySelectorAll('.sky-grid-row-delete-cell .sky-wait-mask-loading-blocking').length)
+          .toBe(0);
       }));
 
       it('should output the delete event correctly', fakeAsync(() => {
@@ -1023,14 +1099,17 @@ describe('Grid Component', () => {
         spyOn(fixture.componentInstance, 'finishRowDelete').and.callThrough();
         fixture.detectChanges();
         tick();
+        fixture.detectChanges();
         fixture.componentInstance.deleteItem('1');
         fixture.componentInstance.deleteItem('2');
         fixture.detectChanges();
         tick();
+        fixture.detectChanges();
         expect(fixture.componentInstance.finishRowDelete).not.toHaveBeenCalled();
-        fixture.nativeElement.querySelectorAll('.sky-row-delete-button')[0].click();
+        fixture.nativeElement.querySelectorAll('.sky-inline-delete-button')[0].click();
         fixture.detectChanges();
         tick();
+        fixture.detectChanges();
         expect(fixture.componentInstance.cancelRowDelete).not.toHaveBeenCalled();
         expect(fixture.componentInstance.finishRowDelete).toHaveBeenCalledWith('1');
       }));
@@ -1045,7 +1124,7 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         tick();
         expect(fixture.componentInstance.cancelRowDelete).not.toHaveBeenCalled();
-        fixture.nativeElement.querySelectorAll('.sky-row-delete .sky-btn-default')[0].click();
+        fixture.nativeElement.querySelectorAll('.sky-inline-delete .sky-btn-default')[0].click();
         fixture.detectChanges();
         tick();
         expect(fixture.componentInstance.cancelRowDelete).toHaveBeenCalledWith('1');

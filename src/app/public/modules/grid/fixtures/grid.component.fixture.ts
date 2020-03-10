@@ -193,7 +193,14 @@ export class GridTestComponent {
   }
 
   public cancelRowDelete(id: string): void {
-    return;
+    this.gridController.next({
+      type: SkyGridMessageType.AbortDeleteRow,
+      data: {
+        abortDeleteRow: {
+          id: id
+        }
+      }
+    });
   }
 
   public deleteItem(id: string): void {

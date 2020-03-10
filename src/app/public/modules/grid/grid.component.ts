@@ -720,6 +720,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
         }
         break;
     }
+    this.changeDetector.markForCheck();
   }
 
   private onHeaderDrop(newColumnIds: Array<string>) {
