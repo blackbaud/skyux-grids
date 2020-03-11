@@ -306,6 +306,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     if (changes.data && this.data) {
       this.transformData();
 
+      // This set timeout is necessary to ensure the data has rendered in the grid
       setTimeout(() => {
         this.checkUserColumnWidthsForScroll();
       });
@@ -753,6 +754,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     this.setDisplayedColumns(true);
     this.ref.markForCheck();
 
+    // This set timeout is necessary to ensure the columns have rendered in the grid
     setTimeout(() => {
       this.checkUserColumnWidthsForScroll();
     });
