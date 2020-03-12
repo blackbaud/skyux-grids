@@ -313,6 +313,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
     if (changes.data && this.data) {
       this.transformData();
+
+      // This set timeout is necessary to ensure the data has rendered in the grid
+      setTimeout(() => {
+        this.checkUserColumnWidthsForScroll();
+      });
     }
 
     if (changes.sortField) {
@@ -332,9 +337,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
   @HostListener('window:resize')
   public onWindowResize(): void {
-    if (!this.showTopScroll) {
-      this.checkUserColumnWidthsForScroll();
-    }
+    this.checkUserColumnWidthsForScroll();
   }
 
   public getTopScrollWidth(): string {
@@ -655,7 +658,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   }
 
   private checkUserColumnWidthsForScroll(): void {
-    if (this.columnElementRefs && this.columnElementRefs.length > 0) {
+    if (!this.showTopScroll && this.columnElementRefs && this.columnElementRefs.length > 0) {
       let columnsWidthTotal = 0;
       const windowSize = this.skyWindow.nativeWindow.innerWidth;
       this.columnElementRefs.forEach(col => {
@@ -795,6 +798,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     this.getColumnsFromComponent();
     this.setDisplayedColumns(true);
     this.ref.markForCheck();
+
+    // This set timeout is necessary to ensure the columns have rendered in the grid
+    setTimeout(() => {
+      this.checkUserColumnWidthsForScroll();
+    });
   }
 
   private resizeColumnByIndex(columnIndex: string, newColWidth: number, deltaX: number) {
