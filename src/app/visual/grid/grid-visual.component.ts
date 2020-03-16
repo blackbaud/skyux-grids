@@ -61,6 +61,8 @@ export class GridVisualComponent {
 
   public gridController = new Subject<SkyGridMessage>();
 
+  public gridRowDeleteController = new Subject<SkyGridMessage>();
+
   public highlightText: string;
 
   public rowHighlightedId: string;
@@ -118,7 +120,7 @@ export class GridVisualComponent {
   }
 
   public deleteItem(id: string): void {
-    this.gridController.next({
+    this.gridRowDeleteController.next({
       type: SkyGridMessageType.PromptDeleteRow,
       data: {
         promptDeleteRow: {
