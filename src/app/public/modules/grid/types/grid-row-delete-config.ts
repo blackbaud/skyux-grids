@@ -1,4 +1,4 @@
 export interface SkyGridRowDeleteConfig {
-  id: any;
+  id: string;
   pending: boolean;
 }

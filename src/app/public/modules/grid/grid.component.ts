@@ -206,10 +206,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   public multiselectSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
 
   @Output()
-  public rowDeleteCancel = new EventEmitter<any>();
+  public rowDeleteCancel = new EventEmitter<string>();
 
   @Output()
-  public rowDeleteConfirm = new EventEmitter<any>();
+  public rowDeleteConfirm = new EventEmitter<string>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -610,17 +610,17 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     return this.gridAdapter.getRowHeight(this.tableElementRef, index);
   }
 
-  public cancelRowDelete(id: any) {
+  public cancelRowDelete(id: string) {
     this.rowDeleteConfigs = this.rowDeleteConfigs.filter(config => config.id !== id);
     this.rowDeleteCancel.emit(id);
   }
 
-  public confirmRowDelete(id: any) {
+  public confirmRowDelete(id: string) {
     this.rowDeleteConfigs.find(config => config.id === id).pending = true;
     this.rowDeleteConfirm.emit(id);
   }
 
-  public getRowDeleteItem(id: any): SkyGridRowDeleteConfig {
+  public getRowDeleteItem(id: string): SkyGridRowDeleteConfig {
     return this.rowDeleteConfigs.find(rowDelete => rowDelete.id === id);
   }
 
