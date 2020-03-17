@@ -84,10 +84,12 @@ import {
   SkyGridColumnHeadingModelChange,
   SkyGridColumnInlineHelpPopoverModelChange,
   SkyGridColumnWidthModelChange,
-  SkyGridRowDeleteConfig,
   SkyGridMessage,
-  SkyGridSelectedRowsModelChange,
   SkyGridMessageType,
+  SkyGridRowDeleteCancelArgs,
+  SkyGridRowDeleteConfig,
+  SkyGridRowDeleteConfirmArgs,
+  SkyGridSelectedRowsModelChange,
   SkyGridSelectedRowsSource
 } from './types';
 
@@ -206,10 +208,10 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   public multiselectSelectionChange = new EventEmitter<SkyGridSelectedRowsModelChange>();
 
   @Output()
-  public rowDeleteCancel = new EventEmitter<string>();
+  public rowDeleteCancel = new EventEmitter<SkyGridRowDeleteCancelArgs>();
 
   @Output()
-  public rowDeleteConfirm = new EventEmitter<string>();
+  public rowDeleteConfirm = new EventEmitter<SkyGridRowDeleteConfirmArgs>();
 
   @Output()
   public selectedColumnIdsChange = new EventEmitter<Array<string>>();
@@ -612,12 +614,12 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
   public cancelRowDelete(id: string) {
     this.rowDeleteConfigs = this.rowDeleteConfigs.filter(config => config.id !== id);
-    this.rowDeleteCancel.emit(id);
+    this.rowDeleteCancel.emit({ id: id });
   }
 
   public confirmRowDelete(id: string) {
     this.rowDeleteConfigs.find(config => config.id === id).pending = true;
-    this.rowDeleteConfirm.emit(id);
+    this.rowDeleteConfirm.emit({ id: id });
   }
 
   public getRowDeleteItem(id: string): SkyGridRowDeleteConfig {

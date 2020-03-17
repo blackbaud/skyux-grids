@@ -1062,7 +1062,7 @@ describe('Grid Component', () => {
         expect(fixture.nativeElement.querySelector('.sky-grid-row-delete-heading')).not.toBeNull();
         expect(fixture.nativeElement.querySelectorAll('.sky-grid-row-delete-cell').length).toBe(7);
         expect(fixture.nativeElement.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
-        fixture.componentInstance.cancelRowDelete('1');
+        fixture.componentInstance.cancelRowDelete({ id: '1' });
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
@@ -1145,7 +1145,7 @@ describe('Grid Component', () => {
         tick();
         fixture.detectChanges();
         expect(fixture.componentInstance.cancelRowDelete).not.toHaveBeenCalled();
-        expect(fixture.componentInstance.finishRowDelete).toHaveBeenCalledWith('1');
+        expect(fixture.componentInstance.finishRowDelete).toHaveBeenCalledWith({ id: '1' });
       }));
 
       it('should output the cancel event correctly', fakeAsync(() => {
@@ -1161,7 +1161,7 @@ describe('Grid Component', () => {
         fixture.nativeElement.querySelectorAll('.sky-inline-delete .sky-btn-default')[0].click();
         fixture.detectChanges();
         tick();
-        expect(fixture.componentInstance.cancelRowDelete).toHaveBeenCalledWith('1');
+        expect(fixture.componentInstance.cancelRowDelete).toHaveBeenCalledWith({ id: '1' });
         expect(fixture.componentInstance.finishRowDelete).not.toHaveBeenCalled();
       }));
 

@@ -16,8 +16,10 @@ import {
 } from '@skyux/popovers';
 
 import {
-  SkyGridMessageType,
   SkyGridMessage,
+  SkyGridMessageType,
+  SkyGridRowDeleteCancelArgs,
+  SkyGridRowDeleteConfirmArgs,
   SkyGridSelectedRowsModelChange
 } from '../../public';
 
@@ -115,8 +117,8 @@ export class GridVisualComponent {
     this.sendMessage(SkyGridMessageType.ClearAll);
   }
 
-  public cancelRowDelete(id: string): void {
-    console.log('Item with id ' + id + ' has not been deleted');
+  public cancelRowDelete(cancelArgs: SkyGridRowDeleteCancelArgs): void {
+    console.log('Item with id ' + cancelArgs.id + ' has not been deleted');
   }
 
   public deleteItem(id: string): void {
@@ -130,11 +132,12 @@ export class GridVisualComponent {
     });
   }
 
-  public finishRowDelete(id: string): void {
+  public finishRowDelete(confirmArgs: SkyGridRowDeleteConfirmArgs): void {
     setTimeout(() => {
-      console.log('Item with id ' + id + ' has been deleted');
+      console.log('Item with id ' + confirmArgs.id + ' has been deleted');
       // IF WORKED
-      this.dataForRowDeleteGrid = this.dataForRowDeleteGrid.filter((data: any) => data.id !== id);
+      this.dataForRowDeleteGrid = this.dataForRowDeleteGrid
+        .filter((data: any) => data.id !== confirmArgs.id);
     }, 5000);
   }
 

@@ -21,7 +21,9 @@ import {
 
 import {
   SkyGridColumnWidthModelChange,
+  SkyGridRowDeleteCancelArgs,
   SkyGridRowDeleteConfig,
+  SkyGridRowDeleteConfirmArgs,
   SkyGridMessage,
   SkyGridSelectedRowsModelChange,
   SkyGridMessageType
@@ -227,12 +229,12 @@ export class GridTestComponent {
     }
   }
 
-  public cancelRowDelete(id: string): void {
+  public cancelRowDelete(cancelArgs: SkyGridRowDeleteCancelArgs): void {
     this.gridController.next({
       type: SkyGridMessageType.AbortDeleteRow,
       data: {
         abortDeleteRow: {
-          id: id
+          id: cancelArgs.id
         }
       }
     });
@@ -249,7 +251,7 @@ export class GridTestComponent {
     });
   }
 
-  public finishRowDelete(id: string): void {
+  public finishRowDelete(confirmArgs: SkyGridRowDeleteConfirmArgs): void {
     return;
   }
 }
