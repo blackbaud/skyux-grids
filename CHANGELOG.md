@@ -1,3 +1,7 @@
+# 3.6.0 (2020-03-20)
+
+- Added the ability to delete rows of the grid. [#98](https://github.com/blackbaud/skyux-grids/pull/98)
+
 # 3.5.3 (2020-03-11)
 
 - Fixed the grid component to properly display the top scroll bar when the grid's columns or data changes. [#105](https://github.com/blackbaud/skyux-grids/pull/105)
