@@ -1,6 +1,6 @@
-# 3.6.0 (2020-03-20)
+# 3.6.0 (2020-03-23)
 
-- Added the ability to delete rows of the grid. [#98](https://github.com/blackbaud/skyux-grids/pull/98)
+- Added the ability to delete rows in the grid component. [#98](https://github.com/blackbaud/skyux-grids/pull/98)
 
 # 3.5.3 (2020-03-11)
 
