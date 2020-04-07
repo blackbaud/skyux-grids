@@ -1750,19 +1750,21 @@ describe('Grid Component', () => {
       });
 
       it('should be accessible', async(() => {
+        fixture.detectChanges();
+
         const inputs = getMultiselectInputs();
 
         // Run accessibility test.
         fixture.whenStable().then(() => {
-          expect(fixture.nativeElement).toBeAccessible();
-
-          // Click on first row.
-          inputs[0].nativeElement.click();
-          fixture.detectChanges();
-
-          fixture.whenStable().then(() => {
+          expect(fixture.nativeElement).toBeAccessible(() => {
+            // Click on first row.
+            inputs[0].nativeElement.click();
             fixture.detectChanges();
-            expect(fixture.nativeElement).toBeAccessible();
+
+            fixture.whenStable().then(() => {
+              fixture.detectChanges();
+              expect(fixture.nativeElement).toBeAccessible();
+            });
           });
         });
       }));
