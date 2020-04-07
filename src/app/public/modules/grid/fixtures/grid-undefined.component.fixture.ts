@@ -23,10 +23,7 @@ import {
 })
 export class GridUndefinedTestComponent {
 
-  @ViewChild(SkyGridComponent, {
-    read: SkyGridComponent,
-    static: false
-  })
+  @ViewChild(SkyGridComponent)
   public grid: SkyGridComponent;
 
   public data: any[] = undefined;

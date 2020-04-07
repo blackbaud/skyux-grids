@@ -169,10 +169,7 @@ export class GridTestComponent {
     'column5'
   ];
 
-  @ViewChild(SkyGridComponent, {
-    read: SkyGridComponent,
-    static: false
-  })
+  @ViewChild(SkyGridComponent)
   public grid: SkyGridComponent;
 
   @ContentChildren(TemplateRef)

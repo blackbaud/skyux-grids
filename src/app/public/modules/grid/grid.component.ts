@@ -38,29 +38,17 @@ import {
 } from 'rxjs';
 
 import {
-  takeUntil,
-  takeWhile,
-  take,
+  distinctUntilChanged,
   map,
-  distinctUntilChanged
+  take,
+  takeUntil,
+  takeWhile
 } from 'rxjs/operators';
 
 import {
   ListItemModel,
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
-
-import {
-  SkyGridColumnComponent
-} from './grid-column.component';
-
-import {
-  SkyGridColumnModel
-} from './grid-column.model';
-
-import {
-  SkyGridAdapterService
-} from './grid-adapter.service';
 
 import {
   SkyGridColumnDescriptionModelChange
@@ -105,6 +93,18 @@ import {
 import {
   SkyGridSelectedRowsSource
 } from './types/grid-selected-rows-source';
+
+import {
+  SkyGridColumnComponent
+} from './grid-column.component';
+
+import {
+  SkyGridColumnModel
+} from './grid-column.model';
+
+import {
+  SkyGridAdapterService
+} from './grid-adapter.service';
 
 import {
   SkyGridUIConfig

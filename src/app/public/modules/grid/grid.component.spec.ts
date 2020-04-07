@@ -790,17 +790,13 @@ describe('Grid Component', () => {
           });
         }));
 
-        it('should have correct attributes on resizing range input', fakeAsync(() => {
-          fixture.detectChanges();
-          tick();
-          fixture.detectChanges();
-          tick();
-
+        it('should have correct aria-labels on resizing range input', fakeAsync(() => {
           const resizeInputs = getColumnRangeInputs(fixture);
           let colWidths = getColumnWidths(fixture);
-
           resizeInputs.forEach((resizeInput, index) => {
             expect(resizeInput.nativeElement.getAttribute('aria-controls')).not.toBeNull();
+            expect(resizeInput.nativeElement.getAttribute('aria-valuemax')).toBe(maxColWidth);
+            expect(resizeInput.nativeElement.getAttribute('aria-valuemin')).toBe(minColWidth);
             expect(resizeInput.nativeElement.getAttribute('max')).toBe(maxColWidth);
             expect(resizeInput.nativeElement.getAttribute('min')).toBe(minColWidth);
           });
@@ -808,19 +804,11 @@ describe('Grid Component', () => {
           // Increase first column.
           resizeColumnByRangeInput(fixture, 0, 10);
           fixture.detectChanges();
-          tick();
-          fixture.detectChanges();
-          tick();
-          fixture.detectChanges();
-          tick();
-          fixture.detectChanges();
-          tick();
-
           colWidths = getColumnWidths(fixture);
 
           // Expect valuenow to be updated with new width values.
           resizeInputs.forEach((resizeInput, index) => {
-            let valuenow = +resizeInput.nativeElement.getAttribute('aria-valuenow');
+            let valuenow = resizeInput.nativeElement.getAttribute('aria-valuenow');
             verifyWidthsMatch(valuenow, colWidths[index]);
           });
         }));
@@ -2523,7 +2511,6 @@ describe('Grid Component', () => {
       ];
 
       component.settingsKey = 'foobar';
-
       fixture.detectChanges();
       tick();
 

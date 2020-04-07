@@ -30,11 +30,7 @@ import * as moment from 'moment';
   template: require('./grid-interactive.component.fixture.html')
 })
 export class GridInteractiveTestComponent {
-
-  @ViewChild(SkyGridComponent, {
-    read: SkyGridComponent,
-    static: false
-  })
+  @ViewChild(SkyGridComponent)
   public grid: SkyGridComponent;
 
   @ContentChildren(TemplateRef)

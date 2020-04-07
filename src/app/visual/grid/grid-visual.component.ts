@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ViewChild
 } from '@angular/core';
@@ -24,7 +23,7 @@ import {
   selector: 'grid-visual',
   templateUrl: './grid-visual.component.html'
 })
-export class GridVisualComponent implements AfterViewInit {
+export class GridVisualComponent {
 
   public asyncPopover: any;
 
@@ -72,14 +71,12 @@ export class GridVisualComponent implements AfterViewInit {
 
   public selectedRows: string;
 
-  @ViewChild('asyncPopoverRef', {
-    static: true
-  })
-  private asyncPopoverRef: any;
+  @ViewChild('asyncPopoverRef')
+  private popoverTemplate: any;
 
-  public ngAfterViewInit(): void {
+  constructor() {
     setTimeout(() => {
-      this.asyncPopover = this.asyncPopoverRef;
+      this.asyncPopover = this.popoverTemplate;
     }, 1000);
   }
 
