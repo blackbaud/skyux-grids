@@ -24,10 +24,7 @@ export class GridEmptyTestComponent {
   })
   public grid: SkyGridComponent;
 
-  @ViewChild(TemplateRef, {
-    read: TemplateRef,
-    static: false
-  })
+  @ViewChild(TemplateRef)
   public template: TemplateRef<any>;
 
   public columns: Array<SkyGridColumnModel>;
