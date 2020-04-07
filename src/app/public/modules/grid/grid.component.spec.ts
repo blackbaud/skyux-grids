@@ -1749,21 +1749,25 @@ describe('Grid Component', () => {
         verifyCheckbox(6, false);
       });
 
-      it('should be accessible', async(() => {
+      it('should be accessible', async((done: DoneFn) => {
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
 
         // Run accessibility test.
         fixture.whenStable().then(() => {
+          fixture.detectChanges();
+
           expect(fixture.nativeElement).toBeAccessible(() => {
+
             // Click on first row.
             inputs[0].nativeElement.click();
             fixture.detectChanges();
 
             fixture.whenStable().then(() => {
               fixture.detectChanges();
-              expect(fixture.nativeElement).toBeAccessible();
+
+              expect(fixture.nativeElement).toBeAccessible(done);
             });
           });
         });
