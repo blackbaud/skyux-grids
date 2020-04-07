@@ -5,19 +5,29 @@ import {
 } from '@angular/core';
 
 import {
-  SkyGridComponent,
   SkyGridColumnModel
-} from '../';
+} from '../grid-column.model';
+
+import {
+  SkyGridComponent
+} from '../grid.component';
 
 @Component({
   selector: 'sky-test-cmp',
   template: require('./grid-empty.component.fixture.html')
 })
 export class GridEmptyTestComponent {
-  @ViewChild(SkyGridComponent)
+
+  @ViewChild(SkyGridComponent, {
+    read: SkyGridComponent,
+    static: true
+  })
   public grid: SkyGridComponent;
 
-  @ViewChild(TemplateRef)
+  @ViewChild(TemplateRef, {
+    read: TemplateRef,
+    static: false
+  })
   public template: TemplateRef<any>;
 
   public columns: Array<SkyGridColumnModel>;

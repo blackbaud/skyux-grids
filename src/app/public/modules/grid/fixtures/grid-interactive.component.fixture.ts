@@ -16,18 +16,25 @@ import {
 } from '../grid.component';
 
 import {
-  SkyGridColumnWidthModelChange,
-  SkyGridSelectedRowsModelChange
-} from '../types';
+  SkyGridColumnWidthModelChange
+} from '../types/grid-column-width-model-change';
 
-const moment = require('moment');
+import {
+  SkyGridSelectedRowsModelChange
+} from '../types/grid-selected-rows-model-change';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'sky-test-cmp',
   template: require('./grid-interactive.component.fixture.html')
 })
 export class GridInteractiveTestComponent {
-  @ViewChild(SkyGridComponent)
+
+  @ViewChild(SkyGridComponent, {
+    read: SkyGridComponent,
+    static: false
+  })
   public grid: SkyGridComponent;
 
   @ContentChildren(TemplateRef)

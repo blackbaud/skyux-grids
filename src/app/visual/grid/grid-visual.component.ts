@@ -1,19 +1,16 @@
 import {
+  AfterViewInit,
   Component,
   ViewChild
 } from '@angular/core';
 
 import {
   Subject
-} from 'rxjs/Subject';
+} from 'rxjs';
 
 import {
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
-
-import {
-  SkyPopoverComponent
-} from '@skyux/popovers';
 
 import {
   SkyGridMessage,
@@ -27,9 +24,9 @@ import {
   selector: 'grid-visual',
   templateUrl: './grid-visual.component.html'
 })
-export class GridVisualComponent {
+export class GridVisualComponent implements AfterViewInit {
 
-  public asyncPopover: SkyPopoverComponent;
+  public asyncPopover: any;
 
   public dataForRowDeleteGrid: any = [
     { id: '1', column1: '1', column2: 'Apple', column3: 'aa' },
@@ -75,12 +72,14 @@ export class GridVisualComponent {
 
   public selectedRows: string;
 
-  @ViewChild('asyncPopoverRef')
-  private popoverTemplate: SkyPopoverComponent;
+  @ViewChild('asyncPopoverRef', {
+    static: true
+  })
+  private asyncPopoverRef: any;
 
-  constructor() {
+  public ngAfterViewInit(): void {
     setTimeout(() => {
-      this.asyncPopover = this.popoverTemplate;
+      this.asyncPopover = this.asyncPopoverRef;
     }, 1000);
   }
 

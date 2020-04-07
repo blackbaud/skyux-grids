@@ -11,14 +11,16 @@ import {
 } from '@angular/core';
 
 import {
-  SkyPopoverComponent
-} from '@skyux/popovers';
+  SkyGridColumnDescriptionModelChange
+} from './types/grid-column-description-model-change';
 
 import {
-  SkyGridColumnDescriptionModelChange,
-  SkyGridColumnHeadingModelChange,
+  SkyGridColumnHeadingModelChange
+} from './types/grid-column-heading-model-change';
+
+import {
   SkyGridColumnInlineHelpPopoverModelChange
-} from './types';
+} from './types/grid-column-inline-help-popover-model-change';
 
 @Component({
   selector: 'sky-grid-column',
@@ -34,10 +36,9 @@ export class SkyGridColumnComponent implements OnChanges {
 
   /**
    * Specifies a template to display inside an inline help popup for this column.
-   * This property accepts a SkyPopoverComponent.
    */
   @Input()
-  public inlineHelpPopover: SkyPopoverComponent;
+  public inlineHelpPopover: any;
 
   @Input()
   public width: number;

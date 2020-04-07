@@ -1,4 +1,12 @@
 import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
+
+import {
   DebugElement
 } from '@angular/core';
 
@@ -12,27 +20,18 @@ import {
 } from '@skyux-sdk/testing';
 
 import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
-
-import {
   SkyAppWindowRef,
   SkyUIConfigService
 } from '@skyux/core';
 
 import {
   DragulaService
-} from 'ng2-dragula/ng2-dragula';
+} from 'ng2-dragula';
 
 import {
-  Observable
-} from 'rxjs/Observable';
-
-import 'rxjs/add/observable/throw';
+  of as observableOf,
+  throwError as observableThrowError
+} from 'rxjs';
 
 import {
   GridEmptyTestComponent
@@ -67,18 +66,30 @@ import {
 } from './fixtures/mock-dragula.service';
 
 import {
-  SkyGridComponent,
   SkyGridColumnModel
-} from './';
+} from './grid-column.model';
 
 import {
-  SkyGridMessage,
-  SkyGridMessageType,
-  SkyGridSelectedRowsModelChange,
-  SkyGridSelectedRowsSource
-} from './types';
+  SkyGridComponent
+} from './grid.component';
 
-const moment = require('moment');
+import {
+  SkyGridMessage
+} from './types/grid-message';
+
+import {
+  SkyGridMessageType
+} from './types/grid-message-type';
+
+import {
+  SkyGridSelectedRowsModelChange
+} from './types/grid-selected-rows-model-change';
+
+import {
+  SkyGridSelectedRowsSource
+} from './types/grid-selected-rows-source';
+
+import * as moment from 'moment';
 
 //#region helpers
 function getColumnHeader(id: string, element: DebugElement): DebugElement {
@@ -169,13 +180,20 @@ function resizeColumnWithTouch(fixture: ComponentFixture<any>, deltaX: number, c
   resizeHandles[columnIndex].triggerEventHandler('touchstart', event);
   fixture.detectChanges();
 
-  let evt = document.createEvent('UIEvent');
-  evt.initUIEvent('touchmove', false, false, window, axis.x + deltaX);
-  document.dispatchEvent(evt);
+  SkyAppTestUtility.fireDomEvent(document, 'touchmove', {
+    customEventInit: {
+      pageX: axis.x + deltaX
+    }
+  });
+
   fixture.detectChanges();
-  evt = document.createEvent('UIEvent');
-  evt.initUIEvent('touchend', false, false, window, axis.x + deltaX);
-  document.dispatchEvent(evt);
+
+  SkyAppTestUtility.fireDomEvent(document, 'touchend', {
+    customEventInit: {
+      pageX: axis.x + deltaX
+    }
+  });
+
   fixture.detectChanges();
 }
 
@@ -599,6 +617,7 @@ describe('Grid Component', () => {
       it('should pass accessibility', async(() => {
         fixture.detectChanges();
         fixture.whenStable().then(() => {
+          fixture.detectChanges();
           expect(fixture.nativeElement).toBeAccessible();
         });
       }));
@@ -771,13 +790,17 @@ describe('Grid Component', () => {
           });
         }));
 
-        it('should have correct aria-labels on resizing range input', fakeAsync(() => {
+        it('should have correct attributes on resizing range input', fakeAsync(() => {
+          fixture.detectChanges();
+          tick();
+          fixture.detectChanges();
+          tick();
+
           const resizeInputs = getColumnRangeInputs(fixture);
           let colWidths = getColumnWidths(fixture);
+
           resizeInputs.forEach((resizeInput, index) => {
             expect(resizeInput.nativeElement.getAttribute('aria-controls')).not.toBeNull();
-            expect(resizeInput.nativeElement.getAttribute('aria-valuemax')).toBe(maxColWidth);
-            expect(resizeInput.nativeElement.getAttribute('aria-valuemin')).toBe(minColWidth);
             expect(resizeInput.nativeElement.getAttribute('max')).toBe(maxColWidth);
             expect(resizeInput.nativeElement.getAttribute('min')).toBe(minColWidth);
           });
@@ -785,11 +808,19 @@ describe('Grid Component', () => {
           // Increase first column.
           resizeColumnByRangeInput(fixture, 0, 10);
           fixture.detectChanges();
+          tick();
+          fixture.detectChanges();
+          tick();
+          fixture.detectChanges();
+          tick();
+          fixture.detectChanges();
+          tick();
+
           colWidths = getColumnWidths(fixture);
 
           // Expect valuenow to be updated with new width values.
           resizeInputs.forEach((resizeInput, index) => {
-            let valuenow = resizeInput.nativeElement.getAttribute('aria-valuenow');
+            let valuenow = +resizeInput.nativeElement.getAttribute('aria-valuenow');
             verifyWidthsMatch(valuenow, colWidths[index]);
           });
         }));
@@ -954,7 +985,7 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should trigger a scroll to the grid when the top scroll bar scrolls', (done) => {
+      it('should trigger a scroll to the grid when the top scroll bar scrolls', async(() => {
         fixture.componentInstance.dynamicWidth = 5000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -969,11 +1000,10 @@ describe('Grid Component', () => {
 
           expect(topScrollSpy).toHaveBeenCalled();
           expect(tableContainerScrollSpy).toHaveBeenCalled();
-          done();
         });
-      });
+      }));
 
-      it('should trigger a scroll to the top scroll when the grid scrolls', (done) => {
+      it('should trigger a scroll to the top scroll when the grid scrolls', async(() => {
         fixture.componentInstance.dynamicWidth = 5000;
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -988,9 +1018,8 @@ describe('Grid Component', () => {
 
           expect(topScrollSpy).toHaveBeenCalled();
           expect(tableContainerScrollSpy).toHaveBeenCalled();
-          done();
         });
-      });
+      }));
 
       it('should set top scroll width to the tables width on column changes when needed', async(() => {
         fixture.detectChanges();
@@ -1009,21 +1038,20 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should set top scroll width to the tables width on data when needed', async(() => {
+      it('should set top scroll width to the tables width on data when needed', fakeAsync(() => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-          expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
-          fixture.componentInstance.addLongData();
+        tick();
 
-          fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
+        expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
+        fixture.componentInstance.addLongData();
 
-            expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
-            expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
-          });
-        });
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        tick();
+
+        expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
+        expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
       }));
     });
 
@@ -2438,7 +2466,7 @@ describe('Grid Component', () => {
 
       // Return a fake from the uiConfigService of the two columns above, plus one bad column.
       const columns = { selectedColumnIds: ['column1', 'column2', 'columnBAD'] };
-      spyOn(uiConfigService, 'getConfig').and.returnValue(Observable.of(columns));
+      spyOn(uiConfigService, 'getConfig').and.returnValue(observableOf(columns));
       component.settingsKey = 'foobar';
       fixture.detectChanges();
 
@@ -2453,7 +2481,7 @@ describe('Grid Component', () => {
 
       spyOn(uiConfigService, 'setConfig').and.callFake(() => {
         // tslint:disable-next-line: deprecation
-        return Observable.throw(new Error());
+        return observableThrowError(new Error());
       });
 
       component.columns = [
@@ -2477,13 +2505,15 @@ describe('Grid Component', () => {
       expect(spy).toHaveBeenCalledWith('Could not save grid settings.');
     });
 
-    it('should suppress errors when getting config', () => {
+    it('should suppress errors when getting config', fakeAsync(() => {
       spyOn(uiConfigService, 'getConfig').and.callFake(() => {
-        // tslint:disable-next-line: deprecation
-        return Observable.throw(new Error());
+        return observableThrowError(new Error());
       });
 
       const spy = spyOn(fixture.componentInstance.grid as any, 'initColumns').and.callThrough();
+
+      fixture.detectChanges();
+      tick();
 
       component.columns = [
         new SkyGridColumnModel(component.template, {
@@ -2493,12 +2523,11 @@ describe('Grid Component', () => {
       ];
 
       component.settingsKey = 'foobar';
-      fixture.detectChanges();
 
-      fixture.whenStable().then(() => {
-        fixture.detectChanges();
-        expect(spy).toHaveBeenCalled();
-      });
-    });
+      fixture.detectChanges();
+      tick();
+
+      expect(spy).toHaveBeenCalled();
+    }));
   });
 });

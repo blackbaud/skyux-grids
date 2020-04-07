@@ -2,16 +2,12 @@ import {
   TemplateRef
 } from '@angular/core';
 
-import {
-  SkyPopoverComponent
-} from '@skyux/popovers';
-
 export class SkyGridColumnModel {
   public template: TemplateRef<any>;
   public id: string;
   public field: string;
   public heading: string;
-  public inlineHelpPopover: SkyPopoverComponent;
+  public inlineHelpPopover: any;
   public type: string;
   public width: number;
   public hidden: boolean;

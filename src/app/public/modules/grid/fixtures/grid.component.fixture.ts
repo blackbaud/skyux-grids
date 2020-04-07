@@ -9,27 +9,45 @@ import {
 
 import {
   Subject
-} from 'rxjs/Subject';
+} from 'rxjs';
 
 import {
   ListSortFieldSelectorModel
 } from '@skyux/list-builder-common';
 
 import {
+  SkyGridColumnWidthModelChange
+} from '../types/grid-column-width-model-change';
+
+import {
+  SkyGridMessage
+} from '../types/grid-message';
+
+import {
+  SkyGridMessageType
+} from '../types/grid-message-type';
+
+import {
+  SkyGridRowDeleteCancelArgs
+} from '../types/grid-row-delete-cancel-args';
+
+import {
+  SkyGridRowDeleteConfig
+} from '../types/grid-row-delete-config';
+
+import {
+  SkyGridRowDeleteConfirmArgs
+} from '../types/grid-row-delete-confirm-args';
+
+import {
+  SkyGridSelectedRowsModelChange
+} from '../types/grid-selected-rows-model-change';
+
+import {
   SkyGridComponent
 } from '../grid.component';
 
-import {
-  SkyGridColumnWidthModelChange,
-  SkyGridRowDeleteCancelArgs,
-  SkyGridRowDeleteConfig,
-  SkyGridRowDeleteConfirmArgs,
-  SkyGridMessage,
-  SkyGridSelectedRowsModelChange,
-  SkyGridMessageType
-} from '../types';
-
-const moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
   selector: 'sky-test-cmp',
@@ -151,7 +169,10 @@ export class GridTestComponent {
     'column5'
   ];
 
-  @ViewChild(SkyGridComponent)
+  @ViewChild(SkyGridComponent, {
+    read: SkyGridComponent,
+    static: false
+  })
   public grid: SkyGridComponent;
 
   @ContentChildren(TemplateRef)
@@ -207,8 +228,9 @@ export class GridTestComponent {
       id: '8',
       column1: 'Some long text that would provoke an overflow of monster proportions!',
       column2: 'Some long text that would provoke an overflow of monster proportions!',
-      column3: 21,
-      column4: moment().add(7, 'minute'),
+      column3: 'Some long text that would provoke an overflow of monster proportions!',
+      column4: 21,
+      column5: moment().add(7, 'minute'),
       customId: '107'
     }];
   }
