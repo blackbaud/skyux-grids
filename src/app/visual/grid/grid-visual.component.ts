@@ -21,7 +21,8 @@ import {
 
 @Component({
   selector: 'grid-visual',
-  templateUrl: './grid-visual.component.html'
+  templateUrl: './grid-visual.component.html',
+  styleUrls: ['./grid-visual.component.scss']
 })
 export class GridVisualComponent {
 
