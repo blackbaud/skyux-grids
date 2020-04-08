@@ -176,6 +176,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
     // Ensure that the ids have changed. The two null checks ensure that we short circuit and don't
     // run the array equality check if it isn't needed due to one of the two values being undefined
+    /* istanbul ignore else */
     if (!oldIds || !this._selectedColumnIds ||
       !(this.arraysEqual(this._selectedColumnIds, oldIds))) {
 
@@ -735,6 +736,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
         break;
       case SkyGridMessageType.PromptDeleteRow:
         /* sanity check */
+        /* istanbul ignore else */
         if (message.data && message.data.promptDeleteRow) {
           const existingConfig = this.rowDeleteConfigs
             .find(config => config.id === message.data.promptDeleteRow.id);
@@ -747,6 +749,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
         break;
       case SkyGridMessageType.AbortDeleteRow:
         /* sanity check */
+        /* istanbul ignore else */
         if (message.data && message.data.abortDeleteRow) {
           this.rowDeleteConfigs = this.rowDeleteConfigs.filter(config => config.id !== message.data.abortDeleteRow.id);
         }
