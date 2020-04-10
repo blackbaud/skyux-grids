@@ -2513,15 +2513,12 @@ describe('Grid Component', () => {
       expect(spy).toHaveBeenCalledWith('Could not save grid settings.');
     });
 
-    it('should suppress errors when getting config', fakeAsync(() => {
+    it('should suppress errors when getting config', async(() => {
       spyOn(uiConfigService, 'getConfig').and.callFake(() => {
         return observableThrowError(new Error());
       });
 
       const spy = spyOn(fixture.componentInstance.grid as any, 'initColumns').and.callThrough();
-
-      fixture.detectChanges();
-      tick();
 
       component.columns = [
         new SkyGridColumnModel(component.template, {
@@ -2532,9 +2529,11 @@ describe('Grid Component', () => {
 
       component.settingsKey = 'foobar';
       fixture.detectChanges();
-      tick();
 
-      expect(spy).toHaveBeenCalled();
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+      });
     }));
   });
 });
