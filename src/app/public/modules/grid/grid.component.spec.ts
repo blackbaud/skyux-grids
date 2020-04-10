@@ -464,19 +464,9 @@ describe('Grid Component', () => {
       });
 
       it('should change displayed headers and data when selected columnids change and emit the change event', async(() => {
-        component.grid.selectedColumnIdsChange.subscribe((newSelectedColumnIds: string[]) => {
-          expect(newSelectedColumnIds).toEqual([
-            'column1',
-            'column2',
-            'column3',
-            'column4',
-            'column5',
-            'hiddenCol1',
-            'hiddenCol2'
-          ]);
-        });
+        fixture.detectChanges();
 
-        component.selectedColumnIds = [
+        const selectedColumnIds = [
           'column1',
           'column2',
           'column3',
@@ -485,7 +475,23 @@ describe('Grid Component', () => {
           'hiddenCol1',
           'hiddenCol2'
         ];
+
+        const changeSpy = spyOn(component.grid.selectedColumnIdsChange, 'emit').and.callThrough();
+
+        component.selectedColumnIds = selectedColumnIds;
         fixture.detectChanges();
+
+        expect(changeSpy.calls.count()).toEqual(1);
+        expect(changeSpy).toHaveBeenCalledWith(selectedColumnIds);
+        changeSpy.calls.reset();
+
+        component.selectedColumnIds = [...selectedColumnIds];
+        fixture.detectChanges();
+
+        expect(changeSpy.calls.count()).toEqual(
+          0,
+          'Setting selectedColumnIds with the same value should not emit changes.'
+        );
 
         verifyHeaders(true);
         verifyData(false, true);
