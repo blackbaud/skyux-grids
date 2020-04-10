@@ -1,3 +1,7 @@
+# 4.0.0-rc.0 (2020-04-10)
+
+- Initial release candidate. [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+
 # 3.6.0 (2020-03-23)
 
 - Added the ability to delete rows in the grid component. [#98](https://github.com/blackbaud/skyux-grids/pull/98)
