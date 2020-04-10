@@ -163,7 +163,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     }
 
     // Ensure that the ids have changed.
-    if (!this.arraysEqual(value, currentIds)) {
+    if (
+      !currentIds ||
+      !value ||
+      !this.arraysEqual(value, currentIds)
+    ) {
       // This variable ensures that we do not set user config options or fire the change event
       // on the first time that the columns are set up
       if (this.selectedColumnIdsSet) {
@@ -1065,10 +1069,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   }
 
   private arraysEqual(arrayA: any[], arrayB: any[]): boolean {
-    if (!arrayA || !arrayB) {
-      return;
-    }
-
     return arrayA.length === arrayB.length &&
       arrayA.every((value, index) =>
         value === arrayB[index]);
