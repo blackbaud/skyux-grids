@@ -1,3 +1,7 @@
+# 4.0.0-rc.2 (2020-04-15)
+
+- Added `SkyGridColumnComponent` and `SkyGridComponent` to exports API (for internal use only).
+
 # 4.0.0-rc.1 (2020-04-15)
 
 - Added `SkyGridColumnModel` to the exports API.
