@@ -214,7 +214,7 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot with column alilgnments', (done) => {
+  it('should match previous screenshot with column alignments', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
     SkyHostBrowser.scrollTo('#screenshot-grid-column-align');
@@ -223,7 +223,7 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot with column alilgnments (screen: xs)', (done) => {
+  it('should match previous screenshot with column alignments (screen: xs)', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid-column-align');
@@ -232,7 +232,7 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot with column alilgnments and inline help', (done) => {
+  it('should match previous screenshot with column alignments and inline help', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('lg');
     SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
@@ -241,7 +241,7 @@ describe('Grid', () => {
     });
   });
 
-  it('should match previous screenshot with column alilgnments and inline help (screen: xs)', (done) => {
+  it('should match previous screenshot with column alignments and inline help (screen: xs)', (done) => {
     SkyHostBrowser.get('visual/grid');
     SkyHostBrowser.setWindowBreakpoint('xs');
     SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
