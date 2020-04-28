@@ -232,4 +232,22 @@ describe('Grid', () => {
     });
   });
 
+  it('should match previous screenshot with column alilgnments and inline help', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
+    expect('#screenshot-grid-column-align-and-inline').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-column-alignment-and-inline-lg'
+    });
+  });
+
+  it('should match previous screenshot with column alilgnments and inline help (screen: xs)', (done) => {
+    SkyHostBrowser.get('visual/grid');
+    SkyHostBrowser.setWindowBreakpoint('xs');
+    SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
+    expect('#screenshot-grid-column-align-and-inline').toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-column-alignment-and-inline-xs'
+    });
+  });
+
 });

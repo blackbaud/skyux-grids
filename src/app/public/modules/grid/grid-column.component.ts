@@ -66,9 +66,10 @@ export class SkyGridColumnComponent implements OnChanges {
 
   /**
    * Specified the horizontal alignment of the column's data and header.
+   * @default left
    */
   @Input()
-  public alignment: SkyGridColumnAlignment;
+  public alignment: SkyGridColumnAlignment = 'left';
 
   /* tslint:disable:no-input-rename */
   @Input('search')
