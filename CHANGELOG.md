@@ -1,6 +1,6 @@
 # 3.7.0 (2020-05-01)
 
-- Updated visual styles of the column resize indicator. [#116](https://github.com/blackbaud/skyux-grids/pull/116)
+- Updated the visual styles of the column resize indicator. [#116](https://github.com/blackbaud/skyux-grids/pull/116)
 - Removed dependency on `moment`. [#116](https://github.com/blackbaud/skyux-grids/pull/116)
 
 # 3.6.0 (2020-03-23)
