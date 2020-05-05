@@ -58,7 +58,6 @@ $sky-grid-resize-handle-width: 5px;
   background-color: $sky-color-white;
 
   overflow: visible;
-  text-align: left;
   background-clip: padding-box; // IE/Edge fix.
 
   &:first-child {
@@ -175,18 +174,16 @@ $sky-grid-resize-handle-width: 5px;
   }
 }
 
-.sky-grid-heading, .sky-grid-cell {
-  &.sky-grid-column-alignment-left {
-    text-align: left;
-  }
+.sky-grid-column-alignment-left {
+  text-align: left;
+}
 
-  &.sky-grid-column-alignment-center {
-    text-align: center;
-  }
+.sky-grid-column-alignment-center {
+  text-align: center;
+}
 
-  &.sky-grid-column-alignment-right {
-    text-align: right;
-  }
+.sky-grid-column-alignment-right {
+  text-align: right;
 }
 
 .sky-grid-row-delete-heading {
