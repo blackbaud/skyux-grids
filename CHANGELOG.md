@@ -1,3 +1,15 @@
+# 4.0.0-rc.2 (2020-04-15)
+
+- Added `SkyGridColumnComponent` and `SkyGridComponent` to exports API (for internal use only).
+
+# 4.0.0-rc.1 (2020-04-15)
+
+- Added `SkyGridColumnModel` to the exports API.
+
+# 4.0.0-rc.0 (2020-04-10)
+
+- Initial release candidate. [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+
 # 3.7.0 (2020-05-01)
 
 - Updated the visual styles of the column resize indicator. [#116](https://github.com/blackbaud/skyux-grids/pull/116)
