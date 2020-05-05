@@ -66,7 +66,7 @@ export class SkyGridColumnComponent implements OnChanges {
 
   /**
    * Specified the horizontal alignment of the column's data and header.
-   * @default left
+   * @default 'left'
    */
   @Input()
   public alignment: SkyGridColumnAlignment = 'left';

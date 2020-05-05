@@ -443,14 +443,6 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
       });
   }
 
-  public getShouldSpaceForCaret(column: SkyGridColumnModel): Observable<boolean> {
-    return this.currentSortField
-      .distinctUntilChanged()
-      .map(field => {
-        return field.fieldSelector !== column.field && column.alignment === 'right';
-      });
-  }
-
   public getHelpInlineClass(columnField: string): Observable<boolean> {
     return this.getCaretVisibility(columnField).map((visibility: string) => {
       return visibility === 'hidden';

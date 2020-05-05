@@ -57,7 +57,7 @@
               [style.max-width.px]="column.width - 1"
               [style.width.px]="column.width - 1"
             >
-              <span *ngIf="(getShouldSpaceForCaret(column) | async)"
+              <span *ngIf="(getCaretVisibility(column.field) | async) === 'hidden'"
                 class="sky-grid-header-caret-hidden-spacing"
               ></span>
               <span

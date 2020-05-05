@@ -45,18 +45,6 @@ $sky-grid-resize-handle-width: 5px;
   .sky-grid-cell {
     padding: 0;
     min-width: 10px;
-
-    &.sky-grid-column-alignment-left {
-      text-align: left;
-    }
-
-    &.sky-grid-column-alignment-center {
-      text-align: center;
-    }
-
-    &.sky-grid-column-alignment-right {
-      text-align: right;
-    }
   }
 }
 
@@ -81,14 +69,6 @@ $sky-grid-resize-handle-width: 5px;
     background-color: $sky-background-color-neutral-light;
   }
 
-  &.sky-grid-column-alignment-left {
-    text-align: left;
-  }
-
-  &.sky-grid-column-alignment-center {
-    text-align: center;
-  }
-
   &.sky-grid-column-alignment-left, &.sky-grid-column-alignment-center {
     // This ensures that the sort icon is a strict size. It is 13.98px without the style. It also
     // ensures that things don't jump when the sort icon is not visible
@@ -105,19 +85,17 @@ $sky-grid-resize-handle-width: 5px;
   }
 
   &.sky-grid-column-alignment-right {
-    text-align: right;
+    // This style moves the icon spacing to the left of the text when the icon is not visible. This
+    // causes the column to not resize when the icon is hidden while not leaving extra visible space
+    // to the right of the header text.
+    .sky-grid-header-caret-hidden-spacing {
+      padding-left: 14px;
+    }
 
     // This ensures that the sort icon is a strict size. It is 13.98px without the style.
     .sky-grid-heading-sort-visible {
       width: 14px;
     }
-  }
-
-  // This style moves the icon spacing to the left of the text when the icon is not visible. This
-  // causes the column to not resize when the icon is hidden while not leaving extra visible space
-  // to the right of the header text.
-  .sky-grid-header-caret-hidden-spacing {
-    padding-left: 14px;
   }
 
   .sky-grid-header-text {
@@ -194,6 +172,20 @@ $sky-grid-resize-handle-width: 5px;
      &:focus {
       background-color: $sky-highlight-color-info;
     }
+  }
+}
+
+.sky-grid-heading, .sky-grid-cell {
+  &.sky-grid-column-alignment-left {
+    text-align: left;
+  }
+
+  &.sky-grid-column-alignment-center {
+    text-align: center;
+  }
+
+  &.sky-grid-column-alignment-right {
+    text-align: right;
   }
 }
 
