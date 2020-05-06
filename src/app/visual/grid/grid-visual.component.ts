@@ -17,7 +17,7 @@ import {
   SkyGridRowDeleteCancelArgs,
   SkyGridRowDeleteConfirmArgs,
   SkyGridSelectedRowsModelChange
-} from '../../public';
+} from '../../public/public_api';
 
 @Component({
   selector: 'grid-visual',
