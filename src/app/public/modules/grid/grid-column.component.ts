@@ -65,7 +65,7 @@ export class SkyGridColumnComponent implements OnChanges {
   public excludeFromHighlighting: boolean;
 
   /**
-   * Specified the horizontal alignment of the column's data and header.
+   * Specifies the horizontal alignment of the column's data and header.
    * @default 'left'
    */
   @Input()
