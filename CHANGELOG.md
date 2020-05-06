@@ -1,3 +1,7 @@
+# 4.0.0-rc.3 (2020-05-06)
+
+- Added bug fixes and features from the `master` branch. [#118](https://github.com/blackbaud/skyux-grids/pull/118)
+
 # 3.7.0 (2020-05-01)
 
 - Updated the visual styles of the column resize indicator. [#116](https://github.com/blackbaud/skyux-grids/pull/116)
