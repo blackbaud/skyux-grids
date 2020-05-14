@@ -1787,17 +1787,13 @@ describe('Grid Component', () => {
         fixture.whenStable().then(() => {
           fixture.detectChanges();
 
-          expect(fixture.nativeElement).toBeAccessible(() => {
+          // Click on first row.
+          inputs[0].nativeElement.click();
+          fixture.detectChanges();
 
-            // Click on first row.
-            inputs[0].nativeElement.click();
+          fixture.whenStable().then(() => {
             fixture.detectChanges();
-
-            fixture.whenStable().then(() => {
-              fixture.detectChanges();
-
-              expect(fixture.nativeElement).toBeAccessible();
-            });
+            expect(fixture.nativeElement).toBeAccessible();
           });
         });
       }));
