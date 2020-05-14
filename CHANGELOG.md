@@ -1,3 +1,13 @@
+# 4.0.0 (2020-05-15)
+
+### New features
+
+- Updated the pipeline to transpile to the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview). [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+
+### Breaking changes
+
+- Dropped support for `rxjs@5`. Consumers can install `rxjs-compat@^6` to support older versions of `rxjs`. [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+
 # 3.8.0 (2020-05-11)
 
 - Added the ability to align the contents and header of a grid column. [#114](https://github.com/blackbaud/skyux-grids/pull/114)
@@ -21,7 +31,13 @@
 
 # 4.0.0-rc.0 (2020-04-10)
 
-- Initial release candidate. [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+### New features
+
+- Updated the pipeline to transpile to the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview). [#109](https://github.com/blackbaud/skyux-grids/pull/109)
+
+### Breaking changes
+
+- Dropped support for `rxjs@5`. Consumers can install `rxjs-compat@^6` to support older versions of `rxjs`. [#109](https://github.com/blackbaud/skyux-grids/pull/109)
 
 # 3.6.0 (2020-03-23)
 
