@@ -1,5 +1,6 @@
 export * from './modules/grid/grid.module';
 export * from './modules/grid/grid-column.model';
+export * from './modules/grid/types/grid-column-alignment';
 export * from './modules/grid/types/grid-column-description-model-change';
 export * from './modules/grid/types/grid-column-heading-model-change';
 export * from './modules/grid/types/grid-column-inline-help-popover-model-change';

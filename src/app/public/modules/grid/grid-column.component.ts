@@ -11,6 +11,10 @@ import {
 } from '@angular/core';
 
 import {
+  SkyGridColumnAlignment
+} from './types/grid-column-alignment';
+
+import {
   SkyGridColumnDescriptionModelChange
 } from './types/grid-column-description-model-change';
 
@@ -64,6 +68,13 @@ export class SkyGridColumnComponent implements OnChanges {
 
   @Input()
   public excludeFromHighlighting: boolean;
+
+  /**
+   * Specifies the horizontal alignment of the column's data and header.
+   * @default 'left'
+   */
+  @Input()
+  public alignment: SkyGridColumnAlignment = 'left';
 
   /* tslint:disable:no-input-rename */
   @Input('search')

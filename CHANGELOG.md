@@ -1,3 +1,7 @@
+# 3.8.0 (2020-05-11)
+
+- Added the ability to align the contents and header of a grid column. [#114](https://github.com/blackbaud/skyux-grids/pull/114)
+
 # 4.0.0-rc.3 (2020-05-06)
 
 - Added bug fixes and features from the `master` branch. [#118](https://github.com/blackbaud/skyux-grids/pull/118)
