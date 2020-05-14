@@ -1778,7 +1778,7 @@ describe('Grid Component', () => {
         verifyCheckbox(6, false);
       });
 
-      it('should be accessible', async((done: DoneFn) => {
+      it('should be accessible', async(() => {
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
@@ -1796,7 +1796,7 @@ describe('Grid Component', () => {
             fixture.whenStable().then(() => {
               fixture.detectChanges();
 
-              expect(fixture.nativeElement).toBeAccessible(done);
+              expect(fixture.nativeElement).toBeAccessible();
             });
           });
         });
