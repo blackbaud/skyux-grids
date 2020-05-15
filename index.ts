@@ -1,1 +1,1 @@
-export * from './src/app/public';
+export * from './src/app/public/public_api';

@@ -4,11 +4,20 @@
   "mode": "easy",
   "compileMode": "aot",
   "host": {
-    "url": "https://developer.blackbaud.com"
+    "url": "https://developer.blackbaud.com",
+    "frameOptions": {
+      "none": true
+    }
   },
   "plugins": [
     "@skyux-sdk/builder-plugin-skyux"
   ],
+  "librarySettings": {
+    "whitelistedNonPeerDependencies": [
+      "dragula",
+      "ng2-dragula"
+    ]
+  },
   "testSettings": {
     "e2e": {
       "browserSet": "speedy"
@@ -18,8 +27,6 @@
     }
   },
   "app": {
-    "styles": [
-      "@skyux/theme/css/sky.css"
-    ]
+    "styles": []
   }
 }
