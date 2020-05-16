@@ -2244,15 +2244,16 @@ describe('Grid Component', () => {
       component = fixture.componentInstance;
     });
 
-    function verifyHeaders(hideColumn = false): void {
+    function verifyHeaders(hideColumn = false, undefinedHeader = false): void {
       const headerCount = hideColumn ? 1 : 2;
 
       expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(headerCount);
       expect(getColumnHeader('column1', element).nativeElement.textContent.trim()).toBe('Column 1');
 
       if (!hideColumn) {
+        const expectedHeaderText = undefinedHeader ? '' : 'Column 2';
         expect(getColumnHeader('column2', element).nativeElement.textContent.trim())
-          .toBe('Column 2');
+          .toBe(expectedHeaderText);
       }
     }
 
@@ -2308,6 +2309,24 @@ describe('Grid Component', () => {
       fixture.detectChanges();
       verifyHeaders(true);
       verifyData(true);
+    });
+
+    it('should handle defined, undefined, and empty headings', () => {
+      fixture.detectChanges();
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: undefined
+        })
+      ];
+
+      fixture.detectChanges();
+      verifyHeaders(false, true);
+      verifyData();
     });
   });
 

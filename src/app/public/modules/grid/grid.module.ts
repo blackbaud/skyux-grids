@@ -53,11 +53,16 @@ import {
   SkyGridsResourcesModule
 } from '../shared/grids-resources.module';
 
+import {
+  TextTrimPipe
+} from './text-trim.pipe';
+
 @NgModule({
   declarations: [
     SkyGridComponent,
     SkyGridColumnComponent,
-    SkyGridCellComponent
+    SkyGridCellComponent,
+    TextTrimPipe
   ],
   imports: [
     CommonModule,

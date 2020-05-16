@@ -36,3 +36,5 @@ BrowserStackLocal
 *.ngfactory.ts
 *.ngsummary.json
 yarn.lock
+
+.idea
