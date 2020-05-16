@@ -2311,7 +2311,7 @@ describe('Grid Component', () => {
       verifyData(true);
     });
 
-    it('should handle defined, undefined, and empty headings', () => {
+    it('should handle defined, and undefined headings', () => {
       fixture.detectChanges();
       component.columns = [
         new SkyGridColumnModel(component.template, {
