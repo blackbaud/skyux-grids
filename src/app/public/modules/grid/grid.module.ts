@@ -54,15 +54,15 @@ import {
 } from '../shared/grids-resources.module';
 
 import {
-  TextTrimPipe
-} from './text-trim.pipe';
+  TrimPipe
+} from './trim.pipe';
 
 @NgModule({
   declarations: [
     SkyGridComponent,
     SkyGridColumnComponent,
     SkyGridCellComponent,
-    TextTrimPipe
+    TrimPipe
   ],
   imports: [
     CommonModule,

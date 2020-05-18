@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 
 @Pipe({name: 'trim'})
-export class TextTrimPipe implements PipeTransform {
+export class TrimPipe implements PipeTransform {
   public transform(value: string): string {
     return value ? value.trim() : '';
   }
