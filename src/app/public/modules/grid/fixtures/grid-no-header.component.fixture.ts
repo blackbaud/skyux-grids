@@ -5,9 +5,11 @@ import {
 } from '@angular/core';
 
 import {
-  SkyGridComponent,
   SkyGridColumnModel
-} from '../';
+} from '../grid-column.model';
+
+import { SkyGridComponent
+} from '../grid.component';
 
 @Component({
   selector: 'sky-test-cmp',
