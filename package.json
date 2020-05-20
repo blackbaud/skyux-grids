@@ -1,6 +1,6 @@
 {
   "name": "@skyux/grids",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "SKY UX Grids",
   "scripts": {
     "build": "skyux build-public-library",
@@ -46,7 +46,7 @@
     "@angular/platform-browser": "9.1.7",
     "@angular/platform-browser-dynamic": "9.1.7",
     "@angular/router": "9.1.7",
-    "@blackbaud/auth-client": "2.24.0",
+    "@blackbaud/auth-client": "2.25.0",
     "@skyux-sdk/builder": "4.0.0-rc.9",
     "@skyux-sdk/builder-plugin-skyux": "4.0.0-rc.0",
     "@skyux-sdk/e2e": "4.0.0-rc.1",
@@ -54,7 +54,7 @@
     "@skyux/animations": "4.0.0",
     "@skyux/assets": "4.0.0",
     "@skyux/config": "4.0.0",
-    "@skyux/core": "4.0.0",
+    "@skyux/core": "4.1.0",
     "@skyux/forms": "4.0.0",
     "@skyux/http": "4.0.0",
     "@skyux/i18n": "4.0.0",
