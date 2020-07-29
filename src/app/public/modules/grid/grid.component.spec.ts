@@ -2015,8 +2015,6 @@ describe('Grid Component', () => {
 
     it('should emit selectedColumnIds when a column is reorded on drop',
       fakeAsync(() => {
-        let newSelectedColumnIds: string[];
-
         fixture.detectChanges();
         fixture.detectChanges();
 
