@@ -61,7 +61,9 @@
                 class="sky-grid-header-caret-hidden-spacing"
               ></span>
               <!-- The no spacing here is intentional to avoid extra spaces due to these being inline elements -->
-              <span>{{column.heading?.trim()}}</span>
+              <span
+                class="sky-grid-header-text"
+              >{{column.heading?.trim()}}</span>
               <sky-icon
                 class="sky-grid-heading-sort"
                 [ngClass]="'sky-grid-heading-sort-' + (getCaretVisibility(column.field) | async)"
