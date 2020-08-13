@@ -39,6 +39,14 @@
     }
   },
   "app": {
-    "styles": []
+    "styles": [
+      "@skyux/docs-tools/css/docs-tools.css"
+    ]
+  },
+  "omnibar": {},
+  "params": {
+    "svcid": {
+      "value": "skyux"
+    }
   }
 }
