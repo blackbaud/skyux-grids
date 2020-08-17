@@ -2367,6 +2367,213 @@ describe('Grid Component', () => {
       verifyHeaders(true);
       verifyData(true);
     });
+
+    it('should be able to set columns without using sky-grid-column component and update correctly', () => {
+      fixture.detectChanges();
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      verifyHeaders();
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element)).toBeNull();
+      }
+
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column3',
+          heading: 'Column 3'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(3);
+      expect(getColumnHeader('column1', element).nativeElement.textContent.trim()).toBe('Column 1');
+      expect(getColumnHeader('column2', element).nativeElement.textContent.trim())
+        .toBe('Column 2');
+      expect(getColumnHeader('column3', element).nativeElement.textContent.trim())
+        .toBe('Column 3');
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element).nativeElement.textContent.trim())
+          .toBe(row.column3);
+      }
+
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      verifyHeaders();
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element)).toBeNull();
+      }
+    });
+
+    it('should be able to set columns without using sky-grid-column component and update correctly with selected ids', () => {
+      fixture.detectChanges();
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        })
+      ];
+
+      let selectedColumnIds = [
+        'column1',
+        'column2'
+      ];
+      fixture.componentInstance.selectedColumnIds = selectedColumnIds;
+
+      fixture.detectChanges();
+
+      verifyHeaders();
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element)).toBeNull();
+      }
+
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column3',
+          heading: 'Column 3'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(2);
+      expect(getColumnHeader('column1', element).nativeElement.textContent.trim()).toBe('Column 1');
+      expect(getColumnHeader('column2', element).nativeElement.textContent.trim())
+        .toBe('Column 2');
+      expect(getColumnHeader('column3', element)).toBeNull();
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element)).toBeNull();
+      }
+
+      selectedColumnIds = [
+        'column1',
+        'column2',
+        'column3'
+      ]
+      fixture.componentInstance.selectedColumnIds = selectedColumnIds;
+
+      fixture.detectChanges();
+
+      expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(3);
+      expect(getColumnHeader('column1', element).nativeElement.textContent.trim()).toBe('Column 1');
+      expect(getColumnHeader('column2', element).nativeElement.textContent.trim())
+        .toBe('Column 2');
+      expect(getColumnHeader('column3', element).nativeElement.textContent.trim())
+        .toBe('Column 3');
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element).nativeElement.textContent.trim())
+          .toBe(row.column3);
+      }
+
+      component.columns = [
+        new SkyGridColumnModel(component.template, {
+          id: 'column1',
+          heading: 'Column 1'
+        }),
+        new SkyGridColumnModel(component.template, {
+          id: 'column2',
+          heading: 'Column 2'
+        })
+      ];
+
+      fixture.detectChanges();
+
+      verifyHeaders();
+
+      for (let i = 0; i < component.data.length; i++) {
+        const row = component.data[i];
+
+        expect(getCell(row.id, 'column1', element).nativeElement.textContent.trim())
+          .toBe(row.column1);
+        expect(getCell(row.id, 'column2', element).nativeElement.textContent.trim())
+          .toBe(row.column2);
+        expect(getCell(row.id, 'column3', element)).toBeNull();
+      }
+    });
   });
 
   describe('Dynamic columns', () => {
