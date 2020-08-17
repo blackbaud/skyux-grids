@@ -985,7 +985,7 @@ describe('Grid Component', () => {
 
       it('should set top scroll width to the tables width on window resize when needed', async(() => {
         fixture.detectChanges();
-        spyOnProperty(TestBed.get(SkyAppWindowRef), 'nativeWindow', 'get').and.returnValue({ innerWidth: 100 });
+        spyOnProperty(TestBed.inject(SkyAppWindowRef), 'nativeWindow', 'get').and.returnValue({ innerWidth: 100 });
         SkyAppTestUtility.fireDomEvent(window, 'resize');
         fixture.detectChanges();
         fixture.whenStable().then(() => {
@@ -2526,7 +2526,7 @@ describe('Grid Component', () => {
         'column1',
         'column2',
         'column3'
-      ]
+      ];
       fixture.componentInstance.selectedColumnIds = selectedColumnIds;
 
       fixture.detectChanges();
@@ -2724,7 +2724,7 @@ describe('Grid Component', () => {
 
       fixture = TestBed.createComponent(GridEmptyTestComponent);
       component = fixture.componentInstance;
-      uiConfigService = TestBed.get(SkyUIConfigService);
+      uiConfigService = TestBed.inject(SkyUIConfigService);
       element = fixture.debugElement as DebugElement;
     });
 
