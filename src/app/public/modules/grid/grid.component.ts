@@ -325,7 +325,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   public ngOnChanges(changes: SimpleChanges) {
     if (changes.columns && this.columns) {
       if (this.selectedColumnIds) {
-        this.selectedColumnIds.filter(columnId => this.columns.find(column => column.id === columnId));
+        this.selectedColumnIds = this.selectedColumnIds.filter(columnId => this.columns.find(column => column.id === columnId));
       }
       this.setDisplayedColumns(true);
     }
