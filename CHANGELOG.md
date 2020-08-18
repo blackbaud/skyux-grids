@@ -1,7 +1,7 @@
 # 4.0.4 (2020-08-18)
 
-- Fixed the grid component to support moving all columns by dragging the header text. [#150](https://github.com/blackbaud/skyux-grids/pull/150)
-- Fixed the grid component to allow for dynamically changing the available columns after the `selectedColumnIds` input has been set. [#151](https://github.com/blackbaud/skyux-grids/pull/151)
+- Fixed the grid component to support moving columns by dragging the header text. [#150](https://github.com/blackbaud/skyux-grids/pull/150)
+- Fixed the grid component to suport dynamically changing the available columns after the `selectedColumnIds` input is set. [#151](https://github.com/blackbaud/skyux-grids/pull/151)
 
 # 4.0.3 (2020-08-11)
 
