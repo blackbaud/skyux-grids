@@ -5,11 +5,13 @@ import {
 export interface SkyGridMessage {
 
   /**
-   * Sets the message to one of the following `SkyGridMessage` types:
-   * `SkyGridMessageType.ClearAll` — Clears the multiselect checkboxes for all rows in the grid
-   * `SkyGridMessageType.SelectAll` — Selects the multiselect checkboxes for all rows in the grid.
+   * Indicates what type of message is being sent.
    */
   type: SkyGridMessageType;
+
+  /**
+   * @internal
+   */
   data?: {
     abortDeleteRow?: {
       id: string;
