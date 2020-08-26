@@ -272,6 +272,11 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
   /**
    * Displays a caret in the column that was used to sort the grid. This is particularly useful
    * when you programmatically sort data and want to visually indicate how the grid was sorted.
+   * This property accepts a `ListSortFieldSelectorModel` value with the following properties:
+   * - `fieldSelector` Represents the current sort field. This property accepts `string` values.
+   * - `descending` Indicates whether to sort in descending order. The caret that visually
+   * indicates the sort order points down for descending order and up for ascending order.
+   * This property accepts `boolean` values. Default is `false`.
    */
   @Input()
   public sortField: ListSortFieldSelectorModel;
