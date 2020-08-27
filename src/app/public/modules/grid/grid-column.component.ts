@@ -110,6 +110,7 @@ export class SkyGridColumnComponent implements OnChanges {
   /**
    * Specifies a search function to apply for the specific column. By default,
    * the column executes a string compare on the column data.
+   * @default (value, searchText) => value.toString().toLowerCase().indexOf(searchText) !== -1
    */
   /* tslint:disable-next-line:no-input-rename */
   @Input('search')
