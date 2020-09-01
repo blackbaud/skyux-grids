@@ -55,6 +55,8 @@ export class GridTestComponent {
 
   public activeSortSelector: ListSortFieldSelectorModel;
 
+  public allColumnWidth: number;
+
   public columnWidthsChange: Array<SkyGridColumnWidthModelChange>;
 
   public data: any[] = [
@@ -247,6 +249,10 @@ export class GridTestComponent {
   }
 
   public cancelRowDelete(cancelArgs: SkyGridRowDeleteCancelArgs): void {
+    return;
+  }
+
+  public cancelRowDeleteViaMessageStream(cancelArgs: SkyGridRowDeleteCancelArgs): void {
     this.gridController.next({
       type: SkyGridMessageType.AbortDeleteRow,
       data: {
