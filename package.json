@@ -62,6 +62,7 @@
     "@skyux/core": "4.3.0",
     "@skyux/docs-tools": "4.4.2",
     "@skyux/forms": "4.9.0",
+    "@skyux/grids": "4.0.5",
     "@skyux/http": "4.0.1",
     "@skyux/i18n": "4.0.1",
     "@skyux/indicators": "4.2.0",
