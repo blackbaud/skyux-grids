@@ -1216,8 +1216,10 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
-        const overlays = document.querySelectorAll('.sky-overlay');
-        overlays.forEach((overlay: HTMLElement) => expect(overlay.style.zIndex).toBe('999'));
+        const overlays = Array.from(document.querySelectorAll('.sky-overlay'));
+        // The `toString` here is to address IE returning a number but all other browsers
+        // returning a string
+        overlays.forEach((overlay: HTMLElement) => expect(overlay.style.zIndex.toString()).toBe('999'));
       }));
 
       it('should not change the column widths when a row delete is triggered', fakeAsync(() => {
@@ -1225,15 +1227,15 @@ describe('Grid Component', () => {
         tick();
         fixture.detectChanges();
         const columnWidths: number[] = [];
-        let columns = document.querySelectorAll('.sky-grid-heading');
+        let columns = Array.from(document.querySelectorAll('.sky-grid-heading'));
         columns.forEach((column: HTMLElement) => columnWidths.push(column.offsetWidth));
         fixture.componentInstance.deleteItem('1');
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
-        columns = document.querySelectorAll('.sky-grid-heading');
+        columns = Array.from(document.querySelectorAll('.sky-grid-heading'));
         for (let i = 0; i < columns.length; i++) {
-          expect((<HTMLElement>columns.item(i)).offsetWidth).toEqual(columnWidths[i]);
+          expect((<HTMLElement>columns[i]).offsetWidth).toEqual(columnWidths[i]);
         }
       }));
 
@@ -1243,15 +1245,15 @@ describe('Grid Component', () => {
         tick();
         fixture.detectChanges();
         const columnWidths: number[] = [];
-        let columns = document.querySelectorAll('.sky-grid-heading');
+        let columns = Array.from(document.querySelectorAll('.sky-grid-heading'));
         columns.forEach((column: HTMLElement) => columnWidths.push(column.offsetWidth));
         fixture.componentInstance.deleteItem('1');
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
-        columns = document.querySelectorAll('.sky-grid-heading');
+        columns = Array.from(document.querySelectorAll('.sky-grid-heading'));
         for (let i = 0; i < columns.length; i++) {
-          expect((<HTMLElement>columns.item(i)).offsetWidth).toEqual(columnWidths[i]);
+          expect((<HTMLElement>columns[i]).offsetWidth).toEqual(columnWidths[i]);
         }
       }));
 
@@ -1269,10 +1271,10 @@ describe('Grid Component', () => {
           .getBoundingClientRect();
         const inlienDelete1: HTMLElement = document.querySelector('#row-delete-ref-1');
         const inlienDelete2: HTMLElement = document.querySelector('#row-delete-ref-2');
-        expect(inlienDelete1.offsetLeft).toEqual(row1Rect.left);
-        expect(inlienDelete1.offsetTop).toEqual(row1Rect.top);
-        expect(inlienDelete2.offsetLeft).toEqual(row2Rect.left);
-        expect(inlienDelete2.offsetTop).toEqual(row2Rect.top);
+        expect(inlienDelete1.offsetLeft).toEqual(Math.round(row1Rect.left));
+        expect(inlienDelete1.offsetTop).toEqual(Math.round(row1Rect.top));
+        expect(inlienDelete2.offsetLeft).toEqual(Math.round(row2Rect.left));
+        expect(inlienDelete2.offsetTop).toEqual(Math.round(row2Rect.top));
       }));
 
     });
