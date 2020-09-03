@@ -1064,7 +1064,7 @@ describe('Grid Component', () => {
         tick();
 
         expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
-        fixture.componentInstance.addLongData();
+        fixture.componentInstance.setLongData();
 
         fixture.detectChanges();
         tick();
@@ -1095,6 +1095,20 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         expect(document.querySelector('#row-delete-ref-2')).not.toBeNull();
         expect(document.querySelectorAll('.sky-inline-delete-standard').length).toBe(2);
+        fixture.componentInstance.addLongData();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(document.querySelector('#row-delete-ref-1')).not.toBeNull();
+        expect(document.querySelector('#row-delete-ref-2')).not.toBeNull();
+        expect(document.querySelectorAll('.sky-inline-delete-standard').length).toBe(2);
+        fixture.componentInstance.removeFirstItem();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        expect(document.querySelector('#row-delete-ref-1')).toBeNull();
+        expect(document.querySelector('#row-delete-ref-2')).not.toBeNull();
+        expect(document.querySelectorAll('.sky-inline-delete-standard').length).toBe(1);
       }));
 
       it('should cancel row delete elements correctly via the message stream', fakeAsync(() => {
