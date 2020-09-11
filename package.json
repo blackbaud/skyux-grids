@@ -1,6 +1,6 @@
 {
   "name": "@skyux/grids",
-  "version": "4.0.5",
+  "version": "4.0.6",
   "description": "SKY UX Grids",
   "scripts": {
     "build": "skyux build-public-library",
