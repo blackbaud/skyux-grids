@@ -50,7 +50,7 @@ export class SkyGridColumnComponent implements OnChanges {
   public description: string;
 
   /**
-   * @internal
+   * Specifies whether the column is excluded from highlighting text when a search is made.
    */
   @Input()
   public excludeFromHighlighting: boolean;
