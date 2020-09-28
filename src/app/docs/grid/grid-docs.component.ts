@@ -2,7 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component
 } from '@angular/core';
-import { SkyDocsDemoControlPanelChange } from '@skyux/docs-tools';
+
+import {
+  SkyDocsDemoControlPanelChange
+} from '@skyux/docs-tools';
 
 import {
   ListSortFieldSelectorModel
