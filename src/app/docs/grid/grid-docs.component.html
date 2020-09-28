@@ -86,7 +86,7 @@
         headingStyle="success"
       >
         <p>
-          Use grids when a large amount of data needs to be visible.
+          Use grids when you need to display a large amount of data.
         </p>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline>
@@ -109,12 +109,12 @@
       </sky-docs-design-guideline>
       <sky-docs-design-guideline>
         <p class="sky-docs-text-block">
-          Don't use grids when the content calls for a more complex layout. If grids require a lot of templated columns, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
+          Don't use grids when the content calls for a more complex layout. If grids require multiple templated columns, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
         </p>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline>
         <p class="sky-docs-text-block">
-          Don't use grids when you need to display many fields and users are likely to view the grids in a small viewport such as a phone. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
+          Don't use grids when you need to display many fields and users are likely to view the grids in small viewports such as phones. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
         </p>
       </sky-docs-design-guideline>
     </sky-docs-demo-page-section>
@@ -211,17 +211,14 @@
           </li>
         </ul>
         <p class="sky-docs-text-block">
-          To allow users to select or clear all items and to view only the selected items, include the multiselect toolbar.
-        </p>
-        <p class="sky-docs-text-block">
-          When users select rows, the summary action bar should fly in from the bottom of the page. Place actions that can be taken on the selected items in the summary action bar.
+          To let users select or clear all items and to view only selected items, include the multiselect toolbar. When users select rows, the <a href="https://developer.blackbaud.com/skyux/components/summary-actionbar">summary action bar</a> should fly in from the bottom of the page for actions that users can take on the selected items.
         </p>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Sorting"
       >
         <p class="sky-docs-text-block">
-          If users are likely to sort based on the data in columns, enable sorting so that they can click column headers to toggle between sorting in ascending and descending order for the specified fields in columns. If users need to sort by data in a templated column, use the sort component instead to allow them to choose the data to sort on.
+          If users are likely to sort based on the data in columns, enable sorting so that they can select column headers to toggle between ascending and descending order for the specified fields in columns. If users need to sort by data in a templated column, use the <a href="https://developer.blackbaud.com/skyux/components/sort">sort component</a> instead to let them select the data to sort on.
         </p>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
@@ -235,7 +232,7 @@
         heading="Templated items"
       >
         <p class="sky-docs-text-block">
-          When columns need to represent composite information instead of single values, use templated columns to lay out content as necessary.
+          When columns represent composite information instead of single values, use templated columns to lay out content as necessary.
         </p>
       </sky-docs-design-guideline>
     </sky-docs-demo-page-section>
@@ -247,7 +244,7 @@
         heading="Fit"
       >
         <p class="sky-docs-text-block">
-          You specify how a grid fits within its parent. If the grid does not have enough columns to fill the parent's width, it always stretches to the parent's full width.
+          The fit determines how to place the grid within its parent. If the grid does not have enough columns to fill the parent's width, it always stretches to the parent's full width.
         </p>
         <h4>
           Scroll
@@ -273,14 +270,14 @@
         heading="Resizing columns"
       >
         <p class="sky-docs-text-block">
-          Users can resize columns by clicking and dragging or by using the keyboard.
+          Users can resize columns by selecting and dragging or by using the keyboard.
         </p>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Responsiveness"
       >
         <p class="sky-docs-text-block">
-          Grids tend to perform poorly in small viewports. The columns in fixed-width grids shrink down to the point of being unreadable, and scrolling grids require a lot of interaction to see all the content. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead if possible.
+          Grids perform poorly in small viewports. The columns in fixed-width grids shrink down to the point of being unreadable, and scrolling grids require a lot of interaction to view the content. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead if possible.
         </p>
       </sky-docs-design-guideline>
     </sky-docs-demo-page-section>
