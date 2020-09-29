@@ -86,36 +86,28 @@
         headingStyle="success"
       >
         <p>
-          Use grids when you need to display a large amount of data.
+          Use grids when users need to view a large amount of data to visually scan for certain values or outliers and to compare values between rows.
         </p>
-      </sky-docs-design-guideline>
-      <sky-docs-design-guideline>
-        <p>
-          Use grids when users need to visually scan columns for certain values or outliers.
-        </p>
-      </sky-docs-design-guideline>
-      <sky-docs-design-guideline>
-        <p>
-          Use grids when users need to compare values between rows.
-        </p>
+        <sky-docs-design-guideline-thumbnail
+          caption="Do use grids to display data for users to visually scan and compare values."
+          captionType="success"
+          imageSource="~/assets/img/grid-use-when.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Don't use when"
         headingStyle="danger"
       >
-        <p class="sky-docs-text-block">
-          Don't use grids when you need to display visual content such as graphs or images. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> or <a href="https://developer.blackbaud.com/skyux/components/card">card views</a> instead.
+        <p>
+          Don't use grids when the content calls for a more complex layout. If you need to display visual content such as graphs or images, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> or <a href="https://developer.blackbaud.com/skyux/components/card">card views</a> instead. If the content requires multiple templated columns, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead. If the content includes many fields and users are likely to view it in small viewports such as phones, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
         </p>
-      </sky-docs-design-guideline>
-      <sky-docs-design-guideline>
-        <p class="sky-docs-text-block">
-          Don't use grids when the content calls for a more complex layout. If grids require multiple templated columns, use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
-        </p>
-      </sky-docs-design-guideline>
-      <sky-docs-design-guideline>
-        <p class="sky-docs-text-block">
-          Don't use grids when you need to display many fields and users are likely to view the grids in small viewports such as phones. Use <a href="https://developer.blackbaud.com/skyux/components/repeater">repeaters</a> instead.
-        </p>
+        <sky-docs-design-guideline-thumbnail
+          caption="Don't use grids to display data that requires a complex layout."
+          captionType="danger"
+          imageSource="~/assets/img/grid-dont-use-complex.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
     </sky-docs-demo-page-section>
 
@@ -187,6 +179,10 @@
         <p class="sky-docs-text-block">
           Use <a href="https://developer.blackbaud.com/skyux/components/dropdown">context-menu dropdowns</a> in the first column when users need to access multiple actions in the rows.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-context-menu.png"
+          >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Multiselect"
@@ -213,6 +209,18 @@
         <p class="sky-docs-text-block">
           To let users select or clear all items and to view only selected items, include the multiselect toolbar. When users select rows, the <a href="https://developer.blackbaud.com/skyux/components/summary-actionbar">summary action bar</a> should fly in from the bottom of the page for actions that users can take on the selected items.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-multi.png"
+            caption="Use multiselect to let users act on more than one row at a time."
+            captionType="success"
+            >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-multi-dont-tile.png"
+            caption="Don't use multiselect when the list might flow off the screen."
+            captionType="danger"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Sorting"
@@ -220,6 +228,10 @@
         <p class="sky-docs-text-block">
           If users are likely to sort based on the data in columns, enable sorting so that they can select column headers to toggle between ascending and descending order for the specified fields in columns. If users need to sort by data in a templated column, use the <a href="https://developer.blackbaud.com/skyux/components/sort">sort component</a> instead to let them select the data to sort on.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-sort.png"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Filtering"
@@ -227,6 +239,10 @@
         <p class="sky-docs-text-block">
           If users are likely to work with a subset of items in the grid, enable filtering so that they can focus on those items.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-filter.png"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Templated items"
@@ -234,6 +250,10 @@
         <p class="sky-docs-text-block">
           When columns represent composite information instead of single values, use templated columns to lay out content as necessary.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-option-template-column.png"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
     </sky-docs-demo-page-section>
 
@@ -258,6 +278,16 @@
         <p class="sky-docs-text-block">
           The <sky-code>width</sky-code> option fixes the width of the grid to its container and resizes columns to fit. This is most useful for simple grids in smaller containers, such as tiles, where the content fits neatly in the allotted space.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-fit-scroll.png"
+            caption="Grids with large numbers of columns can fit to the parent container by using a horizontal scrollbar to take as much space as necessary."
+            >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-fit-width.png"
+            caption="Simple grids in smaller containers can resize columns to fit the grid to its container."
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Reordering columns"
@@ -265,6 +295,10 @@
         <p class="sky-docs-text-block">
           Users can reorder columns by dragging and dropping.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-reorder.png"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Resizing columns"
@@ -272,6 +306,10 @@
         <p class="sky-docs-text-block">
           Users can resize columns by selecting and dragging or by using the keyboard.
         </p>
+        <sky-docs-design-guideline-thumbnail
+            imageSource="~/assets/img/grid-resize.png"
+            >
+        </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
       <sky-docs-design-guideline
         heading="Responsiveness"
