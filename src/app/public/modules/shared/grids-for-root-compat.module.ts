@@ -17,4 +17,4 @@ import {
     SkyUIConfigService
   ]
 })
-export class SkyActionBarsForRootCompatModule {}
+export class SkyGridsForRootCompatModule {}
