@@ -16,9 +16,7 @@ import {
 
 import {
   SkyAffixModule,
-  SkyAppWindowRef,
-  SkyOverlayModule,
-  SkyUIConfigService
+  SkyOverlayModule
 } from '@skyux/core';
 
 import {
@@ -79,10 +77,6 @@ import {
     SkyGridComponent,
     SkyGridColumnComponent,
     SkyGridCellComponent
-  ],
-  providers: [
-    SkyAppWindowRef,
-    SkyUIConfigService
   ]
 })
 export class SkyGridModule {
