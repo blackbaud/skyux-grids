@@ -25,10 +25,17 @@ import {
 } from '@skyux/router';
 
 import {
+  SkyActionBarsForRootCompatModule
+} from './public/modules/shared/grids-for-root-compat.module';
+
+import {
   SkyGridModule
 } from './public/public_api';
 
 @NgModule({
+  imports: [
+    SkyActionBarsForRootCompatModule
+  ],
   exports: [
     SkyAppLinkModule,
     SkyCodeModule,
