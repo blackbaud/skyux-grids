@@ -118,8 +118,6 @@ import {
   SkyGridUIConfig
 } from './types/grid-ui-config';
 
-import '../../polyfills';
-
 let nextId = 0;
 
 @Component({
