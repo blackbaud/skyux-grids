@@ -1077,8 +1077,9 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
     this.columnElementRefs.forEach((col, index) => {
       let computedWidth = parseFloat(window.getComputedStyle(col.nativeElement).width);
       let offsetWidth = col.nativeElement.offsetWidth;
+      /* istanbul ignore next */
       let width = Math.max(
-        computedWidth /* istanbul ignore next */ || offsetWidth,
+        computedWidth || offsetWidth,
         this.minColWidth
       );
       this.getColumnModelByIndex(index).width = width;
@@ -1163,6 +1164,7 @@ export class SkyGridComponent implements OnInit, AfterContentInit, AfterViewInit
 
   private destroyRowDelete(id: string) {
     const rowDeleteContents = this.rowDeleteContents[id];
+    /* istanbul ignore else */
     if (rowDeleteContents) {
       rowDeleteContents.affixer.destroy();
       this.overlayService.close(rowDeleteContents.overlay);
