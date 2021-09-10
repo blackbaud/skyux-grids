@@ -1276,12 +1276,15 @@ describe('Grid Component', () => {
           .getBoundingClientRect();
         const inlineDelete1: HTMLElement = document.querySelector('#row-delete-ref-1');
         const inlineDelete2: HTMLElement = document.querySelector('#row-delete-ref-2');
-        const inlineDelete1Styles: CSSStyleDeclaration = window.getComputedStyle(inlineDelete1);
-        const inlineDelete2Styles: CSSStyleDeclaration = window.getComputedStyle(inlineDelete2);
-        expect(inlineDelete1Styles.left).toEqual(row1Rect.left.toFixed(1) + 'px');
-        expect(inlineDelete1Styles.top).toEqual(row1Rect.top.toFixed(1) + 'px');
-        expect(inlineDelete2Styles.left).toEqual(row2Rect.left.toFixed(1) + 'px');
-        expect(inlineDelete2Styles.top).toEqual(row2Rect.top.toFixed(1) + 'px');
+        inlineDelete1.getBoundingClientRect().left;
+        expect(inlineDelete1.getBoundingClientRect().left.toFixed(1))
+          .toEqual(row1Rect.left.toFixed(1));
+        expect(inlineDelete1.getBoundingClientRect().top.toFixed(1))
+          .toEqual(row1Rect.top.toFixed(1));
+        expect(inlineDelete2.getBoundingClientRect().left.toFixed(1))
+          .toEqual(row2Rect.left.toFixed(1));
+        expect(inlineDelete2.getBoundingClientRect().top.toFixed(1))
+          .toEqual(row2Rect.top.toFixed(1));
       }));
 
     });
