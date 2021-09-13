@@ -18,7 +18,3 @@ export * from './modules/grid/types/grid-ui-config';
 // TODO: Find a way to remove them in the next major version release.
 export * from './modules/grid/grid-column.component';
 export * from './modules/grid/grid.component';
-
-// Components and directives must be exported to support Angular's "partial" Ivy compiler.
-// Obscure names are used to indicate types are not part of the public API.
-export { SkyGridCellComponent as λ1 } from './modules/grid/grid-cell.component';

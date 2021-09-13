@@ -75,8 +75,7 @@ import {
   ],
   exports: [
     SkyGridComponent,
-    SkyGridColumnComponent,
-    SkyGridCellComponent
+    SkyGridColumnComponent
   ]
 })
 export class SkyGridModule {
