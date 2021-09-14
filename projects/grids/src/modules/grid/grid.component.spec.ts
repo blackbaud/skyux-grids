@@ -607,28 +607,26 @@ describe('Grid Component', () => {
 
         fixture.detectChanges();
 
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
 
-          let popupContent = document.querySelector('.sky-popover-body');
+        let popupContent = document.querySelector('.sky-popover-body');
 
-          // Expect column 1 popup to contain column 1 content.
-          expect(popupContent.textContent.trim()).toEqual('Help content for column 1.');
+        // Expect column 1 popup to contain column 1 content.
+        expect(popupContent.textContent.trim()).toEqual('Help content for column 1.');
 
-          // Open column 4 help popup.
-          popupContent.parentNode.removeChild(popupContent);
-          inlineHelp4.click();
+        // Open column 4 help popup.
+        popupContent.parentNode.removeChild(popupContent);
+        inlineHelp4.click();
 
-          fixture.detectChanges();
+        fixture.detectChanges();
 
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            popupContent = document.querySelector('.sky-popover-body');
+        await fixture.whenStable();
+        fixture.detectChanges();
+        popupContent = document.querySelector('.sky-popover-body');
 
-            // Expect column 4 popup to contain column 4 content.
-            expect(popupContent.textContent.trim()).toEqual('Help content for column 4.');
-          });
-        });
+        // Expect column 4 popup to contain column 4 content.
+        expect(popupContent.textContent.trim()).toEqual('Help content for column 4.');
       });
 
       it('should pass accessibility', async () => {
