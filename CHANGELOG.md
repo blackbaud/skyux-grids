@@ -1,3 +1,7 @@
+# 5.0.0-beta.1 (2021-09-14)
+
+- Adopt Angular CLI. [#167](https://github.com/blackbaud/skyux-grids/pull/167)
+
 # 5.0.0-beta.0 (2021-07-09)
 
 - Initial beta release.
