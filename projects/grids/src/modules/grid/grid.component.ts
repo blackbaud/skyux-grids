@@ -1,10 +1,10 @@
 import {
   AfterContentInit,
   AfterViewInit,
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
-  ContentChildren,
+  ChangeDetectorRef,
   Component,
+  ContentChildren,
   ElementRef,
   EventEmitter,
   HostListener,
@@ -28,15 +28,20 @@ import {
   SkyUIConfigService,
 } from '@skyux/core';
 
+import {
+  ListItemModel,
+  ListSortFieldSelectorModel,
+} from '@skyux/list-builder-common';
+
 import { DragulaService } from 'ng2-dragula';
 
 import {
   BehaviorSubject,
+  fromEvent,
+  merge,
   Observable,
   Subject,
   Subscription,
-  merge,
-  fromEvent,
 } from 'rxjs';
 
 import {
@@ -47,10 +52,11 @@ import {
   takeWhile,
 } from 'rxjs/operators';
 
-import {
-  ListItemModel,
-  ListSortFieldSelectorModel,
-} from '@skyux/list-builder-common';
+import { SkyGridAdapterService } from './grid-adapter.service';
+
+import { SkyGridColumnComponent } from './grid-column.component';
+
+import { SkyGridColumnModel } from './grid-column.model';
 
 import { SkyGridColumnDescriptionModelChange } from './types/grid-column-description-model-change';
 
@@ -75,12 +81,6 @@ import { SkyGridRowDeleteContents } from './types/grid-row-delete-contents';
 import { SkyGridSelectedRowsModelChange } from './types/grid-selected-rows-model-change';
 
 import { SkyGridSelectedRowsSource } from './types/grid-selected-rows-source';
-
-import { SkyGridColumnComponent } from './grid-column.component';
-
-import { SkyGridColumnModel } from './grid-column.model';
-
-import { SkyGridAdapterService } from './grid-adapter.service';
 
 import { SkyGridUIConfig } from './types/grid-ui-config';
 
@@ -1100,8 +1100,10 @@ export class SkyGridComponent
       );
       let offsetWidth = col.nativeElement.offsetWidth;
       /* istanbul ignore next */
-      let width = Math.max(computedWidth || offsetWidth, this.minColWidth);
-      this.getColumnModelByIndex(index).width = width;
+      this.getColumnModelByIndex(index).width = Math.max(
+        computedWidth || offsetWidth,
+        this.minColWidth
+      );
     });
 
     // 'scroll' tables should be allowed to expand outside of their constraints.
@@ -1255,11 +1257,9 @@ export class SkyGridComponent
             /* istanbul ignore else */
             if (config && config.selectedColumnIds) {
               // Remove any columnIds that don't exist in the current data set.
-              const filteredColumnIds = config.selectedColumnIds.filter((id) =>
+              this.selectedColumnIds = config.selectedColumnIds.filter((id) =>
                 this.columns.find((column) => column.id === id)
               );
-
-              this.selectedColumnIds = filteredColumnIds;
               this.changeDetector.markForCheck();
             }
 

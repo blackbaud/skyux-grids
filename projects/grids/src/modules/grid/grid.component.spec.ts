@@ -1,11 +1,10 @@
+import { DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
 } from '@angular/core/testing';
-
-import { DebugElement } from '@angular/core';
 
 import { By } from '@angular/platform-browser';
 
@@ -17,21 +16,21 @@ import { DragulaService } from 'ng2-dragula';
 
 import { of as observableOf, throwError as observableThrowError } from 'rxjs';
 
-import { GridEmptyTestComponent } from './fixtures/grid-empty.component.fixture';
+import { GridAsyncTestComponent } from './fixtures/grid-async.component.fixture';
 
 import { GridDynamicTestComponent } from './fixtures/grid-dynamic.component.fixture';
 
-import { GridAsyncTestComponent } from './fixtures/grid-async.component.fixture';
+import { GridEmptyTestComponent } from './fixtures/grid-empty.component.fixture';
 
 import { GridFixturesModule } from './fixtures/grid-fixtures.module';
-
-import { GridTestComponent } from './fixtures/grid.component.fixture';
 
 import { GridInteractiveTestComponent } from './fixtures/grid-interactive.component.fixture';
 
 import { GridNoHeaderTestComponent } from './fixtures/grid-no-header.component.fixture';
 
 import { GridUndefinedTestComponent } from './fixtures/grid-undefined.component.fixture';
+
+import { GridTestComponent } from './fixtures/grid.component.fixture';
 
 import { MockDragulaService } from './fixtures/mock-dragula.service';
 
@@ -72,12 +71,10 @@ function getElementCords(elementRef: any): any {
   const rect = (
     elementRef.nativeElement as HTMLElement
   ).getBoundingClientRect();
-  const coords = {
+  return {
     x: Math.round(rect.left + rect.width / 2),
     y: Math.round(rect.top + rect.height / 2),
   };
-
-  return coords;
 }
 
 function getColumnWidths(fixture: ComponentFixture<any>): number[] {
@@ -222,8 +219,8 @@ function resizeColumnByRangeInput(
       keyboardEventInit: { key: 'ArrowRight' },
     }
   );
-  let newValue = Number(resizeInputs[columnIndex].nativeElement.value) + deltaX;
-  resizeInputs[columnIndex].nativeElement.value = newValue;
+  resizeInputs[columnIndex].nativeElement.value =
+    Number(resizeInputs[columnIndex].nativeElement.value) + deltaX;
   SkyAppTestUtility.fireDomEvent(
     resizeInputs[columnIndex].nativeElement,
     'change',
@@ -2618,7 +2615,7 @@ describe('Grid Component', () => {
             matches(selector: string) {
               return false;
             },
-          }
+          } as HTMLElement
         );
 
         const acceptsOptionUndefinedSibiling = options.accepts(
@@ -3006,7 +3003,7 @@ describe('Grid Component', () => {
     let element: DebugElement;
 
     beforeEach(async () => {
-      TestBed.configureTestingModule({
+      await TestBed.configureTestingModule({
         imports: [GridFixturesModule],
       }).compileComponents();
     });
@@ -3077,7 +3074,7 @@ describe('Grid Component', () => {
     let element: DebugElement;
 
     beforeEach(async () => {
-      TestBed.configureTestingModule({
+      await TestBed.configureTestingModule({
         imports: [GridFixturesModule],
       }).compileComponents();
     });
@@ -3090,9 +3087,7 @@ describe('Grid Component', () => {
     it('should allow columns with undefined headers', async () => {
       fixture.detectChanges();
 
-      const selectedColumnIds = ['columnNoHeader'];
-
-      fixture.componentInstance.selectedColumnIds = selectedColumnIds;
+      fixture.componentInstance.selectedColumnIds = ['columnNoHeader'];
       fixture.detectChanges();
 
       expect(element.queryAll(By.css('th.sky-grid-heading')).length).toBe(3);
