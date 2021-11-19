@@ -1,31 +1,23 @@
-import {
-  Component,
-  ViewChild
-} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
-import {
-  Subject
-} from 'rxjs';
+import { Subject } from 'rxjs';
 
-import {
-  ListSortFieldSelectorModel
-} from '@skyux/list-builder-common';
+import { ListSortFieldSelectorModel } from '@skyux/list-builder-common';
 
 import {
   SkyGridMessage,
   SkyGridMessageType,
   SkyGridRowDeleteCancelArgs,
   SkyGridRowDeleteConfirmArgs,
-  SkyGridSelectedRowsModelChange
+  SkyGridSelectedRowsModelChange,
 } from 'projects/grids/src/public-api';
 
 @Component({
-  selector: 'grid-visual',
+  selector: 'app-grid-visual',
   templateUrl: './grid-visual.component.html',
-  styleUrls: ['./grid-visual.component.scss']
+  styleUrls: ['./grid-visual.component.scss'],
 })
 export class GridVisualComponent {
-
   public asyncPopover: any;
 
   public dataForRowDeleteGrid: any = [
@@ -35,7 +27,7 @@ export class GridVisualComponent {
     { id: '4', column1: '12', column2: 'Daikon', column3: 'dd' },
     { id: '5', column1: '13', column2: 'Edamame', column3: 'ee' },
     { id: '6', column1: '20', column2: 'Fig', column3: 'ff' },
-    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' }
+    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' },
   ];
 
   public dataForSimpleGrid = [
@@ -45,7 +37,7 @@ export class GridVisualComponent {
     { id: '4', column1: '12', column2: 'Daikon', column3: 'dd' },
     { id: '5', column1: '13', column2: 'Edamame', column3: 'ee' },
     { id: '6', column1: '20', column2: 'Fig', column3: 'ff' },
-    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' }
+    { id: '7', column1: '21', column2: 'Grape', column3: 'gg' },
   ];
 
   public dataForSimpleGridWithMultiselect = [
@@ -55,7 +47,7 @@ export class GridVisualComponent {
     { id: '4', column1: '12', column2: 'Daikon', column3: 'dd', myId: '104' },
     { id: '5', column1: '13', column2: 'Edamame', column3: 'ee', myId: '105' },
     { id: '6', column1: '20', column2: 'Fig', column3: 'ff', myId: '106' },
-    { id: '7', column1: '21', column2: 'Grape', column3: 'gg', myId: '107' }
+    { id: '7', column1: '21', column2: 'Grape', column3: 'gg', myId: '107' },
   ];
 
   public gridController = new Subject<SkyGridMessage>();
@@ -82,11 +74,19 @@ export class GridVisualComponent {
   }
 
   public sortChangedSimpleGrid(activeSort: ListSortFieldSelectorModel): void {
-    this.dataForSimpleGrid = this.performSort(activeSort, this.dataForSimpleGrid);
+    this.dataForSimpleGrid = this.performSort(
+      activeSort,
+      this.dataForSimpleGrid
+    );
   }
 
-  public sortChangedMultiselectGrid(activeSort: ListSortFieldSelectorModel): void {
-    this.dataForSimpleGridWithMultiselect = this.performSort(activeSort, this.dataForSimpleGridWithMultiselect);
+  public sortChangedMultiselectGrid(
+    activeSort: ListSortFieldSelectorModel
+  ): void {
+    this.dataForSimpleGridWithMultiselect = this.performSort(
+      activeSort,
+      this.dataForSimpleGridWithMultiselect
+    );
   }
 
   public triggerTextHighlight(): void {
@@ -101,7 +101,9 @@ export class GridVisualComponent {
     }
   }
 
-  public onMultiselectSelectionChange(value: SkyGridSelectedRowsModelChange): void {
+  public onMultiselectSelectionChange(
+    value: SkyGridSelectedRowsModelChange
+  ): void {
     this.selectedRowIdsDisplay = value.selectedRowIds;
     console.log(value);
   }
@@ -123,9 +125,9 @@ export class GridVisualComponent {
       type: SkyGridMessageType.PromptDeleteRow,
       data: {
         promptDeleteRow: {
-          id: id
-        }
-      }
+          id: id,
+        },
+      },
     });
   }
 
@@ -133,8 +135,9 @@ export class GridVisualComponent {
     setTimeout(() => {
       console.log('Item with id ' + confirmArgs.id + ' has been deleted');
       // IF WORKED
-      this.dataForRowDeleteGrid = this.dataForRowDeleteGrid
-        .filter((data: any) => data.id !== confirmArgs.id);
+      this.dataForRowDeleteGrid = this.dataForRowDeleteGrid.filter(
+        (data: any) => data.id !== confirmArgs.id
+      );
     }, 5000);
   }
 
@@ -146,34 +149,39 @@ export class GridVisualComponent {
     console.log(event);
   }
 
-  private performSort(activeSort: ListSortFieldSelectorModel, data: any[]): Array<any> {
+  private performSort(
+    activeSort: ListSortFieldSelectorModel,
+    data: any[]
+  ): Array<any> {
     const sortField = activeSort.fieldSelector;
     const descending = activeSort.descending;
 
-    return data.sort((a: any, b: any) => {
-      let value1 = a[sortField];
-      let value2 = b[sortField];
+    return data
+      .sort((a: any, b: any) => {
+        let value1 = a[sortField];
+        let value2 = b[sortField];
 
-      if (value1 && typeof value1 === 'string') {
-        value1 = value1.toLowerCase();
-      }
+        if (value1 && typeof value1 === 'string') {
+          value1 = value1.toLowerCase();
+        }
 
-      if (value2 && typeof value2 === 'string') {
-        value2 = value2.toLowerCase();
-      }
+        if (value2 && typeof value2 === 'string') {
+          value2 = value2.toLowerCase();
+        }
 
-      if (value1 === value2) {
-        return 0;
-      }
+        if (value1 === value2) {
+          return 0;
+        }
 
-      let result = value1 > value2 ? 1 : -1;
+        let result = value1 > value2 ? 1 : -1;
 
-      if (descending) {
-        result *= -1;
-      }
+        if (descending) {
+          result *= -1;
+        }
 
-      return result;
-    }).slice();
+        return result;
+      })
+      .slice();
   }
 
   private sendMessage(type: SkyGridMessageType): void {
