@@ -230,11 +230,11 @@ export class GridTestComponent {
       {
         id: '8',
         column1:
-          'Some long text that would provoke an overflow of monster proportions!',
+          'Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions!',
         column2:
-          'Some long text that would provoke an overflow of monster proportions!',
+          'Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions!',
         column3:
-          'Some long text that would provoke an overflow of monster proportions!',
+          'Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions! Some long text that would provoke an overflow of monster proportions!',
         column4: 21,
         column5: new Date().getTime() + 5600000,
         customId: '107',
