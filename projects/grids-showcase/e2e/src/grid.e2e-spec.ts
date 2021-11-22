@@ -1,16 +1,8 @@
-import {
-  expect,
-  SkyHostBrowser
-} from '@skyux-sdk/e2e';
+import { expect, SkyHostBrowser } from '@skyux-sdk/e2e';
 
-import {
-  element,
-  browser,
-  by
-} from 'protractor';
+import { element, browser, by } from 'protractor';
 
 describe('Grid', () => {
-
   beforeEach(async () => {
     await SkyHostBrowser.get('visual/grid');
   });
@@ -19,7 +11,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-lg'
+      screenshotName: 'grid-lg',
     });
   });
 
@@ -27,7 +19,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-xs'
+      screenshotName: 'grid-xs',
     });
   });
 
@@ -36,7 +28,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('th')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-sort-desc-lg'
+      screenshotName: 'grid-sort-desc-lg',
     });
   });
 
@@ -45,7 +37,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('th')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-sort-desc-xs'
+      screenshotName: 'grid-sort-desc-xs',
     });
   });
 
@@ -55,7 +47,7 @@ describe('Grid', () => {
     await element(by.css('th')).click();
     await element(by.css('th')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-sort-asc-lg'
+      screenshotName: 'grid-sort-asc-lg',
     });
   });
 
@@ -65,7 +57,7 @@ describe('Grid', () => {
     await element(by.css('th')).click();
     await element(by.css('th')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-sort-asc-xs'
+      screenshotName: 'grid-sort-asc-xs',
     });
   });
 
@@ -74,7 +66,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('#highlight-text-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-text-lg'
+      screenshotName: 'grid-highlighted-text-lg',
     });
   });
 
@@ -83,7 +75,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('#highlight-text-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-text-xs'
+      screenshotName: 'grid-highlighted-text-xs',
     });
   });
 
@@ -92,7 +84,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('#highlight-row-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-row-lg'
+      screenshotName: 'grid-highlighted-row-lg',
     });
   });
 
@@ -101,7 +93,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid');
     await element(by.css('#highlight-row-button')).click();
     expect('#screenshot-grid').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-highlighted-row-xs'
+      screenshotName: 'grid-highlighted-row-xs',
     });
   });
 
@@ -109,7 +101,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
     expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-multiselect-lg'
+      screenshotName: 'grid-multiselect-lg',
     });
   });
 
@@ -117,31 +109,35 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
     expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-multiselect-xs'
+      screenshotName: 'grid-multiselect-xs',
     });
   });
 
   it('should match previous screenshot with selected rows', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
-    let checkboxes = element.all(by.css('.sky-grid-multiselect-cell sky-checkbox'));
+    let checkboxes = element.all(
+      by.css('.sky-grid-multiselect-cell sky-checkbox')
+    );
     await checkboxes.get(0).click();
     await checkboxes.get(2).click();
     await checkboxes.get(3).click();
     expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-multiselect-selected-lg'
+      screenshotName: 'grid-multiselect-selected-lg',
     });
   });
 
   it('should match previous screenshot with selected rows (screen: xs)', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid-multiselect');
-    let checkboxes = element.all(by.css('.sky-grid-multiselect-cell sky-checkbox'));
+    let checkboxes = element.all(
+      by.css('.sky-grid-multiselect-cell sky-checkbox')
+    );
     await checkboxes.get(0).click();
     await checkboxes.get(2).click();
     await checkboxes.get(3).click();
     expect('#screenshot-grid-multiselect').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-multiselect-selected-xs'
+      screenshotName: 'grid-multiselect-selected-xs',
     });
   });
 
@@ -150,7 +146,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
     await browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-inline-help-lg'
+      screenshotName: 'grid-inline-help-lg',
     });
   });
 
@@ -159,7 +155,7 @@ describe('Grid', () => {
     await SkyHostBrowser.scrollTo('#screenshot-grid-inline-help');
     await browser.driver.sleep(2000); // Wait for async inline help to show.
     expect('#screenshot-grid-inline-help').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-inline-help-xs'
+      screenshotName: 'grid-inline-help-xs',
     });
   });
 
@@ -167,7 +163,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid-scrollbars');
     expect('#screenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-scrollbars-lg'
+      screenshotName: 'grid-scrollbars-lg',
     });
   });
 
@@ -175,7 +171,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid-scrollbars');
     expect('#screenshot-grid-scrollbars').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-scrollbars-xs'
+      screenshotName: 'grid-scrollbars-xs',
     });
   });
 
@@ -185,7 +181,7 @@ describe('Grid', () => {
     await element.all(by.css('.sky-dropdown-button')).get(0).click();
     await element.all(by.css('.sky-dropdown-item button')).get(0).click();
     expect('#screenshot-grid-row-delete').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-row-delete-lg'
+      screenshotName: 'grid-row-delete-lg',
     });
   });
 
@@ -195,7 +191,7 @@ describe('Grid', () => {
     await element.all(by.css('.sky-dropdown-button')).get(0).click();
     await element.all(by.css('.sky-dropdown-item button')).get(0).click();
     expect('#screenshot-grid-row-delete').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-row-delete-xs'
+      screenshotName: 'grid-row-delete-xs',
     });
   });
 
@@ -203,7 +199,7 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid-column-align');
     expect('#screenshot-grid-column-align').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-column-alignment-lg'
+      screenshotName: 'grid-column-alignment-lg',
     });
   });
 
@@ -211,24 +207,27 @@ describe('Grid', () => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid-column-align');
     expect('#screenshot-grid-column-align').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-column-alignment-xs'
+      screenshotName: 'grid-column-alignment-xs',
     });
   });
 
   it('should match previous screenshot with column alignments and inline help', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
-    expect('#screenshot-grid-column-align-and-inline').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-column-alignment-and-inline-lg'
+    expect(
+      '#screenshot-grid-column-align-and-inline'
+    ).toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-column-alignment-and-inline-lg',
     });
   });
 
   it('should match previous screenshot with column alignments and inline help (screen: xs)', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-grid-column-align-and-inline');
-    expect('#screenshot-grid-column-align-and-inline').toMatchBaselineScreenshot(done, {
-      screenshotName: 'grid-column-alignment-and-inline-xs'
+    expect(
+      '#screenshot-grid-column-align-and-inline'
+    ).toMatchBaselineScreenshot(done, {
+      screenshotName: 'grid-column-alignment-and-inline-xs',
     });
   });
-
 });

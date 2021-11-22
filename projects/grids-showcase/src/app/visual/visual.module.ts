@@ -7,16 +7,13 @@ import { GridVisualComponent } from './grid/grid-visual.component';
 import { SkyGridModule } from 'projects/grids/src/public-api';
 
 @NgModule({
-  declarations: [
-    GridVisualComponent,
-    VisualComponent
-  ],
+  declarations: [GridVisualComponent, VisualComponent],
   imports: [
     CommonModule,
     RouterModule,
     SkyGridModule,
     SkyDropdownModule,
-    SkyPopoverModule
-  ]
+    SkyPopoverModule,
+  ],
 })
-export class VisualModule { }
+export class VisualModule {}
