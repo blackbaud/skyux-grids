@@ -16,6 +16,7 @@ import {
 
 import {
   expect,
+  expectAsync,
   SkyAppTestUtility
 } from '@skyux-sdk/testing';
 
@@ -631,13 +632,12 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should pass accessibility', async(() => {
+      it('should pass accessibility', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
-          expect(fixture.nativeElement).toBeAccessible();
-        });
-      }));
+        await fixture.whenStable();
+        fixture.detectChanges();
+        await expectAsync(fixture.nativeElement).toBeAccessible();
+      });
 
       describe('sorting', () => {
         it('adds appropriate icons and styles, and emits event on click to headers', () => {
@@ -689,7 +689,7 @@ describe('Grid Component', () => {
           expect(headerEl.querySelector('i')).toHaveCssClass('fa-caret-up');
         });
 
-        it('should have proper aria-sort labels', async(() => {
+        it('should have proper aria-sort labels', async () => {
           let headerEl = nativeElement.querySelectorAll('th').item(0) as HTMLElement;
           SkyAppTestUtility.fireDomEvent(headerEl, 'mouseup',
             { bubbles: false, cancelable: false });
@@ -712,10 +712,9 @@ describe('Grid Component', () => {
           expect(unSortedHeaderEl.getAttribute('aria-sort')).toBe('none');
 
           // Run accessibility test.
-          fixture.whenStable().then(() => {
-            expect(fixture.nativeElement).toBeAccessible();
-          });
-        }));
+          await fixture.whenStable();
+          await expectAsync(fixture.nativeElement).toBeAccessible();
+        });
 
         it('should sort on enter or space press', () => {
           let headerEl = element.query(By.css('th[sky-cmp-id="column1"]'));
@@ -846,7 +845,7 @@ describe('Grid Component', () => {
           expect(resizeBar).toBeNull();
         }));
 
-        it('should resize column when range input is changed', async(() => {
+        it('should resize column when range input is changed', async () => {
           // Get initial baseline for comparison.
           // Note: We are assuming column at index[1] starts with a set value (150).
           let columnIndex = 1;
@@ -856,49 +855,47 @@ describe('Grid Component', () => {
           let deltaX = 10;
 
           fixture.detectChanges();
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
+          await fixture.whenStable();
+          fixture.detectChanges();
 
-            // Increase first column.
-            resizeColumnByRangeInput(fixture, columnIndex, deltaX);
+          // Increase first column.
+          resizeColumnByRangeInput(fixture, columnIndex, deltaX);
 
-            // Assert table was resized properly, and input range was updated correctly.
-            let expectedColumnWidths: any = cloneItems(initialColumnWidths);
-            expectedColumnWidths[columnIndex] = expectedColumnWidths[columnIndex] + deltaX;
+          // Assert table was resized properly, and input range was updated correctly.
+          let expectedColumnWidths: any = cloneItems(initialColumnWidths);
+          expectedColumnWidths[columnIndex] = expectedColumnWidths[columnIndex] + deltaX;
 
-            verifyWidthsMatch(getTableWidth(fixture), initialTableWidth + deltaX);
-            verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
-            verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
-            component.columnWidthsChange.forEach((cwc, index) => {
-              if (cwc.id.indexOf('hidden') === -1) {
-                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
-              }
-            });
-
-            // Decrease first column.
-            initialTableWidth = getTableWidth(fixture);
-            initialColumnWidths = getColumnWidths(fixture);
-            deltaX = -20;
-            resizeColumnByRangeInput(fixture, columnIndex, deltaX);
-
-            // Assert table was resized properly, and input range was updated correctly.
-            expectedColumnWidths = cloneItems(initialColumnWidths);
-            expectedColumnWidths[columnIndex] = expectedColumnWidths[columnIndex] + deltaX;
-            verifyWidthsMatch(getTableWidth(fixture), initialTableWidth + deltaX);
-            verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
-            verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
-            component.columnWidthsChange.forEach((cwc, index) => {
-              if (cwc.id.indexOf('hidden') === -1) {
-                verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
-              }
-            });
-
-            // Run accessibility test.
-            fixture.whenStable().then(() => {
-              expect(fixture.nativeElement).toBeAccessible();
-            });
+          verifyWidthsMatch(getTableWidth(fixture), initialTableWidth + deltaX);
+          verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
+          verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
+          component.columnWidthsChange.forEach((cwc, index) => {
+            if (cwc.id.indexOf('hidden') === -1) {
+              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            }
           });
-        }));
+
+          // Decrease first column.
+          initialTableWidth = getTableWidth(fixture);
+          initialColumnWidths = getColumnWidths(fixture);
+          deltaX = -20;
+          resizeColumnByRangeInput(fixture, columnIndex, deltaX);
+
+          // Assert table was resized properly, and input range was updated correctly.
+          expectedColumnWidths = cloneItems(initialColumnWidths);
+          expectedColumnWidths[columnIndex] = expectedColumnWidths[columnIndex] + deltaX;
+          verifyWidthsMatch(getTableWidth(fixture), initialTableWidth + deltaX);
+          verifyAllWidthsMatch(getColumnWidths(fixture), expectedColumnWidths);
+          verifyWidthsMatch(Number(inputRange.nativeElement.value), initialColumnWidths[columnIndex] + deltaX);
+          component.columnWidthsChange.forEach((cwc, index) => {
+            if (cwc.id.indexOf('hidden') === -1) {
+              verifyWidthsMatch(cwc.width, expectedColumnWidths[index]);
+            }
+          });
+
+          // Run accessibility test.
+          await fixture.whenStable();
+          await expectAsync(fixture.nativeElement).toBeAccessible();
+        });
 
         it('should NOT change max value when column width is changed', fakeAsync(() => {
           // Get initial baseline for comparison.
@@ -1358,12 +1355,11 @@ describe('Grid Component', () => {
         expect(table).toHaveCssClass('sky-grid-has-toolbar');
       });
 
-      it('should pass accessibility', async(() => {
+      it('should pass accessibility', async () => {
         fixture.detectChanges();
-        fixture.whenStable().then(() => {
-          expect(fixture.nativeElement).toBeAccessible();
-        });
-      }));
+        await fixture.whenStable();
+        await expectAsync(fixture.nativeElement).toBeAccessible();
+      });
     });
 
     describe('Resiazable columns', () => {
@@ -1859,25 +1855,23 @@ describe('Grid Component', () => {
         verifyCheckbox(6, false);
       });
 
-      it('should be accessible', async(() => {
+      it('should be accessible', async () => {
         fixture.detectChanges();
 
         const inputs = getMultiselectInputs();
 
         // Run accessibility test.
-        fixture.whenStable().then(() => {
-          fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
 
-          // Click on first row.
-          inputs[0].nativeElement.click();
-          fixture.detectChanges();
+        // Click on first row.
+        inputs[0].nativeElement.click();
+        fixture.detectChanges();
 
-          fixture.whenStable().then(() => {
-            fixture.detectChanges();
-            expect(fixture.nativeElement).toBeAccessible();
-          });
-        });
-      }));
+        await fixture.whenStable();
+        fixture.detectChanges();
+        await expectAsync(fixture.nativeElement).toBeAccessible();
+      });
     });
   });
 
@@ -2381,7 +2375,7 @@ describe('Grid Component', () => {
       expect(eventSpy.preventDefault).toHaveBeenCalled();
     });
 
-    it('should pass accessibility', async(() => {
+    it('should pass accessibility', async () => {
       fixture.detectChanges();
       fixture.detectChanges();
 
@@ -2397,10 +2391,9 @@ describe('Grid Component', () => {
       ]);
 
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        expect(fixture.nativeElement).toBeAccessible();
-      });
-    }));
+      await fixture.whenStable();
+      await expectAsync(fixture.nativeElement).toBeAccessible();
+    });
   });
 
   describe('Empty Fixture', () => {
