@@ -1059,7 +1059,7 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should set top scroll width to the tables width on data when needed', async () => {
+      fit('should set top scroll width to the tables width on data when needed', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
@@ -1072,7 +1072,7 @@ describe('Grid Component', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
+        expect(fixture.componentInstance.grid.showTopScroll).toEqual(true);
         expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
       });
     });
