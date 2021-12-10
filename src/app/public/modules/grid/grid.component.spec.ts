@@ -1059,21 +1059,22 @@ describe('Grid Component', () => {
         });
       }));
 
-      it('should set top scroll width to the tables width on data when needed', fakeAsync(() => {
+      it('should set top scroll width to the tables width on data when needed', async () => {
         fixture.detectChanges();
-        tick();
+        await fixture.whenStable();
+        fixture.detectChanges();
 
         expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
+
         fixture.componentInstance.setLongData();
 
         fixture.detectChanges();
-        tick();
+        await fixture.whenStable();
         fixture.detectChanges();
-        tick();
 
         expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
         expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
-      }));
+      });
     });
 
     describe('row delete', () => {
