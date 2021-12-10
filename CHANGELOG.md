@@ -1,3 +1,5 @@
+#
+
 # 4.0.6 (2020-09-11)
 
 - Fixed the grid component's resize handle to have a proper accessibility role. [#158](https://github.com/blackbaud/skyux-grids/pull/158)
