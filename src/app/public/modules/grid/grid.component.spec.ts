@@ -1059,7 +1059,7 @@ describe('Grid Component', () => {
         });
       }));
 
-      fit('should set top scroll width to the tables width on data when needed', async () => {
+      it('should set top scroll width to the tables width on data when needed', async () => {
         fixture.detectChanges();
         await fixture.whenStable();
         fixture.detectChanges();
