@@ -1060,15 +1060,17 @@ describe('Grid Component', () => {
         fixture.detectChanges();
         tick();
 
-        expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
+        const scrollContainer = document.querySelector('.sky-grid-table-container');
+        expect(scrollContainer.scrollWidth > window.innerWidth).toEqual(false);
+
         fixture.componentInstance.setLongData();
-
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
         tick();
 
-        expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
+        expect(scrollContainer.scrollWidth > window.innerWidth).toEqual(true);
+
         expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
       }));
     });
