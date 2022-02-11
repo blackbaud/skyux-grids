@@ -1060,21 +1060,21 @@ describe('Grid Component', () => {
       }));
 
       // This test works locally, but could not get it to work within BrowserStack.
-      xit('should set top scroll width to the tables width on data when needed', fakeAsync(() => {
-        fixture.detectChanges();
-        tick();
+      // xit('should set top scroll width to the tables width on data when needed', fakeAsync(() => {
+      //   fixture.detectChanges();
+      //   tick();
 
-        expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
-        fixture.componentInstance.setLongData();
+      //   expect(fixture.componentInstance.grid.showTopScroll).toBeFalsy();
+      //   fixture.componentInstance.setLongData();
 
-        fixture.detectChanges();
-        tick();
-        fixture.detectChanges();
-        tick();
+      //   fixture.detectChanges();
+      //   tick();
+      //   fixture.detectChanges();
+      //   tick();
 
-        expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
-        expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
-      }));
+      //   expect(fixture.componentInstance.grid.showTopScroll).toBeTruthy();
+      //   expect(getTableWidth(fixture)).toEqual(getTopScrollWidth(fixture));
+      // }));
     });
 
     describe('row delete', () => {
