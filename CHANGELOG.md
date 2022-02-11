@@ -1,3 +1,7 @@
+# 4.0.7 (2021-02-11)
+
+- Fixed a typo in the design guidelines. [#174](https://github.com/blackbaud/skyux-grids/pull/174)
+
 # 4.0.6 (2020-09-11)
 
 - Fixed the grid component's resize handle to have a proper accessibility role. [#158](https://github.com/blackbaud/skyux-grids/pull/158)
