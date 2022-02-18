@@ -29,7 +29,7 @@ import { SkyGridColumnInlineHelpPopoverModelChange } from './types/grid-column-i
 export class SkyGridColumnComponent implements OnChanges {
   /**
    * Specifies the horizontal alignment of the column's data and header.
-   * Options include: `left`, `center`, and `right`.
+   * Options include: `"left"`, `"center"`, and `"right"`.
    * @default "left"
    */
   @Input()
